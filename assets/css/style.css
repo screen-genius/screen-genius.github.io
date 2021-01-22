@@ -9,8 +9,8 @@
 header {
     
 }
-
 .top-panel {
+    position:relative;
     margin: 1rem;
     background-color: var(--main-color);
     padding: 1rem;
@@ -137,7 +137,7 @@ header {
     box-shadow: 0 0 10px black;
 }
 .fa:hover {
-    opacity: 0.6;
+    opacity: 0.9;
 }
 
 .fa-facebook {
