@@ -46,8 +46,11 @@ header {
     list-style: none;
 }
 
+
+
 .hero {
     display: flex;
+    color: white;
 }
 
 .search-bar {
@@ -62,7 +65,8 @@ header {
     margin: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
-    padding: 1rem;
+    padding: 2rem;
+    text-align: center;
 }
 
 .search-bar {
@@ -72,6 +76,30 @@ header {
 
 .submit {
     border-radius: 10px;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.submit:hover {
+    background-color: black;
+    color: white;
+}
+
+.movie-genres {
+    border-top: 2px solid black;
+    padding-top: 2rem;
+}
+
+.genre-btn {
+    width: 15rem;
+    margin-top: .5rem;
+    border-radius: 10px;
+    background-color: var(--fourth-color);
+}
+
+.genre-btn:hover {
+    background-color: black;
+    color: white;
     font-weight: bold;
 }
 
