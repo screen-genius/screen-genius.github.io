@@ -1,3 +1,4 @@
+
 :root {
     --main-color: #252525;
     --second-color: #6930c3;
@@ -6,7 +7,6 @@
 }
 
 header {
-
     
 }
 
@@ -112,4 +112,47 @@ header {
     border-radius: 15px;
     box-shadow: 0 0 10px black;
     right: 0;
+}
+
+.footer {
+    display: flex;
+    background: var(--third-color);
+    width: 98%;
+    padding: 40px 35px;
+    margin: 1rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
+}
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align:center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
+}
+.fa:hover {
+    opacity: 0.6;
+}
+
+.fa-facebook {
+    background: rgb(59,89,152);
+    color: white;
+}
+
+.fa-instagram {
+        background: rgb(18,86,136);
+        color: white;
+}
+.fa-twitter {
+    background: rgb(85,172,238);
+}
+.fa-youtube {
+    background: rgb(187,0,0);
+
 }
