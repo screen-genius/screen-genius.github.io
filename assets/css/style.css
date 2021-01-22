@@ -1,0 +1,63 @@
+:root {
+    --main-color: #252525;
+    --second-color: #6930c3;
+    --third-color: #64dfdf;
+    --fourth-color: #80ffdb;
+}
+
+header {
+    display: relative;
+    height: 5rem;
+    width: 100%;
+    background-color: var(--main-color);
+}
+
+.main-title {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.site-links-container {
+    position: absolute;
+    color: white;
+    right: 0;
+    top: 0;
+    padding: 2rem;
+}
+
+.ul-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.links {
+    padding: .5rem;
+    text-decoration: none;
+    list-style: none;
+}
+
+
+
+
+
+body {
+    
+}
+
+.left-panel {
+    position: relative;
+    background-color: var(--second-color);
+    width: 25%;
+    height: 50rem;
+}
+
+.main-body {
+    position: absolute;
+    background-color: var(--third-color);
+    width: 75%;
+    height: 50rem;
+    top: 5rem;
+    right: 0;
+}
