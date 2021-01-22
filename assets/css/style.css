@@ -6,10 +6,16 @@
 }
 
 header {
-    display: relative;
-    height: 5rem;
-    width: 100%;
+
+    
+}
+
+.top-panel {
+    margin: 1rem;
     background-color: var(--main-color);
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
 }
 
 .main-title {
@@ -17,6 +23,7 @@ header {
     color: white;
     font-weight: bold;
     font-size: 3rem;
+    padding-left: 1rem;
 }
 
 .site-links-container {
@@ -24,7 +31,8 @@ header {
     color: white;
     right: 0;
     top: 0;
-    padding: 2rem;
+    padding-top: 3rem;
+    padding-right: 2rem;
 }
 
 .ul-container {
@@ -38,12 +46,12 @@ header {
     list-style: none;
 }
 
+.hero {
+    display: flex;
+}
 
+.search-bar {
 
-
-
-body {
-    
 }
 
 .left-panel {
@@ -51,13 +59,29 @@ body {
     background-color: var(--second-color);
     width: 25%;
     height: 50rem;
+    margin: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
+    padding: 1rem;
+}
+
+.search-bar {
+    margin: 1rem;
+    border-radius: 10px;
+}
+
+.submit {
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 .main-body {
-    position: absolute;
+
     background-color: var(--third-color);
-    width: 75%;
+    width: 70%;
     height: 50rem;
-    top: 5rem;
+    margin: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
     right: 0;
 }
