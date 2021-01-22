@@ -1,0 +1,37 @@
+
+footer {
+    display: flex;
+    background:"" ;
+    width: 100%;
+    padding: 40px 35px;
+    justify-content: space-between;
+
+}
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align:center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+.fa:hover {
+    opacity: 0.6;
+}
+
+.fa-facebook {
+    background: rgb(59,89,152);
+    color: white;
+}
+
+.fa-instagram {
+        background: rgb(18,86,136);
+        color: white;
+}
+.fa-twitter {
+    background: rgb(85,172,238);
+}
+.fa-youtube {
+    background: rgb(187,0,0);
+}
