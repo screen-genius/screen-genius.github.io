@@ -1,5 +1,6 @@
 var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
+var moviedisplayEl = document.getElementById("movie-display");
 var genres = [];
 
 
@@ -54,15 +55,22 @@ function fetchMovies() {
        return response.json();
     })
     .then(function(data){
+        console.log(data);
         let results = data.results;
-        let moviesPicked = [];
-        let includedGenresArray = [];
-        let movieObject;
-        let randomMovieNum;
-        let lastMovieNum;
-        for (var i = 0; i < 3; i++) {
-            randomMovieNum = Math.floor(Math.random()*results.length);
-            if (randomMovieNum !== lastMovieNum) {
+        if (results.length === 0) {
+            alert("Sorry too many genres. Try again.");
+        } else {
+            console.log(results.length);
+            let moviesPicked = [];
+            let includedGenresArray = [];
+            let movieObject;
+            let randomMovieNum;
+            let loopLength = 3;
+            if (results.length < loopLength) {
+                loopLength = results.length;
+            }
+            for (var i = 0; i < 3; i++) {
+                randomMovieNum = Math.floor(Math.random()*results.length);
                 for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
                     for (k = 0; k < genres.length; k++) {
                         if (results[randomMovieNum].genre_ids[j]===genres[k].id){
@@ -70,28 +78,82 @@ function fetchMovies() {
                         }
                     }
                 }
-                let includedGenres = includedGenresArray.toString();
+                let includedGenres = includedGenresArray.join(", ");
                 includedGenresArray = [];
                 movieObject = {title: results[randomMovieNum].title, 
                                poster: results[randomMovieNum].poster_path,
                                overview: results[randomMovieNum].overview,
                                genres: includedGenres,
                                rating: results[randomMovieNum].vote_average
-
-                            };
+                              };
                 moviesPicked.push(movieObject);
-                lastMovieNum = randomMovieNum;
-            } else if (results.length > 3) {
-                i--;
+                results.splice(randomMovieNum, 1)
             }
             
-
+            displayMovies(moviesPicked);
         }
-        console.log(moviesPicked);
 
     })
 
 
+}
+
+function displayMovies(mArray) {
+    moviedisplayEl.textContent = "";
+    for (var i = 0; i < mArray.length; i++){
+        
+        // create variables from array
+        let title = mArray[i].title;
+        let poster = mArray[i].poster;
+        let overview = mArray[i].overview;
+        let genres = mArray[i].genres;
+        let posterURL = "./assets/images/noPoster.png"
+        if (poster) {
+            posterURL="https://image.tmdb.org/t/p/w500"+poster;      
+        }
+
+
+        // create card elements
+        let cardEl = document.createElement("div");
+        cardEl.setAttribute("class", "card");
+
+        //add poster image
+        let cardImageEl = document.createElement("div");
+        cardImageEl.setAttribute("class", "card-image");
+        let figureEl = document.createElement("figure")
+        figureEl.setAttribute("class", "image is-3by4");
+        let posterEl = document.createElement("img");
+        posterEl.setAttribute("src", posterURL);
+        //posterEl.setAttribute("alt", "");
+        figureEl.appendChild(posterEl);
+        cardImageEl.appendChild(figureEl);
+        cardEl.appendChild(cardImageEl);
+
+        // add text content
+        let cardContentEl = document.createElement("div");
+        cardContentEl.setAttribute("class", "card-content");
+        let mediaContentEl = document.createElement("div");
+        mediaContentEl.setAttribute("class", "media-content");
+        let titleEl = document.createElement("h3");
+        titleEl.setAttribute("class", "title is-4");
+        titleEl.textContent = title;
+        mediaContentEl.appendChild(titleEl);
+
+        let subtitleEl = document.createElement("h4");
+        subtitleEl.setAttribute("class", "subtitle is-6");
+        subtitleEl.textContent = genres;
+        mediaContentEl.appendChild(subtitleEl);
+        cardContentEl.appendChild(mediaContentEl);
+
+        let contentEl = document.createElement("div");
+        contentEl.setAttribute("class", "content");
+        contentEl.textContent = overview;
+        cardContentEl.appendChild(contentEl);
+
+        cardEl.appendChild(cardContentEl);
+        moviedisplayEl.appendChild(cardEl);
+
+    }
 }
 
 loadGenres();
