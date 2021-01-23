@@ -320,7 +320,7 @@ ul {
 
 
 .footer {
-    display: relative;
+    display: none;
     background: var(--third-color);
     width: 98%;
     padding: 40px 35px;
