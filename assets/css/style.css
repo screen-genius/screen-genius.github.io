@@ -15,6 +15,9 @@ header {
     width: 100%;
 }
 
+/*---------------------------*/
+/*      TOP PANEL ITEMS      */
+/*---------------------------*/
 .top-panel {
     position: sticky;
     background-color: var(--main-color);
@@ -55,14 +58,11 @@ header {
     padding: .5rem;
     text-decoration: none;
     list-style: none;
+    color: white;
 }
 
 .links:hover {
     text-shadow: 0px 0px 3px white;
-}
-
-.search-check:checked ~ .links {
-    background-color: pink;
 }
 
 .search-check {
@@ -74,6 +74,10 @@ header {
     color: white;
     width: 100%;
 }
+
+/*---------------------------*/
+/*          LEFT PANEL       */
+/*---------------------------*/
 
 .left-panel {
     position: fixed;
@@ -129,6 +133,10 @@ h2 {
     color: black;
 }
 
+/*---------------------------*/
+/*      MAIN - RESULTS       */
+/*---------------------------*/
+
 .content {
     position: absolute;
     top: 8rem;
@@ -149,6 +157,21 @@ h2 {
     display: flex;
     flex-wrap: wrap;
 }
+
+/*---------------------------*/
+/*    MOVIE CARD TEMPLATE    */
+/*---------------------------*/
+
+/*
+CLASSES FOR JAVA:
+.movie-card 
+.movie-card:hover
+.movie-picture
+.movie-description
+ul
+.add-favourites
+.add-favourites:hover
+*/
 
 .movie-card {
     background-color: var(--main-color);
@@ -199,6 +222,11 @@ img {
     font-weight: bold;
     background-color: yellow;
     margin-left: 1rem;
+}
+
+.remove-favourites:hover {
+    color: white;
+    background-color: black;
 }
 
 .add-favourites:hover {
