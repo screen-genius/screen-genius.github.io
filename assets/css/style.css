@@ -6,19 +6,25 @@
 }
 
 header {
+    position: fixed;
     padding: 1rem;
+    background-color: white;
+    height: 8rem;
+    z-index: 990;
+    width: 100%;
 }
 
 .top-panel {
-    position: fixed;
+    position: sticky;
     background-color: var(--main-color);
     padding: 1rem;
-    border-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
     box-shadow: 0 0 10px black;
-    width: 70%;
-    left: 26%;
+    width: 71%;
+    left: 27%;
     margin-left: 1rem;
-    height: 15%;
+    height: 7rem;
     z-index: 999;
 }
 
@@ -54,6 +60,14 @@ header {
     text-shadow: 0px 0px 3px white;
 }
 
+.search-check:checked ~ .links {
+    background-color: pink;
+}
+
+.search-check {
+    display: none;
+}
+
 .hero {
     display: flex;
     color: white;
@@ -75,11 +89,13 @@ header {
     padding: 2rem;
     text-align: center;
     height: 96%;
+    z-index: 999;
 }
 
 .search-bar {
     margin: 1rem;
     border-radius: 10px;
+    width: 90%;
 }
 
 .submit {
@@ -111,21 +127,32 @@ header {
     font-weight: bold;
 }
 
-.main-body {
+h2 {
+    padding: 3rem 0 2rem 2.5rem;
+    color: black;
+}
+
+.content {
+    position: absolute;
+    top: 8rem;
+}
+
+.movie-container {
     position: relative;
     background-color: var(--third-color);
     width: 70%;
     margin: 1rem;
-    padding-bottom: 1rem;
+    padding: 0 1rem 1rem 0;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
     left: 26%;
-    top: 6rem;
+
 }
 
 .movie-results {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .movie-card {
@@ -160,6 +187,25 @@ img {
     text-align: left;
 }
 
+.favourites-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.favourites-panel {
+    position: relative;
+    background-color: var(--third-color);
+    width: 70%;
+    margin: 1rem;
+    padding: 0 1rem 1rem 0;
+    border-radius: 15px;
+    box-shadow: 0 0 10px black;
+    left: 26%;
+    justify-content: space-around;
+
+}
+
 /*---------------------*/
 /*      MEDIA 500      */
 /*---------------------*/
@@ -171,10 +217,13 @@ header {
 }
 
 .top-panel {
+    position: absolute;
     width: 100%;
     margin: 0rem;
     border-radius: 0px;
     height: 8rem;
+    left: 0;
+    z-index: none;
 }
 
 .main-title {
@@ -189,13 +238,14 @@ header {
 }
 
 .left-panel {
-    position: relative;
+    position: absolute;
     width: 100%;
     margin: 0rem;
     box-shadow: none;
     border-radius: 0px;
     height: 35rem;
     padding: 1rem;
+    top: 15%;
 }
 
 .hero {
@@ -204,10 +254,11 @@ header {
 
 .main-body {
     position: absolute;
-    top: 43rem;
+    top: 42.70rem;
     width: 100%;
     margin: 0rem;
     border-radius: 0px;
+    left: 0;
 }
 
 .movie-card {
