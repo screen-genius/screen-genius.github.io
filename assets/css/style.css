@@ -6,6 +6,13 @@
     --fourth-color: #80ffdb;
 }
 
+.block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
 header {
     position: fixed;
     padding: 1rem;
@@ -26,7 +33,7 @@ header {
     border-top-left-radius: 15px;
     box-shadow: 0 0 10px black;
     width: 71%;
-    left: 27%;
+    left: 22rem;
     margin-left: 1rem;
     height: 7rem;
     z-index: 999;
@@ -83,7 +90,7 @@ header {
     position: fixed;
     top: 0rem;
     background-color: var(--second-color);
-    width: 25%;
+    width: 20rem;
     margin: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
@@ -129,7 +136,7 @@ header {
 }
 
 h2 {
-    padding: 3rem 0 2rem 2.5rem;
+    padding: 2rem 0 0 3rem;
     color: black;
 }
 
@@ -140,22 +147,58 @@ h2 {
 .content {
     position: absolute;
     top: 8rem;
+    left: 21rem;
+    display: grid;
+    grid-template-rows: 3;
+    width: 71.5%;
+}
+
+.main-body {
+    grid-row: 1;
+}
+
+.favourites-results {
+    grid-row: 2;
 }
 
 .movie-container {
     position: relative;
     background-color: var(--third-color);
-    width: 70%;
     margin: 1rem;
-    padding: 0 1rem 1rem 0;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
-    left: 26%;
+}
+
+.movie-card-0 {
+    grid-row: 1;
+    grid-column: 1 / span 3;
+    background-color: var(--main-color);
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-rows: 2;
+    margin: 1rem 3rem 0rem 3rem;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.movie-card-1 {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.movie-card-2 {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.movie-card-3 {
+    grid-row: 2;
+    grid-column: 3;
 }
 
 .movie-results {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-rows: 2;
 }
 
 /*---------------------------*/
@@ -173,10 +216,22 @@ ul
 .add-favourites:hover
 */
 
+/* GRID 1 - large */
+.large-card {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.mini-card {
+    display: grid;
+    grid-template-columns: 3;
+    padding-right: 3rem;
+    padding-bottom: 3rem;
+}
+
 .movie-card {
     background-color: var(--main-color);
-    width: 15rem;
-    height: 25rem;
+    display: inline-block;
     margin: 1rem 0rem 0rem 3rem;
     border-radius: 10px;
     padding: .5rem;
@@ -193,8 +248,8 @@ ul {
 }
 
 img {
-    height: 100%;
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .movie-picture {
@@ -202,17 +257,27 @@ img {
     height: 60%;
 }
 
+.mini-picture-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
 .movie-description {
     text-align: left;
 }
 
+.movie-description-large {
+    margin-left: 2rem;
+}
+
 .add-favourites {
-    position: relative;
+    display: inline;
     margin-top: .5rem;
     border-radius: 10px;
     font-weight: bold;
     background-color: yellow;
-    margin-left: 1rem;
 }
 
 .remove-favourites {
@@ -234,6 +299,34 @@ img {
     background-color: var(--second-color);
 }
 
+.add-watchlist {
+    display: inline;
+    margin-top: .5rem;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: yellow;
+    margin-left: 1rem;
+}
+
+.add-watchlist:hover {
+    color: white;
+    background-color: black;
+}
+
+.remove-watchlist {
+    position: relative;
+    margin-top: .5rem;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: yellow;
+    margin-left: 1rem;
+}
+
+.remove-watchlist:hover {
+    color: white;
+    background-color: black;
+}
+
 .favourites-container {
     display: flex;
     flex-wrap: wrap;
@@ -242,12 +335,10 @@ img {
 .favourites-panel {
     position: relative;
     background-color: var(--third-color);
-    width: 70%;
     margin: 1rem;
     padding: 0 1rem 1rem 0;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
-    left: 26%;
     justify-content: space-around;
 }
 
