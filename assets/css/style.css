@@ -221,7 +221,6 @@ img {
     box-shadow: 0 0 10px black;
     left: 26%;
     justify-content: space-around;
-
 }
 
 /*---------------------*/
@@ -321,7 +320,7 @@ ul {
 
 
 .footer {
-    display: flex;
+    display: relative;
     background: var(--third-color);
     width: 98%;
     padding: 40px 35px;
@@ -330,6 +329,7 @@ ul {
     flex-wrap: wrap;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
+    left: 0;
 }
 
 .fa {
