@@ -1,5 +1,5 @@
 
-
+var locationDisplayEl = document.getElementById("location-display");
 
 
 function getAPI (movieTitle) {
@@ -34,4 +34,17 @@ function getAPI (movieTitle) {
 	console.log(availableAt);
 	console.log(resultPicture);
 	console.log(resultName);
+
+	// add location
+	let cardContentEl = document.createElement("div");
+	cardContentEl.setAttribute("class", "card-content");
+	let mediaContentEl = document.createElement("div");
+	mediaContentEl.setAttribute("class", "media-content");
+
+	let locationEl = document.createElement("h4");
+	locationEl.setAttribute("class", "subtitle is-6");
+	locationEl.textContent = availableAt;
+	mediaContentEl.appendChild(locationEl);
+	cardContentEl.appendChild(mediaContentEl);
+
 }
