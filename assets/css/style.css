@@ -142,7 +142,6 @@ h2 {
     padding: 0 1rem 1rem 0;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
-<<<<<<< HEAD
     left: 26%;
 }
 
@@ -186,6 +185,15 @@ img {
 }
 
 .add-favourites {
+    position: relative;
+    margin-top: .5rem;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: yellow;
+    margin-left: 1rem;
+}
+
+.remove-favourites {
     position: relative;
     margin-top: .5rem;
     border-radius: 10px;
