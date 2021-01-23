@@ -1,3 +1,4 @@
+//gets data from API and returns the values
 var movieName="friends";
 var apiName="https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term="+movieName;
 
@@ -21,16 +22,35 @@ fetch(apiName, {
 
 //displays Movie data
    function displayMovieAttr(data){
-           
-            var availableAt="";
-            var resultName ="";
-            var resultPicture=""
-            resultName=data.results[0].name;
-            resultPicture = data.results[0].picture;
-            availableAt=data.results[0].locations[0].display_name;
-            console.log(availableAt);
-            console.log(resultPicture);
-            console.log(resultName);
+    var availableAt="";
+    var resultName ="";
+    var resultPicture="";
+    var noOfMovies=data.results.length;
+    var resultsToShow=[['nameResult', ""], ['photo', ""], ['availableloc', ""]];
+    if(noOfMovies<3){
+        n=noOfMovies;
+    } else{
+        n=3;
+    }
 
-   } 
+//get 3 movies/shows available
+    for (i=0;i<n;i++){
+        resultName=data.results[i].name;
+        resultPicture = data.results[i].picture;
+        // push results onto the array 
+        resultsToShow[i].nameResult=resultName;
+        resultsToShow[i].photo=resultPicture;
+        // where is the movie/show available (e.g. Netflix)
+        for(j=0;j<3; j++) {
+            availableAt=data.results[i].locations[j].display_name;
+            resultsToShow[i].push(availableAt);
+        }    
+    }
+//print the results
+console.log(resultsToShow);
+} 
+
+
+// when the user searches the search should start with var movieName="friends";
+//once the search is complete the array resultsToShow has the results. use it to show on html. 3 results are shown. 
         
