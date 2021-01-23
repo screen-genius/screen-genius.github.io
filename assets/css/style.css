@@ -74,10 +74,6 @@ header {
     width: 100%;
 }
 
-.search-bar {
-
-}
-
 .left-panel {
     position: fixed;
     top: 0rem;
@@ -146,7 +142,6 @@ h2 {
     border-radius: 15px;
     box-shadow: 0 0 10px black;
     left: 26%;
-
 }
 
 .movie-results {
@@ -171,6 +166,7 @@ h2 {
 ul {
     list-style: none;
     text-decoration: none;
+    margin-left: -1rem;
 }
 
 img {
@@ -185,6 +181,20 @@ img {
 
 .movie-description {
     text-align: left;
+}
+
+.add-favourites {
+    position: relative;
+    margin-top: .5rem;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: yellow;
+    margin-left: 1rem;
+}
+
+.add-favourites:hover {
+    color: white;
+    background-color: var(--second-color);
 }
 
 .favourites-container {
@@ -217,13 +227,13 @@ header {
 }
 
 .top-panel {
-    position: absolute;
+    position: fixed;
     width: 100%;
     margin: 0rem;
     border-radius: 0px;
     height: 8rem;
     left: 0;
-    z-index: none;
+    z-index: 999;
 }
 
 .main-title {
@@ -238,33 +248,54 @@ header {
 }
 
 .left-panel {
-    position: absolute;
+    position: relative;
     width: 100%;
     margin: 0rem;
     box-shadow: none;
     border-radius: 0px;
     height: 35rem;
     padding: 1rem;
-    top: 15%;
+    top: 8rem;
+    z-index: 5;
+
 }
 
-.hero {
-    width: 100%;
+.content {
+    top: 40rem;
 }
 
-.main-body {
-    position: absolute;
-    top: 42.70rem;
-    width: 100%;
-    margin: 0rem;
-    border-radius: 0px;
+.movie-container {
+    position: relative;
     left: 0;
+    width: 100%;
+    margin-left: 0;
+    border-radius: 0;
+}
+
+.favourites-panel {
+    position: relative;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
 }
 
 .movie-card {
+    background-color: var(--main-color);
     width: 10rem;
-    height: 18rem;
+    height: 100%;
+    margin: 1rem 0rem 0rem 1rem;
+    border-radius: 10px;
+    padding: .1rem;
+}
 
+.add-favourites {
+    margin-left: -.5rem;
+    margin-right: .5rem;
+}
+
+ul {
+    margin-left: -1.25rem;
 }
 
 }
