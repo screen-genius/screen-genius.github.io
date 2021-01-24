@@ -13,30 +13,50 @@
     width: 90%;
 }
 
-header {
-    position: fixed;
-    padding: 1rem;
-    background-color: white;
-    height: 8rem;
-    z-index: 990;
-    width: 100%;
+.inline-block {
+    display: inline-block;
 }
 
 /*---------------------------*/
 /*      TOP PANEL ITEMS      */
 /*---------------------------*/
-.top-panel {
+
+.body-grid {
+    display: grid;
+    grid-template-columns: 20rem 4fr;
+    grid-template-rows: auto auto;
+}
+
+.grid-2 {
+    grid-column: 2;
+    grid-row: 1 / span 1;
+    display: grid;
+    grid-template-rows: 2;
     position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.grid-3 {
+    grid-column: 2;
+    grid-row: 2 / span 4;
+    display: inline-block;
+}
+
+.top-panel-grid {
+    background-color: white;
+    height: 8rem;
+}
+
+.top-panel {
     background-color: var(--main-color);
     padding: 1rem;
+    margin: 1rem;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
     box-shadow: 0 0 10px black;
-    width: 71%;
-    left: 22rem;
-    margin-left: 1rem;
     height: 7rem;
-    z-index: 999;
 }
 
 .main-title {
@@ -76,28 +96,25 @@ header {
     display: none;
 }
 
-.hero {
-    display: flex;
-    color: white;
-    width: 100%;
-}
-
 /*---------------------------*/
 /*          LEFT PANEL       */
 /*---------------------------*/
 
+.grid-1 {
+    grid-column: 1;
+    grid-row: 1/span 2;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+
 .left-panel {
-    position: fixed;
-    top: 0rem;
     background-color: var(--second-color);
-    width: 20rem;
     margin: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
     padding: 2rem;
     text-align: center;
-    height: 96%;
-    z-index: 999;
 }
 
 .search-bar {
@@ -145,20 +162,13 @@ h2 {
 /*---------------------------*/
 
 .content {
-    position: absolute;
-    top: 8rem;
-    left: 21rem;
+    grid-row: 2;
     display: grid;
     grid-template-rows: 3;
-    width: 71.5%;
 }
 
 .main-body {
     grid-row: 1;
-}
-
-.favourites-results {
-    grid-row: 2;
 }
 
 .movie-container {
@@ -167,33 +177,6 @@ h2 {
     margin: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 10px black;
-}
-
-.movie-card-0 {
-    grid-row: 1;
-    grid-column: 1 / span 3;
-    background-color: var(--main-color);
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-rows: 2;
-    margin: 1rem 3rem 0rem 3rem;
-    border-radius: 10px;
-    padding: 1rem;
-}
-
-.movie-card-1 {
-    grid-row: 2;
-    grid-column: 1;
-}
-
-.movie-card-2 {
-    grid-row: 2;
-    grid-column: 2;
-}
-
-.movie-card-3 {
-    grid-row: 2;
-    grid-column: 3;
 }
 
 .movie-results {
@@ -205,46 +188,11 @@ h2 {
 /*    MOVIE CARD TEMPLATE    */
 /*---------------------------*/
 
-/*
-CLASSES FOR JAVA:
-.movie-card 
-.movie-card:hover
-.movie-picture
-.movie-description
-ul
-.add-favourites
-.add-favourites:hover
-*/
-
-/* GRID 1 - large */
-.large-card {
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-
-.mini-card {
-    display: grid;
-    grid-template-columns: 3;
-    padding-right: 3rem;
-    padding-bottom: 3rem;
-}
-
-.movie-card {
-    background-color: var(--main-color);
-    display: inline-block;
-    margin: 1rem 0rem 0rem 3rem;
-    border-radius: 10px;
-    padding: .5rem;
-}
-
-.movie-card:hover {
-    box-shadow: 0 0 15px black;
-}
-
 ul {
     list-style: none;
     text-decoration: none;
     margin-left: -1rem;
+    color: white;
 }
 
 img {
@@ -252,182 +200,304 @@ img {
     max-height: 100%;
 }
 
+/*---------------------------*/
+/*     MOVIE CARD LARGE      */
+/*---------------------------*/
+
+.large-card {
+    padding: 0 3rem 0 3rem;
+}
+
+.movie-card-0 {
+    grid-row: 1;
+    grid-column: 1 / span 3;
+    background-color: var(--main-color);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.movie-card-0:hover {
+    box-shadow: 0 0 15px black;
+}
+
+.movie-picture-large {
+    grid-column: 1;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+}
+
+.movie-description-large {
+    margin-left: 2rem;
+    grid-column: 2;
+}
+
+.featured-buttons {
+    width: 15rem;
+}
+
+/*---------------------------*/
+/*     MOVIE CARD SMALL      */
+/*---------------------------*/
+
+.inline-block-1 {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.inline-block-2 {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+.inline-block-3 {
+    grid-row: 2;
+    grid-column: 3;
+}
+
+.mini-card {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding-right: 3rem;
+    padding-bottom: 3rem;
+}
+
+.movie-card {
+    background-color: var(--main-color);
+    margin: 1rem 0rem 0rem 3rem;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.movie-card:hover {
+    box-shadow: 0 0 15px black;
+}
+
 .movie-picture {
     margin: 1rem;
     height: 60%;
-}
-
-.mini-picture-block {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
 }
 
 .movie-description {
     text-align: left;
 }
 
-.movie-description-large {
-    margin-left: 2rem;
-}
+/*---------------------------*/
+/*          BUTTONS          */
+/*---------------------------*/
 
-.add-favourites {
-    display: inline;
+.button {
     margin-top: .5rem;
     border-radius: 10px;
     font-weight: bold;
     background-color: yellow;
+    width: 80%;
 }
 
-.remove-favourites {
-    position: relative;
-    margin-top: .5rem;
-    border-radius: 10px;
-    font-weight: bold;
-    background-color: yellow;
-    margin-left: 1rem;
-}
-
-.remove-favourites:hover {
+.button:hover {
     color: white;
     background-color: black;
 }
 
-.add-favourites:hover {
-    color: white;
-    background-color: var(--second-color);
+/*----------------------------*/
+/*     FAVOURITES PANEL       */
+/*----------------------------*/
+
+
+
+/*---------------------------*/
+/*     WATCHLIST PANEL       */
+/*---------------------------*/
+
+
+
+/*---------------------*/
+/*      MEDIA 1150      */
+/*---------------------*/
+
+@media screen and (max-width: 1150px) {
+
+.movie-results {
+    display: grid;
+    grid-template-rows: 4;
 }
 
-.add-watchlist {
-    display: inline;
-    margin-top: .5rem;
+.inline-block-1 {
+    grid-row: 2;
+    grid-column: 1 / span 3;
+}
+
+.inline-block-2 {
+    grid-row: 3;
+    grid-column: 1 / span 3;
+}
+
+.inline-block-3 {
+    grid-row: 4;
+    grid-column: 1 / span 3;
+}
+
+.movie-card {
+    grid-row: 1;
+    grid-column: 1 / span 3;
+    background-color: var(--main-color);
+    display: grid;
+    grid-template-columns: 30% 70%;
     border-radius: 10px;
-    font-weight: bold;
-    background-color: yellow;
-    margin-left: 1rem;
 }
 
-.add-watchlist:hover {
-    color: white;
-    background-color: black;
+.mini-card {
+    grid-template-columns: 1;
+    padding-right: none;
 }
 
-.remove-watchlist {
-    position: relative;
-    margin-top: .5rem;
-    border-radius: 10px;
-    font-weight: bold;
-    background-color: yellow;
-    margin-left: 1rem;
+.movie-description {
+    grid-column: 2;
 }
 
-.remove-watchlist:hover {
-    color: white;
-    background-color: black;
+.movie-picture {
+    grid-column: 1;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    margin: 0;
 }
+
+.movie-picture-large {
+    grid-column: 1;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+}
+
+.button {
+    width: 15rem;
+}
+
+/* FAVOURITES LIST GRID ORDER */
 
 .favourites-container {
-    display: flex;
-    flex-wrap: wrap;
+    grid-template-columns: 1;
 }
 
-.favourites-panel {
-    position: relative;
-    background-color: var(--third-color);
-    margin: 1rem;
-    padding: 0 1rem 1rem 0;
-    border-radius: 15px;
-    box-shadow: 0 0 10px black;
-    justify-content: space-around;
 }
 
 /*---------------------*/
-/*      MEDIA 500      */
+/*      MEDIA 950      */
 /*---------------------*/
 
 @media screen and (max-width: 950px) {
 
-header {
-    padding: 0rem;
+.body-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-rows: auto auto auto;
+}
+
+.grid-1 {
+    grid-row: 2 / span 1;
+    grid-column: none;
+    position: relative;
+    display: inline-block;
+}
+
+.top-panel-grid {
+    height: 6rem;
 }
 
 .top-panel {
-    position: fixed;
+    margin: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     width: 100%;
-    margin: 0rem;
-    border-radius: 0px;
-    height: 8rem;
-    left: 0;
-    z-index: 999;
-}
-
-.main-title {
-    font-size: 2.5rem;
-    padding-top: 0rem;
-    text-align: center;
-}
-
-.site-links-container {
-    padding-top: 0rem;
-    position: relative;
 }
 
 .left-panel {
-    position: relative;
+    margin: 0;
+    border-radius: 0;
     width: 100%;
-    margin: 0rem;
-    box-shadow: none;
-    border-radius: 0px;
-    height: 35rem;
-    padding: 1rem;
-    top: 8rem;
-    z-index: 5;
-
+    height: none;
 }
 
-.content {
-    top: 40rem;
+.grid-2 {
+    grid-row: 1;
+}
+
+.grid-3 {
+    grid-row: 3;
 }
 
 .movie-container {
     position: relative;
-    left: 0;
-    width: 100%;
-    margin-left: 0;
-    border-radius: 0;
-}
-
-.favourites-panel {
-    position: relative;
-    left: 0;
-    width: 100%;
+    background-color: var(--third-color);
     margin: 0;
     border-radius: 0;
+    box-shadow: 0 0 10px black;
+    padding-top: 6rem;
 }
 
 .movie-card {
-    background-color: var(--main-color);
-    width: 10rem;
-    height: 100%;
-    margin: 1rem 0rem 0rem 1rem;
-    border-radius: 10px;
-    padding: .1rem;
+    grid-template-rows: 75% 25%;
+    grid-template-columns: 40% 60%;
+    margin: 1rem 0 0 1rem;
 }
 
-.add-favourites {
-    margin-left: -.5rem;
-    margin-right: .5rem;
+.movie-picture {
+    grid-column: 1;
+    grid-row: 1;
 }
 
-.remove-favourites {
-    margin-left: -.5rem;
-    margin-right: .5rem;
+.movie-description {
+    grid-column: 2;
+    grid-row: 1;
 }
 
-ul {
-    margin-left: -1.25rem;
+.action-buttons {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
 }
+
+.movie-card-0 {
+    grid-template-rows: 75% 25%;
+    grid-template-columns: 40% 60%;
+}
+
+.movie-picture-large {
+    grid-column: 1 / span 1;
+    grid-row: 1;
+}
+
+.movie-description-large {
+    grid-column: 2 / span 1;
+    grid-row: 1;
+}
+
+.featured-buttons {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+}
+
+.large-card {
+    padding: 0 1rem 0 1rem;
+}
+
+.mini-card {
+    padding-right: 1rem;
+    padding-left: 0rem;
+}
+
+h2 {
+    padding: 1rem 0 0 1rem;
+    text-align: center;
+}
+
+.movie-description-large {
+    margin-left: .5rem;
+}
+
+
 
 }
 
