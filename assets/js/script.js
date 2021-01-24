@@ -14,7 +14,8 @@ function getAPI (movieTitle) {
 })
 
 .then(function(response) {
-    return response.json();
+	return response.json();
+
 	
 })
 .catch(err => {
