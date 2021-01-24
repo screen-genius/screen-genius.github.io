@@ -17,6 +17,18 @@
     display: inline-block;
 }
 
+a:link {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
 /*---------------------------*/
 /*      TOP PANEL ITEMS      */
 /*---------------------------*/
@@ -57,10 +69,11 @@
     border-top-left-radius: 15px;
     box-shadow: 0 0 10px black;
     height: 7rem;
+    position: relative;
 }
 
 .main-title {
-    position: relative;
+    position: absolute;
     color: white;
     font-weight: bold;
     font-size: 3rem;
@@ -79,6 +92,7 @@
 .ul-container {
     display: flex;
     justify-content: space-between;
+    color: white;
 }
 
 .links {
@@ -382,6 +396,63 @@ img {
     grid-template-columns: 1;
 }
 
+.site-links-container {
+    position: absolute;
+    padding-top: 2.5rem;
+    padding-right: 2rem;
+}
+
+
+.movie-card {
+    grid-template-rows: 75% 25%;
+    grid-template-columns: 40% 60%;
+    margin: 1rem 0 0 1rem;
+}
+
+.movie-picture {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.movie-description {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.action-buttons {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+}
+
+.movie-card-0 {
+    grid-template-rows: 75% 25%;
+    grid-template-columns: 40% 60%;
+}
+
+.movie-picture-large {
+    grid-column: 1 / span 1;
+    grid-row: 1;
+}
+
+.movie-description-large {
+    grid-column: 2 / span 1;
+    grid-row: 1;
+}
+
+.featured-buttons {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+}
+
+.large-card {
+    padding: 0 1rem 0 1rem;
+}
+
+.mini-card {
+    padding-right: 1rem;
+    padding-left: 0rem;
+}
+
 }
 
 /*---------------------*/
@@ -497,7 +568,11 @@ h2 {
     margin-left: .5rem;
 }
 
-
+.site-links-container {
+    position: absolute;
+    padding-top: 5rem;
+    padding-right: 4rem;
+}
 
 }
 
