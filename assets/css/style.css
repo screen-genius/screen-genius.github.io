@@ -41,3 +41,7 @@ div label input {
  .card {
      width:250px;
  }
+ .date {
+    font-weight: lighter;
+    font-size: 0.8em;
+ }

@@ -2,6 +2,9 @@ var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
 var genres = [];
+var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
+var sortByOptions = ["popularity.asc", "popularity.desc", "revenue.asc", "revenue.desc", "vote_average.asc", "vote_average.desc", "vote_count.asc", "vote_count.desc"];
+
 
 
 function loadGenres() {
@@ -28,74 +31,90 @@ function loadGenres() {
             genreItemHolderEl.appendChild(genreItemLabelEl);
             genreAreaEl.appendChild(genreItemHolderEl); 
 
-            searchButtonEl.addEventListener("click", fetchMovies);
-
-            
+            searchButtonEl.addEventListener("click", fetchMovies);            
         }
     })
 }
 
-function fetchMovies() {
-    let firstID = true;
-    let moreGenres = "";
-    let finalGenre = "";
+function setPageNo(genreNos){
+    console.log(genreNos);
+    let pageNo;
+    fetch(tmdbCall+genreNos)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+         console.log(data);
+        if (data.results.length === 0) {
+            alert("Sorry too many genres. Try again.");
+        } else {         
+            console.log("total pages: " + data.total_pages);
+            pageNo = Math.ceil(Math.random()*data.total_pages);
+            console.log("page number: " + pageNo);
+            fetchMovieDetails(pageNo, genreNos)
+        }
+    })
+}
+
+function collectGenres() {
+    let theGenres = []
     for (var i = 0; i < genres.length; i++) {
         let genreCheck = document.getElementById(genres[i].id) ;
         if (genreCheck.checked) {
-            finalGenre+= moreGenres + genres[i].id;
+            theGenres.push(genres[i].id);
             genreCheck.checked = false;
-            if (firstID === true) {
-                firstID=false;
-                moreGenres = ",";
-            }
         }
     }
-   fetch("https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&sort_by=vote_average.desc&with_genres="+finalGenre)
-   .then(function(response){
-       return response.json();
+    return theGenres.toString();
+}
+
+function fetchMovies() {
+ 
+    let finalGenre = collectGenres();
+    setPageNo(finalGenre);
+
+}
+
+function fetchMovieDetails(pageNo, finalGenre) {
+    let sortBy = Math.floor(Math.random()+sortByOptions.length);
+    fetch(tmdbCall+finalGenre+"&page="+pageNo+"&sort_by"+sortBy)
+    .then(function(response){
+        return response.json();
     })
     .then(function(data){
-        console.log(data);
         let results = data.results;
-        if (results.length === 0) {
-            alert("Sorry too many genres. Try again.");
-        } else {
-            console.log(results.length);
-            let moviesPicked = [];
-            let includedGenresArray = [];
-            let movieObject;
-            let randomMovieNum;
-            let loopLength = 3;
-            if (results.length < loopLength) {
-                loopLength = results.length;
-            }
-            for (var i = 0; i < 3; i++) {
-                randomMovieNum = Math.floor(Math.random()*results.length);
-                for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
-                    for (k = 0; k < genres.length; k++) {
-                        if (results[randomMovieNum].genre_ids[j]===genres[k].id){
-                            includedGenresArray.push(genres[k].name);
-                        }
+        let moviesPicked = [];
+        let includedGenresArray = [];
+        let movieObject;
+        let randomMovieNum;
+        let loopLength = 3;
+        if (results.length < loopLength) {
+            loopLength = results.length;
+        }
+        for (var i = 0; i < 3; i++) {
+            randomMovieNum = Math.floor(Math.random()*results.length);
+            for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+                for (k = 0; k < genres.length; k++) {
+                    if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+                        includedGenresArray.push(genres[k].name);
                     }
                 }
-                let includedGenres = includedGenresArray.join(", ");
-                includedGenresArray = [];
-                movieObject = {title: results[randomMovieNum].title, 
-                               poster: results[randomMovieNum].poster_path,
-                               overview: results[randomMovieNum].overview,
-                               genres: includedGenres,
-                               rating: results[randomMovieNum].vote_average
-                              };
-                moviesPicked.push(movieObject);
-                results.splice(randomMovieNum, 1)
             }
-            
-            displayMovies(moviesPicked);
-        }
-
+            let includedGenres = includedGenresArray.join(", ");
+            includedGenresArray = [];
+            movieObject = {title: results[randomMovieNum].title, 
+                            poster: results[randomMovieNum].poster_path,
+                            overview: results[randomMovieNum].overview,
+                            genres: includedGenres,
+                            rating: results[randomMovieNum].vote_average,
+                            date: results[randomMovieNum].release_date,
+                            tmdbId: results[randomMovieNum].id
+                            };
+            moviesPicked.push(movieObject);
+            results.splice(randomMovieNum, 1)
+        }        
+        displayMovies(moviesPicked);
     })
-
-
 }
 
 function displayMovies(mArray) {
@@ -107,10 +126,12 @@ function displayMovies(mArray) {
         let poster = mArray[i].poster;
         let overview = mArray[i].overview;
         let genres = mArray[i].genres;
+        let date = mArray[i].date.substring(0, 4);
         let posterURL = "./assets/images/noPoster.png"
         if (poster) {
             posterURL="https://image.tmdb.org/t/p/w500"+poster;      
         }
+        let tmdbId = mArray[i].tmdbId;
 
 
         // create card elements
@@ -136,11 +157,11 @@ function displayMovies(mArray) {
         mediaContentEl.setAttribute("class", "media-content");
         let titleEl = document.createElement("h3");
         titleEl.setAttribute("class", "title is-4");
-        titleEl.textContent = title;
+        titleEl.innerHTML = title + " <span class='date'>"+date+"</span>";
         mediaContentEl.appendChild(titleEl);
 
         let subtitleEl = document.createElement("h4");
-        subtitleEl.setAttribute("class", "subtitle is-6");
+        subtitleEl.setAttribute("class", "subtitle is-5");
         subtitleEl.textContent = genres;
         mediaContentEl.appendChild(subtitleEl);
         cardContentEl.appendChild(mediaContentEl);
