@@ -29,6 +29,12 @@ a:active {
     text-decoration: underline;
 }
 
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
 /*---------------------------*/
 /*      TOP PANEL ITEMS      */
 /*---------------------------*/
@@ -398,8 +404,8 @@ img {
 
 .site-links-container {
     position: absolute;
-    padding-top: 2.5rem;
-    padding-right: 2rem;
+    padding-top: 4.5rem;
+    padding-right: 1rem;
 }
 
 
@@ -570,8 +576,8 @@ h2 {
 
 .site-links-container {
     position: absolute;
-    padding-top: 5rem;
-    padding-right: 4rem;
+    padding-top: 4.5rem;
+    padding-right: 1rem;
 }
 
 }
@@ -582,6 +588,15 @@ h2 {
 
 @media screen and (max-width: 400px) {
 
+.links {
+    font-size: .75rem;
+    padding: .25;
+}
+
+.site-links-container {
+    padding-top: 5rem;
+    padding-right: 1rem;
+}
 
 .footer {
     display: none;
