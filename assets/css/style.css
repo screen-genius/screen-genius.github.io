@@ -586,7 +586,7 @@ h2 {
 /*      MEDIA 400      */
 /*---------------------*/
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 435px) {
 
 .links {
     font-size: .75rem;
