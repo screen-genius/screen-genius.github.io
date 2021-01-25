@@ -1,9 +1,34 @@
+.white {
+    color: white;
+}
+
 .margin {
     margin: 1rem;
 }
 
+.padding {
+    padding: 5rem;
+}
+
+.main-content {
+    margin-top: 10rem;
+}
+
 .hover:hover {
     box-shadow: 0 0 15px black;
+}
+
+.fixed {
+    display: absolute;
+    position: fixed;
+    z-index: 999;
+}
+
+.genre-btn {
+    padding: .25rem;
+    margin-bottom: .5rem;
+    color: white;
+    font-weight: bold;
 }
 
 

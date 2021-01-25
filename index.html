@@ -10,7 +10,7 @@
   <title>Screen Genius</title>
 </head>
 
-<body>
+<body class="has-background-grey-dark">
 
 <!-- GENRE BUTTONS
 genre-adventure
@@ -22,30 +22,35 @@ genre-fantasy
 genre-historical-->
 
 <!-- page contents-->
-<div class="tile is-ancestor">
-    <div class="tile is-parent is-vertical">
+<div class="tile is-ancestor has-background-grey-dark">
+    <div class="tile is-parent is-vertical  has-background-grey-dark">
 <!-- TOP TITLE BAR -->
-        <div class="tile is-parent is-12">
-            <div class="tile is-child box">
-                <nav class="navbar" role="navigation" aria-label="main navigation">
+
+        <div class="tile is-parent is-12 fixed has-background-grey-dark">
+            <div class="tile is-child">
+                <nav class="navbar has-background-grey-dark" role="navigation" aria-label="main navigation">
                   <div class="navbar-brand">
                     <a class="navbar-item" href="">
-                      <h1><B>SCREEN GENIUS</B></h1>
+                      <h1 class="has-text-white"><B>SCREEN GENIUS</B></h1>
                     </a>
                 
                   </div>
                 
                   <div id="navbarBasicExample" class="navbar-menu">
                     <div class="navbar-start">
-                      <a href="#search" class="navbar-item">
+                      <a href="#search" class="navbar-item has-text-white">
                         Search
                       </a>
+
+                      <a href="#results" class="navbar-item has-text-white">
+                        Results
+                      </a>
                 
-                      <a href="#favourites" class="navbar-item">
+                      <a href="#favourites" class="navbar-item has-text-white">
                         Favourites
                       </a>
 
-                      <a href="#watchlist" class="navbar-item">
+                      <a href="#watchlist" class="navbar-item has-text-white">
                         Watchlist
                       </a>
                 
@@ -57,33 +62,35 @@ genre-historical-->
             </div>
         </div>
 
-        <div class="tile is-ancestor">
+        <div class="tile is-ancestor has-background-grey-dark padding main-content">
 <!-- LEFT PANEL OF PAGE (search bar and genre selection)-->
 
-            <div class="tile is-parent is-3">
-                <div class="tile is-child box is-vertical">
-                    <div id="search" class="tile is-child is-primary box"><!--SEARCH-->
+            <div class="tile is-parent is-3 margin">
+                <div class="tile is-child is-vertical">
+                    <div id="search" class="tile is-child is-primary box has-background-grey-dark"><!--SEARCH-->
                         <div class="content">
-                            <h3>MOVIE SEARCH</h3>
+                            <h3 class="has-text-white">MOVIE SEARCH</h3>
                             <input type="text" class="search-bar"></input>
                             <button type="submit" class="submit">SEARCH</button>
                         </div>
                         <div class="content">
-                            <h3>SEARCH BY MOVIE GENRES</h3>
-                            <button class="genre-adventure genre-btn">Adventure</button>
-                            <button class="genre-action genre-btn">Action</button>
-                            <button class="genre-comedy genre-btn">Comedy</button>
-                            <button class="genre-crime genre-btn">Crime</button>
-                            <button class="genre-drama genre-btn">Drama</button>
-                            <button class="genre-fantasy genre-btn">Fantasy</button>
-                            <button class="genre-historical genre-btn">Historical</button>
+                            <h3 class="has-text-white">SEARCH BY MOVIE GENRES</h3>
+                            <div class="tile is-parent is-vertical">
+                                <button class="genre-btn has-background-grey-darker">Adventure</button>
+                                <button class="genre-btn has-background-grey-darker">Action</button>
+                                <button class="genre-btn has-background-grey-darker">Comedy</button>
+                                <button class="genre-btn has-background-grey-darker">Crime</button>
+                                <button class="genre-btn has-background-grey-darker">Drama</button>
+                                <button class="genre-btn has-background-grey-darker">Fantasy</button>
+                                <button class="genre-btn has-background-grey-darker">Historical</button>
+                            </div>
                         </div>
                     </div>
-                    <div id="search" class="tile is-child is-primary box"><!--FOOTER-->
-                        <h2>
+                    <div id="search" class="tile is-child is-primary box  has-background-grey-dark"><!--FOOTER-->
+                        <h2 class="has-text-white">
                             Term of Use
                           </h2>
-                          <h2>
+                          <h2 class="has-text-white">
                             Follow Us
                           </h2>
                     </div>
@@ -94,7 +101,10 @@ genre-historical-->
 
             <div class="tile is-parent is-9">
                 <div class="tile is-child is-vertical">
-                    <div class="tile is-child is-vertical"><!--RESULTS-->
+                    <div id="results" class="tile is-child is-vertical"><!--RESULTS-->
+                        <div class="content">
+                            <h2 class="has-text-white">Search Results</h2>
+                        </div>
                         <div class="tile is-parent is-12"><!--LARGE DISPLAY-->
                             <div class="tile is-child is-12 box has-background-dark hover has-text-white"><!--LARGE TILE-->
                                 <div class="tile content"><!--LARGE PICTURE-->
@@ -204,7 +214,10 @@ genre-historical-->
                             </div>
                         </div>
                     </div><!--END OF RESULTS-->
-                    <div id="favourites" class="tile is-child is-vertical box"><!--FAVOURITES-->
+                    <div id="favourites" class="tile is-child is-vertical"><!--FAVOURITES-->
+                        <div class="content">
+                            <h2 class="has-text-white">Favourites</h2>
+                        </div>
                         <div class="tile is-parent is-12"><!--SMALL DISPLAY-->
                             <div class="tile is-parent is-4"><!--SMALL TILE 1-->
                                 <div class="card hover has-background-dark has-text-white">
@@ -289,7 +302,10 @@ genre-historical-->
                             </div>
                         </div>
                     </div><!--END OF FAVOURITES-->
-                    <div id="watchlist" class="tile is-child is-vertical box"><!--WATCHLIST-->
+                    <div id="watchlist" class="tile is-child is-vertical"><!--WATCHLIST-->
+                        <div class="content">
+                            <h2 class="has-text-white">Watchlist</h2>
+                        </div>
                         <div class="tile is-parent is-12"><!--SMALL DISPLAY-->
                             <div class="tile is-parent is-4"><!--SMALL TILE 1-->
                                 <div class="card hover has-background-dark has-text-white">
@@ -386,7 +402,3 @@ genre-historical-->
 </body>
 
 </html>
-
-<div class="footer">
-
-</div>
