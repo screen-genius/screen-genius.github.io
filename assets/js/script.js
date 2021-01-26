@@ -1,4 +1,3 @@
-
 var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
@@ -14,8 +13,13 @@ function loadGenres() {
     })
     .then(function(data){
         genres = data.genres;
+        let buttonHolderEl;
         for (var i = 0; i < genres.length; i++) {
             let genreItemHolderEl = document.createElement("div");
+            if (i%2 == 0) {
+                buttonHolderEl = document.createElement("div");
+                buttonHolderEl.setAttribute("class", "button-holder");
+            }
             genreItemHolderEl.setAttribute("class", "ck-button");
             let genreItemLabelEl = document.createElement("label");
             let genreItemEl = document.createElement("input");
@@ -28,7 +32,12 @@ function loadGenres() {
             genreItemLabelEl.appendChild(genreItemTextEl);
 
             genreItemHolderEl.appendChild(genreItemLabelEl);
-            genreAreaEl.appendChild(genreItemHolderEl); 
+            if (i%2 == 1 || i == genres.length-1) {
+                buttonHolderEl.appendChild(genreItemHolderEl); 
+                genreAreaEl.appendChild(buttonHolderEl);
+            } else {
+                buttonHolderEl.appendChild(genreItemHolderEl);
+            }
 
             searchButtonEl.addEventListener("click", fetchMovies);            
         }
@@ -62,7 +71,8 @@ function setPageNo(genreNos){
 function collectGenres() {
     let theGenres = []
     for (var i = 0; i < genres.length; i++) {
-        let genreCheck = document.getElementById(genres[i].id) ;
+        let genreCheck = document.getElementById(genres[i].id);
+        console.log(i+": ", genreCheck);
         if (genreCheck.checked) {
             theGenres.push(genres[i].id);
             genreCheck.checked = false;
@@ -139,38 +149,40 @@ function displayMovies(mArray) {
 
         // create card elements
         let cardEl = document.createElement("div");
-        cardEl.setAttribute("class", "card");
+        cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
+
 
         //add poster image
         let cardImageEl = document.createElement("div");
-        cardImageEl.setAttribute("class", "card-image");
+        cardImageEl.setAttribute("class", "card-image is-3");
         let figureEl = document.createElement("figure")
-        figureEl.setAttribute("class", "image is-3by4");
+        figureEl.setAttribute("class", "image");
         let posterEl = document.createElement("img");
         posterEl.setAttribute("src", posterURL);
-        //posterEl.setAttribute("alt", "");
+        posterEl.setAttribute("alt", "Poster " + title);
+        //posterEl.setAttribute("class", "image");
         figureEl.appendChild(posterEl);
         cardImageEl.appendChild(figureEl);
         cardEl.appendChild(cardImageEl);
 
         // add text content
         let cardContentEl = document.createElement("div");
-        cardContentEl.setAttribute("class", "card-content");
+        cardContentEl.setAttribute("class", "card-content is-9");
         let mediaContentEl = document.createElement("div");
         mediaContentEl.setAttribute("class", "media-content");
         let titleEl = document.createElement("h3");
-        titleEl.setAttribute("class", "title is-4");
-        titleEl.innerHTML = title + " <span class='date'>"+date+"</span>";
+        titleEl.setAttribute("class", "title is-2 has-text-weight-bold has-text-white");
+        titleEl.innerHTML = title + " <span class='date has-text-weight-light has-text-white'>"+date+"</span>";
         mediaContentEl.appendChild(titleEl);
 
         let subtitleEl = document.createElement("h4");
-        subtitleEl.setAttribute("class", "subtitle is-5");
+        subtitleEl.setAttribute("class", "subtitle is-5 has-text-white");
         subtitleEl.textContent = genres;
         mediaContentEl.appendChild(subtitleEl);
         cardContentEl.appendChild(mediaContentEl);
 
         let contentEl = document.createElement("div");
-        contentEl.setAttribute("class", "content");
+        contentEl.setAttribute("class", "content has-text-grey-light");
         contentEl.textContent = overview;
         cardContentEl.appendChild(contentEl);
 

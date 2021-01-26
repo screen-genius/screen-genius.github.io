@@ -6,19 +6,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <!--link rel="stylesheet" href="./assets/css/bulma.css" /-->
   <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Screen Genius</title>
 
 </head>
 
 
-<body class="has-background-grey-dark">
+<body>
 
 
 <!-- page contents-->
-<div class="tile is-ancestor has-background-grey-dark content">
-    <div class="tile is-parent is-vertical  has-background-grey-dark">
+<div class="tile is-ancestor content">
+    <div class="tile is-parent is-vertical">
 <!-- TOP TITLE BAR -->
 
 
@@ -26,13 +27,13 @@
             <div class="tile is-child">
                 <div class="tile is-parent">
                     <div class="tile is-child is-6">
-                        <h1 class="has-text-white"><B>SCREEN GENIUS</B></h1>
+                        <h1 class="has-text-white">SCREEN GENIUS</h1>
                     </div>
                     <div class="tile is-parent is-6">
                         <a href="#search" class="has-text-white margin-top text-shadow">
                             Search
                         </a>
-                        <a href="#results" class="has-text-white margin-top text-shadow">
+                        <a href="#movie-display" class="has-text-white margin-top text-shadow">
                             Results
                         </a>
                         <a href="#favourites" class="has-text-white margin-top text-shadow">
@@ -47,22 +48,25 @@
             </div>
         </div>
 
-        <div class="tile is-ancestor has-background-grey-dark padding main-content">
+        <div class="tile is-ancestor main-content padding pl-5">
 <!-- LEFT PANEL OF PAGE (search bar and genre selection)-->
 
 
-            <div class="tile is-parent is-3 margin">
-                <div class="tile is-child is-vertical">
-                    <div id="search" class="tile is-child is-primary box has-background-grey-dark"><!--SEARCH-->
-                        <div class="content">
+            <div class="tile is-parent is-3">
+                <div class="is-child is-vertical">
+                    <div class="tile is-child is-primary box has-background-link-dark"><!--SEARCH-->
+                        <!--div class="content">
                             <h3 class="has-text-white">MOVIE SEARCH</h3>
                             <input type="text" class="search-bar"></input>
                             <button type="submit" class="submit">SEARCH</button>
-                        </div>
+                        </div-->
                         <div class="content">
                             <h3 class="has-text-white">SEARCH BY MOVIE GENRES</h3>
                             <div id="genres-list" class="tile is-parent is-vertical">
                                
+                            </div>
+                            <div class="tile is-parent is-vertical">
+                                <button id="search" class="button block">Search</button>
                             </div>
                         </div>
                     </div>
@@ -82,296 +86,8 @@
 
             <div class="tile is-parent is-9">
                 <div class="tile is-child is-vertical">
-                    <div id="results" class="tile is-child is-vertical"><!--RESULTS-->
-                        <div class="content">
-                            <h2 class="has-text-white padding">Search Results</h2>
-                        </div>
-                        <div class="tile is-parent is-12"><!--LARGE DISPLAY-->
-                            <div class="tile is-child is-12 box has-background-dark hover has-text-white"><!--LARGE TILE-->
-                                <div class="card-image"><!--LARGE PICTURE-->
-                                    <img class="block" src="./assets/images/avengers1.jpg">
-                                </div>
-                                <div class="card-content"><!--LARGE DESCRIPTION-->
-                                    <ul>
-                                        <li>
-                                            <b>Title:</b>
-                                        </li>
-                                        <li>
-                                            <b>Rating:</b>
-                                        </li>
-                                        <li>
-                                            <b>Sypnosis:</b>
-                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                    <button class="button block">Add To Favourites</button>
-                                    <button class="button block">Add To Watchlist</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tile is-parent is-12"><!--SMALL DISPLAY-->
-                            <div class="tile is-parent is-4"><!--SMALL TILE 1-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 2-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 3-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="movie-display" class="box is-child is-vertical has-background-primary p-5radius-large"><!--RESULTS-->
                     </div><!--END OF RESULTS-->
-                    <div id="favourites" class="tile is-child is-vertical"><!--FAVOURITES-->
-                        <div class="content">
-                            <h2 class="has-text-white padding">Favourites</h2>
-                        </div>
-                        <div class="tile is-parent is-12"><!--SMALL DISPLAY-->
-                            <div class="tile is-parent is-4"><!--SMALL TILE 1-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Remove From Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 2-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Remove From Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 3-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Remove From Favourites</button>
-                                        <button class="button block">Add To Watchlist</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--END OF FAVOURITES-->
-                    <div id="watchlist" class="tile is-child is-vertical"><!--WATCHLIST-->
-                        <div class="content">
-                            <h2 class="has-text-white padding">Watchlist</h2>
-                        </div>
-                        <div class="tile is-parent is-12"><!--SMALL DISPLAY-->
-                            <div class="tile is-parent is-4"><!--SMALL TILE 1-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Remove From Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 2-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVAOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Remove From Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tile is-parent is-4"><!--SMALL TILE 3-->
-                                <div class="card hover has-background-dark has-text-white">
-                                    <div class="card-image margin"><!--SMALL PICTURE-->
-                                        <figure class="image is-4by8">
-                                            <img class="block" src="./assets/images/avengers1.jpg">
-                                        </figure>
-                                    </div>
-                                    <div class="card-content"><!--SMALL DESCRIPTION-->
-                                        <ul>
-                                            <li>
-                                                <b>Title:</b>
-                                            </li>
-                                            <li>
-                                                <b>Rating:</b>
-                                            </li>
-                                            <li>
-                                                <b>Sypnosis:</b>
-                                                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="card-content"><!--FAVOURITES AND WATCHLIST BUTTON-->
-                                        <button class="button block">Add To Favourites</button>
-                                        <button class="button block">Remove From Watchlist</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--END OF WATCHLIST-->
                 </div>
             </div><!--END OF MAIN BODY-->
         </div>
