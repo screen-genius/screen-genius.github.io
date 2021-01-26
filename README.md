@@ -14,36 +14,37 @@ This is your home for new movies, and forgotten favorites.
 
 
 
-## Table of Contents✨
+# Table of Contents✨
 * [Overview](#Overview)
 * [Technologies](#Technologies)
 * [Status](#Status)
 * [Screenshot](#Screenshot)
-* [powerpointpdf](#PowerPoint)
+* [PowerPoint](#PowerPoint)
 
 # Overview
 This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people.
 This website requires basic user input with genre selection buttons.
+
 It will then use our two APIS;
 <a href="https://developers.themoviedb.org/3/getting-started/introduction">The Movie Database Api</a>,
+This api will pull from 100,000's movies based on one or a combination of multiple genres. We have narrowed down our search to the following parameters t set to pull movies with rating of 7 or higher, that has been voted on by more than 100 people, but less than a 1000. The reason behind this is we want to find the "hidden gems" of the entertainment industry. From this api we get the "" 
 &
-<a href="https://rapidapi.com/utelly/api/utelly">Rapid Api/Utelly</a>
+
+<a href="https://rapidapi.com/utelly/api/utelly">Rapid Api/Utelly</a> This api uses the "" Id to pull information about the title, we had to use the id as sometimes the title alone would not matchup to the first api call. By searching with ID we prevent any mishapps. This API gives us the streaming service that you can view this show or movie on. 
 
 
-
-The movies and shows displayed will only be titles that had a high viewer rating, and low viewer count "hidden gems".  These movies/shows will be randomized and portray a movie
- poster with an option to select more information, add to their watchlist, or rate the movie with a thumbs up or down. This information will be saved on local storage and will help to narrow down selections for the website to display. If a user selects more information, it will open a new page that shows where they can view it (selected streaming services with a link) and a trailer.
-Implement an e petition system for those who would like to see a title on one streaming service be available on a different one such as Crave to Netflix. We could also implement an “add” system that would show an add every time the user refreshes the page or before it gives the user the movie options. Possibly create a paid version that would give the user 5 options no adds. 
 
 
 # Technologies
-Project created with:
-* HTML
+As we were limited by not usuing boot-strap we used;
+* HTML 
 * CSS
 * JS
 
 # Status
-To view finished project please visit the below.
+We are currently working on adding new features to Screen Genius! These feature include better suggested titles based on user input. 
+A seperate e-petition page that will allow the user to request a streaming service to add a movie or show to their library.
+
 
 
 # Screenshot
