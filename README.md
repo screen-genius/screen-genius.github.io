@@ -17,9 +17,9 @@ This is your home for new movies, and forgotten favorites.
 ## Table of Contents✨
 * [Overview](#Overview)
 * [Technologies](#Technologies)
-* [Status](#status)
-* [Screenshot](#screenshot)
-* [powerpointpdf](#powerpoint)
+* [Status](#Status)
+* [Screenshot](#Screenshot)
+* [powerpointpdf](#PowerPoint)
 
 # Overview
 This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people.
