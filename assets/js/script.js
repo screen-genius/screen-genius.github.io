@@ -27,7 +27,7 @@ fetch(apiName, {
     var resultUrl="";
     var noOfMovies=data.results.length;
     console.log(noOfMovies);
-    var resultsToShow=[['nameResult'], ['photo'], ['urlOf'],['availableloc']];
+    var resultsToShow=[['nameResult',""], ['photo',"" ], ['urlOf', ""],['availableloc',""]];
     if(noOfMovies<3){
         n=noOfMovies;
     } else{
@@ -58,8 +58,8 @@ console.log(resultsToShow);
 
 //getting attributes using ID
 
-var imdbCode="tt0974015"; //enter the id
-var imdbCodeurl = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id="+imdbCode+"&source=imdb&country=ca";
+var imdbCode="278"; //enter the id
+var imdbCodeurl = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+imdbCode+"&source=tmdb&country=ca";
 fetch(imdbCodeurl, {
     "method": "GET",
     "headers": {
@@ -82,7 +82,7 @@ fetch(imdbCodeurl, {
 function displayMovieAttrImdb(data){
     console.log(data);
 
-    var movieNoArray =[['urlOfMovie'], ['locationMovie']];
+    var movieNoArray =[['urlOfMovie', ""], ['locationMovie', ""]];
     var movieName=data.collection.name;
     var moviePic=data.collection.picture;
 
@@ -104,4 +104,4 @@ function displayMovieAttrImdb(data){
 
 
 // when the user searches the search should start with var movieName="friends";
-//once the search is complete the array resultsToShow has the results. use it to show on html. 3 results are shown.
+//once the search is complete the array resultsToShow has the results. use it to show on html. 3 results are shown. 
