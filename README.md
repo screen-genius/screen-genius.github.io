@@ -2,7 +2,10 @@
 
 
 # <a href="https://screen-genius.github.io/">🍿Welcome to Screen Genius!🍿</a>
-This is your home for new movies, and forgotten favorites.
+This is your home for new movies, and forgotten favorites.This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people. So stop scrolling and save yourself some time!
+<iframe src="https://giphy.com/embed/63I6FXZTXks2A" width="326" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/transparent-63I6FXZTXks2A">via GIPHY</a></p>
+
+
 
 # Contributors
 
@@ -22,9 +25,7 @@ This is your home for new movies, and forgotten favorites.
 * [PowerPoint](#PowerPoint)
 
 # Overview
-This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people.
 This website requires basic user input with genre selection buttons.
-
 It will then use our two APIS;
 <a href="https://developers.themoviedb.org/3/getting-started/introduction">The Movie Database Api</a>,
 This api will pull from 100,000's movies based on one or a combination of multiple genres. We have narrowed down our search to the following parameters t set to pull movies with rating of 7 or higher, that has been voted on by more than 100 people, but less than a 1000. The reason behind this is we want to find the "hidden gems" of the entertainment industry. From this api we get the "TMDB ID" 
