@@ -18,7 +18,6 @@ function loadGenres() {
             let genreItemHolderEl = document.createElement("div");
             genreItemHolderEl.setAttribute("class", "ck-button");
             let genreItemLabelEl = document.createElement("label");
-
             let genreItemEl = document.createElement("input");
             genreItemEl.setAttribute("type", "checkbox");
             genreItemEl.setAttribute("value", genres[i].id)
