@@ -6,6 +6,10 @@
     margin: 1rem;
 }
 
+.margin-top {
+    margin: .2rem;
+}
+
 .padding {
     padding: 5rem;
 }
@@ -16,6 +20,10 @@
 
 .hover:hover {
     box-shadow: 0 0 15px black;
+}
+
+.text-shadow:hover {
+    text-shadow: 0 0 5px black;
 }
 
 .fixed {
