@@ -27,10 +27,10 @@ This website requires basic user input with genre selection buttons.
 
 It will then use our two APIS;
 <a href="https://developers.themoviedb.org/3/getting-started/introduction">The Movie Database Api</a>,
-This api will pull from 100,000's movies based on one or a combination of multiple genres. We have narrowed down our search to the following parameters t set to pull movies with rating of 7 or higher, that has been voted on by more than 100 people, but less than a 1000. The reason behind this is we want to find the "hidden gems" of the entertainment industry. From this api we get the "" 
+This api will pull from 100,000's movies based on one or a combination of multiple genres. We have narrowed down our search to the following parameters t set to pull movies with rating of 7 or higher, that has been voted on by more than 100 people, but less than a 1000. The reason behind this is we want to find the "hidden gems" of the entertainment industry. From this api we get the "TMDB ID" 
 &
 
-<a href="https://rapidapi.com/utelly/api/utelly">Rapid Api/Utelly</a> This api uses the "" Id to pull information about the title, we had to use the id as sometimes the title alone would not matchup to the first api call. By searching with ID we prevent any mishapps. This API gives us the streaming service that you can view this show or movie on. 
+<a href="https://rapidapi.com/utelly/api/utelly">Rapid Api/Utelly</a> This api uses the "TMDB" Id to pull information about the title, we had to use the id as sometimes the title alone would not matchup to the first api call. By searching with ID we prevent any mishapps. This API gives us the streaming service that you can view this show or movie on. 
 
 
 
