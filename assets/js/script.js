@@ -299,5 +299,3 @@ function displayMovieAttrImdb(data){
 }
 
 
-// when the user searches the search should start with var movieName="friends";
-//once the search is complete the array resultsToShow has the results. use it to show on html. 3 results are shown. 
