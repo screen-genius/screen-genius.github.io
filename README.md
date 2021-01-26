@@ -19,6 +19,7 @@ This is your home for new movies, and forgotten favorites.
 * [Technologies](#Technologies)
 * [Status](#status)
 * [Screenshot](#screenshot)
+* [powerpointpdf](#powerpoint)
 
 # Overview
 This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people.
@@ -47,3 +48,5 @@ To view finished project please visit the below.
 
 # Screenshot
 
+# Powerpoint
+[Screen-buddy.pdf](https://github.com/screen-genius/screen-genius.github.io/files/5875611/Screen-buddy.pdf)
