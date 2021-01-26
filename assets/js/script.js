@@ -1,3 +1,4 @@
+
 var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
@@ -181,3 +182,4 @@ function displayMovies(mArray) {
 }
 
 loadGenres();
+

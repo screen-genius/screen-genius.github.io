@@ -1,39 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screen Genius</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="assets/css/style.css" />
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Screen Genius</title>
+
 </head>
+
 <body>
-    <nav>
-        <h1>Screen Genius</h1>       
-    </nav>
 
-    <div class="section">
-        <div class="container">
-            <div class="columns">
-                <div>
-                    <div id="genres-list" class="column is-3">
-                        <h2>Genres</h2>
-                    </div>
-                    <div class="search-button">
-                        <button class="button is-primary" id="search">
-                            Search
-                        </button>
-                    </div>
+
+<!-- GENRE BUTTONS
+genre-adventure
+genre-adventure
+genre-comedy
+genre-crime
+genre-drama
+genre-fantasy
+genre-historical-->
+
+<!-- page contents-->
+<div class="hero body-grid">
+
+<!-- LEFT PANEL OF PAGE (search bar and genre selection)-->
+    <div class="grid-1">
+        <div id="search-results" class="left-panel">
+                <h3>MOVIE SEARCH</h3>
+            <input type="text" class="search-bar"></input>
+            <button type="submit" class="submit">SEARCH</button>
+                <div class="movie-genres">
+                    <h3>SEARCH BY MOVIE GENRES</h3>
+                    <button class="genre-adventure genre-btn">Adventure</button>
+                    <button class="genre-action genre-btn">Action</button>
+                    <button class="genre-comedy genre-btn">Comedy</button>
+                    <button class="genre-crime genre-btn">Crime</button>
+                    <button class="genre-drama genre-btn">Drama</button>
+                    <button class="genre-fantasy genre-btn">Fantasy</button>
+                    <button class="genre-historical genre-btn">Historical</button>
+
                 </div>
+        </div><!-- end of left-panel-->
+    </div><!--end of grid 2 div-->
 
-                <div id="movie-display" class="column is-9">
-                    <h2>Movies</h2>
+    <div class="grid-2">
+        <!--TOP PANEL OF PAGE-->
+        <div class="top-panel-grid">
+            <div class="top-panel">
+                <div class="main-title">Screen Genius</div>
+                <div class="site-links-container">
+                    <ul class="ul-container">
+                        <li class="links">
+                            <a href="#search-results">Search</a>
+                        </li>
+                        <li class="links">
+                            <a href="#recent-results">Recently Searched</a>
+                        </li>
+                        <li class="links">
+                            <a href="#watchlist-results">Watchlist</a>
+                        </li>
+                        <li class="links">
+                            <a href="#favourites-results">Favourites</a>
+                        </li>
+                    </ul>
+
                 </div>
+            </div><!--end of top panel div-->
+        </div><!--end of top panel sticky-->
+    </div><!--end of grid 2-->
 
-            </div>
+    <div class="grid-3">
+<!-- MAIN BODY TO DISPLAY SEARCH RESULTS AND FAVOURITES LIST-->
+            <div class="content">
+                <div class="main-body">
+<!-- SEARCH LIST-->
+                    <div id="recent-results" class="movie-container">
+                        <h2>MOVIE SEARCH LIST</h2>
+                        <div class="movie-results">
+<!-- SEARCH RESULTS-->
+                            <div class="large-card"><!--LARGE CARD (grid1)-->
+<!--MOVIE CARD 0 LARGE-->
+                                    <div class="movie-card-0">
+                                        <div class="movie-picture-large">
+                                            <img class="block" src="./assets/images/avengers1.jpg">
+                                        </div>     
+                                        <div class="movie-description-large">
+                                            <ul>
+                                                <li>
+                                                    <b>Title:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Rating:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Sypnosis:</b>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                                </li>
+                                            </ul>
+                                        </div><!--end of movie-description div-->
+                                        <div class="featured-buttons block">
+                                            <button class="button block">Add To Favourites</button>
+                                            <button class="button block">Add To Watchlist</button>
+                                        </div>
+                                    </div><!--end of movie-card div-->
+                            </div><!--end of large card div-->
+<!--MOVIE CARD 0 SMALL-->
+                            <div class="mini-card"> <!-- MINI CARD (grid2)-->
+                                <div class="inline-block-1">
+                                    <div class="movie-card">
+                                        <div class="movie-picture">
+                                            <img class="block" src="./assets/images/avengers1.jpg">
+                                        </div>     
+                                        <div class="movie-description">
+                                            <ul>
+                                                <li>
+                                                    <b>Title:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Rating:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Sypnosis:</b>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                                </li>
+                                            </ul>
+                                        </div><!--end of movie-description div-->
+                                            <div class="action-buttons block">
+                                                <button class="button block">Add To Favourites</button>
+                                                <button class="button block">Add To Watchlist</button>
+                                            </div>
+                                    </div><!--end of movie-card div-->
+                                </div><!--end inline block 1 div-->
+                                <div class="inline-block-2">
+                                    <div class="movie-card">
+                                        <div class="movie-picture">
+                                            <img class="block" src="./assets/images/avengers1.jpg">
+                                        </div>     
+                                        <div class="movie-description">
+                                            <ul>
+                                                <li>
+                                                    <b>Title:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Rating:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Sypnosis:</b>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                                </li>
+                                            </ul>
+                                        </div><!--end of movie-description div-->
+                                            <div class="action-buttons block">
+                                                <button class="button block">Add To Favourites</button>
+                                                <button class="button block">Add To Watchlist</button>
+                                            </div>
+                                    </div><!--end of movie-card div-->
+                                </div><!--end inline block 2 div-->
+                                <div class="inline-block-3">
+                                    <div class="movie-card">
+                                        <div class="movie-picture">
+                                            <img class="block" src="./assets/images/avengers1.jpg">
+                                        </div>     
+                                        <div class="movie-description">
+                                            <ul>
+                                                <li>
+                                                    <b>Title:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Rating:</b>
+                                                </li>
+                                                <li>
+                                                    <b>Sypnosis:</b>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                                </li>
+                                            </ul>
+                                        </div><!--end of movie-description div-->
+                                            <div class="action-buttons block">
+                                                <button class="button block">Add To Favourites</button>
+                                                <button class="button block">Add To Watchlist</button>
+                                            </div>
+                                    </div><!--end of movie-card div-->
+                                </div><!--end inline block 3 div-->
+                            </div><!--end mini card div-->
+                        </div><!--end movie-results div-->
+                    </div><!--end of movie-container div-->
+                </div><!--end main-body div-->
 
-        </div>
-    </div>
-    <script src="assets/js/script.js"></script>
+<!-- FAVOURITES LIST -->
+                <div id="favourites-results" class="movie-container">
+                    <h2>FAVOURITES LIST</h2>
+                    <div class="mini-card"> <!-- MINI CARD (grid2)-->
+                        <div class="inline-block-1">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Add To Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 1 div-->
+                        <div class="inline-block-2">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Remove From Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 2 div-->
+                        <div class="inline-block-3">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Remove From Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 3 div-->
+                    </div><!--end mini card div-->
+                </div><!--end of favourites results-->
+
+ <!-- WATCHLIST LIST-->
+                <div id="watchlist-results" class="movie-container">
+                    <h2>WATCHLIST LIST</h2>
+                    <div class="mini-card"> <!-- MINI CARD (grid2)-->
+                        <div class="inline-block-1">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Remove From Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 1 div-->
+                        <div class="inline-block-2">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Remove From Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 2 div-->
+                        <div class="inline-block-3">
+                            <div class="movie-card">
+                                <div class="movie-picture">
+                                    <img class="block" src="./assets/images/avengers1.jpg">
+                                </div>     
+                                <div class="movie-description">
+                                    <ul>
+                                        <li>
+                                            <b>Title:</b>
+                                        </li>
+                                        <li>
+                                            <b>Rating:</b>
+                                        </li>
+                                        <li>
+                                            <b>Sypnosis:</b>
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat nisi mi, ut pharetra nunc gravida non. Etiam purus risus.</span>
+                                        </li>
+                                    </ul>
+                                </div><!--end of movie-description div-->
+                                    <div class="action-buttons block">
+                                        <button class="button block">Remove From Favourites</button>
+                                        <button class="button block">Add To Watchlist</button>
+                                    </div>
+                            </div><!--end of movie-card div-->
+                        </div><!--end inline block 3 div-->
+                    </div><!--end mini card div-->
+                </div><!--end of favourites results-->   
+            </div><!--end of content div-->
+    </div><!--end of grid 3-->
+
+
+</div><!--end of HERO div-->
+
+  <div class="footer">
+    <h2>
+      Term of Use
+    </h2>
+    <h2>
+      Follow Us
+    </h2>
+    <!-- Social Media Icons Go Here-->
+    <!--facebook-->
+    <a href="#" class="fa fa-facebook">
+    </a>
+
+    <!--Instagram-->
+    <a href="#" class="fa fa-instagram">
+    </a>
+
+    <!--Twitter-->
+    <a href="#" class="fa fa-twitter">
+      </a>
+
+    <!--Youtube-->
+    <a hef="#" class="fa fa-youtube"></a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- add the js file here -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="./assets/js/script.js"></script>
+
 </body>
+
 </html>
