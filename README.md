@@ -4,7 +4,7 @@
 # <a href="https://screen-genius.github.io/">🍿Welcome to Screen Genius!🍿</a>
 This is your home for new movies, and forgotten favorites.
 
-## Contributors 
+https://img.shields.io/badge/Contributors-6-brightgreen
 
 
 ## Table of Contents
