@@ -1,4 +1,53 @@
 
+div label input {
+    margin-right:100px;
+ }
+ body {
+     font-family:sans-serif;
+ }
+ 
+ .ck-button {
+     margin:4px;
+     background-color:#EFEFEF;
+     border-radius:16px;
+     border:1px solid #D0D0D0;
+     overflow:auto;
+     float:left;
+     width: 200px;
+ }
+ 
+ .ck-button:hover {
+     background:black;
+     color: white;
+ }
+ 
+ 
+ 
+ .ck-button label span {
+     text-align:center;
+     padding:3px 0px;
+     display:block;
+ }
+ 
+ .ck-button label input {
+     position:absolute;
+     top:-200px;
+ }
+ 
+ .ck-button input:checked + span {
+     background-color:#666;
+     color:#fff;
+ }
+
+ .card {
+     width:250px;
+ }
+ .date {
+    font-weight: lighter;
+    font-size: 0.8em;
+ }
+=======
+
 :root {
     --main-color: #252525;
     --second-color: #6930c3;
@@ -641,3 +690,4 @@ h2 {
     background: rgb(187,0,0);
 }
 }
+
