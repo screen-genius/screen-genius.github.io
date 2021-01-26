@@ -3,7 +3,6 @@ var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
 var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
-var sortByOptions = ["popularity.asc", "popularity.desc", "revenue.asc", "revenue.desc", "vote_average.asc", "vote_average.desc", "vote_count.asc", "vote_count.desc"];
 
 
 
@@ -37,23 +36,27 @@ function loadGenres() {
 }
 
 function setPageNo(genreNos){
-    console.log(genreNos);
+    moviedisplayEl.textContent = "";
     let pageNo;
-    fetch(tmdbCall+genreNos)
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data){
-         console.log(data);
-        if (data.results.length === 0) {
-            alert("Sorry too many genres. Try again.");
-        } else {         
-            console.log("total pages: " + data.total_pages);
-            pageNo = Math.ceil(Math.random()*data.total_pages);
-            console.log("page number: " + pageNo);
-            fetchMovieDetails(pageNo, genreNos)
-        }
-    })
+    for (var i = 0; i < 4; i++) {
+        console.log(i);
+        fetch(tmdbCall+genreNos)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            if (data.results.length === 0) {
+                alert("Sorry too many genres. Try again.");
+            } else {         
+                console.log("total pages: " + data.total_pages);
+                pageNo = Math.ceil(Math.random() * data.total_pages);
+                console.log("page number: " + pageNo);
+                console.log("total results: " + data.total_results + "  i: " + i);
+                fetchMovieDetails(pageNo, genreNos);
+            }
+        })
+        
+    }
 }
 
 function collectGenres() {
@@ -76,12 +79,15 @@ function fetchMovies() {
 }
 
 function fetchMovieDetails(pageNo, finalGenre) {
-    let sortBy = Math.floor(Math.random()+sortByOptions.length);
-    fetch(tmdbCall+finalGenre+"&page="+pageNo+"&sort_by"+sortBy)
+    console.log("fetchMovieDetails - page no: "+pageNo);
+    console.log(tmdbCall+finalGenre+"&page="+pageNo);
+    fetch(tmdbCall+finalGenre+"&page="+pageNo)
+
     .then(function(response){
         return response.json();
     })
     .then(function(data){
+        console.log(data);
         let results = data.results;
         let moviesPicked = [];
         let includedGenresArray = [];
@@ -91,34 +97,31 @@ function fetchMovieDetails(pageNo, finalGenre) {
         if (results.length < loopLength) {
             loopLength = results.length;
         }
-        for (var i = 0; i < 3; i++) {
-            randomMovieNum = Math.floor(Math.random()*results.length);
-            for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
-                for (k = 0; k < genres.length; k++) {
-                    if (results[randomMovieNum].genre_ids[j]===genres[k].id){
-                        includedGenresArray.push(genres[k].name);
-                    }
+        randomMovieNum = Math.floor(Math.random()*results.length);
+        for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+            for (k = 0; k < genres.length; k++) {
+                if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+                    includedGenresArray.push(genres[k].name);
                 }
             }
-            let includedGenres = includedGenresArray.join(", ");
-            includedGenresArray = [];
-            movieObject = {title: results[randomMovieNum].title, 
-                            poster: results[randomMovieNum].poster_path,
-                            overview: results[randomMovieNum].overview,
-                            genres: includedGenres,
-                            rating: results[randomMovieNum].vote_average,
-                            date: results[randomMovieNum].release_date,
-                            tmdbId: results[randomMovieNum].id
-                            };
-            moviesPicked.push(movieObject);
-            results.splice(randomMovieNum, 1)
-        }        
+        }
+        let includedGenres = includedGenresArray.join(", ");
+        includedGenresArray = [];
+        movieObject = {title: results[randomMovieNum].title, 
+                        poster: results[randomMovieNum].poster_path,
+                        overview: results[randomMovieNum].overview,
+                        genres: includedGenres,
+                        rating: results[randomMovieNum].vote_average,
+                        date: results[randomMovieNum].release_date,
+                        tmdbId: results[randomMovieNum].id
+                        };
+        moviesPicked.push(movieObject);
+        results.splice(randomMovieNum, 1)
         displayMovies(moviesPicked);
     })
 }
 
 function displayMovies(mArray) {
-    moviedisplayEl.textContent = "";
     for (var i = 0; i < mArray.length; i++){
         
         // create variables from array
