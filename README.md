@@ -3,7 +3,6 @@
 
 # <a href="https://screen-genius.github.io/">🍿Welcome to Screen Genius!🍿</a>
 This is your home for new movies, and forgotten favorites.This is a website that will deliver movies or shows to those who have seen everything. During COVID-19 our team has concluded this is a common problem amongst most people. So stop scrolling and save yourself some time!
-<iframe src="https://giphy.com/embed/63I6FXZTXks2A" width="326" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/transparent-63I6FXZTXks2A">via GIPHY</a></p>
 
 
 
@@ -15,6 +14,12 @@ This is your home for new movies, and forgotten favorites.This is a website that
 |![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01FFJX35EH-8853f39f557f-512)|![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01FG6JGREX-8aab55bc0e29-512)|![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01FX6ZRAD7-390208b29630-512)|![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01FGC3DAN7-41377ad60b24-512) |![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01F9AY18T0-ad94549a1f86-512)|![myImage](https://ca.slack-edge.com/T01EXTZCZ44-U01FHNVGXC3-5f0ad82ea6b5-512)|
 |<a href="https://github.com/e-p-n" target="_blank">Eric's Github</a>| <a href="https://github.com/Studzic"> Austin's Github</a>|<a href="https://github.com/AChung92">Alex's Github</a>|<a href="https://github.com/nchow18">Nathan's Github</a>|<a href="https://github.com/shamimimtiaz">Shamimim's Github| | ""|
 
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 # Table of Contents✨
