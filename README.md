@@ -1,3 +1,3 @@
 
 Welcome to Screen Genius!
-This is your home for new movies, and forgotten favorites 
+<div>This is your home for new movies, and forgotten favorites<div> 
