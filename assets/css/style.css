@@ -101,5 +101,10 @@
 /* bulma modification */
   .is-horizontal {
     display: flex;
+    align-items: center;
   }
   
+.icon-holder {
+  display: flex;
+
+}

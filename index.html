@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-  <!--link rel="stylesheet" href="./assets/css/bulma.css" /-->
   <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Screen Genius</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" >
@@ -91,6 +90,23 @@
         </div>
     </div>
 </div><!--end of PAGE CONTENT -->
+
+
+
+<div id="too-many-genres" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Too many genres</p>
+      </header>
+      <section class="modal-card-body">
+       No movies could be found with all of the genres you selected. Please choose fewer genres and try again.
+      </section>
+      <footer class="modal-card-foot">
+        <button id="genres-OK-button" class="button is-success">OK</button>
+      </footer>
+    </div>
+</div>
 
 <script src="./assets/js/script.js"></script>
 </body>
