@@ -97,6 +97,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 
 }
 
+// WATCH LIST AND FAVOURITES LIST CREATION STARTS
 var saveSearch = function() {
 	localStorage.setItem("movies", JSON.stringify(movies));
 }
@@ -133,7 +134,7 @@ var loadMovies = function() {
 	console.log(movies);
 
 
-} // END OF LOADMOVIES FUNCTION
+}
 
 var loadFavourites = function() {
 	//LOAD MOVIES IN FAVOURITES
@@ -210,7 +211,7 @@ var loadFavourites = function() {
 			favDisplayEl.appendChild(cardEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
-}//END OF loadFavourites
+}
 
 var loadWatchlist = function() {
 	//LOAD MOVIES IN WATCHLIST
@@ -287,7 +288,7 @@ var loadWatchlist = function() {
 			watchlistDisplayEl.appendChild(cardEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
-}//END OF loadFavourites
+}
 
 var saveFav = function(clicked_id) {
 	var favId = document.getElementById(clicked_id).id;
@@ -511,6 +512,8 @@ var saveWatch = function(clicked_id) {
 	}//end of for loop
 
 }
+
+// END OF WATCHLIST AND FAVOURITES LIST 
 
 function setPageNo(){
     let genreNos = collectGenres();
