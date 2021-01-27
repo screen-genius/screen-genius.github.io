@@ -52,7 +52,6 @@
                 <div class="is-child is-vertical">
                     <div class="tile is-child is-primary box has-background-link-dark"><!--SEARCH-->
                         <!--div class="content">
-
                             <h3 class="has-text-white">MOVIE SEARCH</h3>
                             <input type="text" class="search-bar"></input>
                             <button type="submit" class="submit">SEARCH</button>
@@ -81,11 +80,24 @@
  <!-- MAIN BODY TO DISPLAY SEARCH RESULTS AND FAVOURITES LIST-->
 
             <div class="tile is-parent is-9">
-                <div class="tile is-child is-vertical">
-                    <div id="movie-display" class="box is-child is-vertical has-background-primary p-5radius-large"><!--RESULTS-->
-                    </div><!--END OF RESULTS-->
-
+                <div class="tile is-parent is-vertical">
+                    <div class="tile is-child">
+                        <h1>Recently Searched</h1>
+                        <div id="movie-display" class="box is-child is-vertical has-background-primary p-5radius-large"><!--RESULTS-->
+                        </div><!--END OF RECENT SEARCH RESULTS-->
+                    </div>
+                    <div class="tile is-child is-vertical">
+                        <h1>Favourites List</h1>
+                        <div id="favourite-display" class="box is-child is-vertical has-background-primary p-5radius-large"><!--RESULTS-->
+                        </div><!--END FAVOURITES OF RESULTS-->
+                    </div>
+                    <div class="tile is-child is-vertical">
+                        <h1>Watch List</h1>
+                        <div id="watchlist-display" class="box is-child is-vertical has-background-primary p-5radius-large"><!--RESULTS-->
+                        </div><!--END FAVOURITES OF RESULTS-->
+                    </div>
                 </div>
+
             </div><!--END OF MAIN BODY-->
         </div>
     </div>
