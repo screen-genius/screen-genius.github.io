@@ -55,8 +55,17 @@ function loadGenres() {
     })
 }
 
+function resetVariables() {
+    countPages = 1;
+    pageNo1 = null;
+    pageNo2 = null;
+    pageNo3 = null;
+    pageNo4 = null;
+}
+
 //Pick a random movie from the page selected and get the Title, poster, release date, description, and where to watch information
 function fetchMovieDetails(pageNo, finalGenre) {
+ 
 
     fetch(tmdbCall+finalGenre+"&page="+pageNo)
 
@@ -83,7 +92,19 @@ function fetchMovieDetails(pageNo, finalGenre) {
             return response.json();
         })
         .then(function(utellyData){
-            countPages++;
+            if (countPages ===2 && !pageNo3) {
+                console.log("first")
+                resetVariables();
+                return;
+            } else if (countPages ===3 && !pageNo4) {
+                console.log("second")
+                resetVariables();
+                return;
+            }  else if (countPages === 4) {
+                console.log("third")
+                resetVariables();
+                return;
+            } 
    
             let locationInfo = utellyData.collection.locations;
  
@@ -133,36 +154,20 @@ function fetchMovieDetails(pageNo, finalGenre) {
     
     
             displayMovies(movieObject);
+            countPages++;
 
             if(pageNo2 && countPages === 2) {
                 fetchMovieDetails(pageNo2, genreNos);
-                if(totalResults == 2) {
-                    countPages = 1;
-                    pageNo1 = undefined;
-                    pageNo2 = undefined;
-                }
+             
             }
             if(pageNo3 && countPages === 3) {
-                fetchMovieDetails(pageNo3, genreNos)
-                if(totalResults == 3) {
-                    countPages = 1; 
-                    pageNo1 = undefined;
-                    pageNo2 = undefined;
-                    pageNo3 = undefined;
-                        
-                }
+                fetchMovieDetails(pageNo3, genreNos);
             }
+                
             if(pageNo4 && countPages === 4) {
-                fetchMovieDetails(pageNo4, genreNos)
-                if(totalResults == 4) {
-                    countPages = 1; 
-                    pageNo1 = undefined;
-                    pageNo2 = undefined;
-                    pageNo3 = undefined;
-                    pageNo4 = undefined;
-                        
-                }
-           }
+                fetchMovieDetails(pageNo4, genreNos);
+  
+            }
 
         })
         .catch(err => {
