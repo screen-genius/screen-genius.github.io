@@ -1,6 +1,17 @@
 var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
+var tooManyGenresModalEl = document.getElementById("too-many-genres");
+var genresOKButtonEl = document.getElementById("genres-OK-button");
+var pageNo1;
+var pageNo2;
+var pageNo3;
+var pageNo4;
+var totalResults;
+var countPages = 1;
+var genreNos;
+
+var results;
 var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
 
@@ -44,73 +55,162 @@ function loadGenres() {
     })
 }
 
+//Pick a random movie from the page selected and get the Title, poster, release date, description, and where to watch information
 function fetchMovieDetails(pageNo, finalGenre) {
+
     fetch(tmdbCall+finalGenre+"&page="+pageNo)
 
     .then(function(response){
         return response.json();
     })
     .then(function(data){
-        let results = data.results;
+        results = data.results;
 
-        let moviesPicked = [];
-        let includedGenresArray = [];
-        let movieObject;
-        let randomMovieNum;
-        randomMovieNum = Math.floor(Math.random()*results.length);
-        for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
-            for (k = 0; k < genres.length; k++) {
-                if (results[randomMovieNum].genre_ids[j]===genres[k].id){
-                    includedGenresArray.push(genres[k].name);
+        let randomMovieNum = Math.floor(Math.random()*results.length);
+
+
+        let tmdbID = results[randomMovieNum].id;
+
+        var tmdbCodeURL = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbID+"&source=tmdb&country=ca";
+        fetch(tmdbCodeURL, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
+                "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
+            }
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(function(utellyData){
+            countPages++;
+   
+            let locationInfo = utellyData.collection.locations;
+ 
+            let includedGenresArray = [];
+            let movieObject;
+            for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+                for (k = 0; k < genres.length; k++) {
+                    if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+                        includedGenresArray.push(genres[k].name);
+                    }
                 }
             }
-        }
-        let includedGenres = includedGenresArray.join(", ");
-        includedGenresArray = [];
-        movieObject = {title: results[randomMovieNum].title, 
-                        poster: results[randomMovieNum].poster_path,
-                        overview: results[randomMovieNum].overview,
-                        genres: includedGenres,
-                        rating: results[randomMovieNum].vote_average,
-                        date: results[randomMovieNum].release_date,
-                        tmdbId: results[randomMovieNum].id
-                        };
-        moviesPicked.push(movieObject);
-        displayMovies(moviesPicked);
+    
+            let includedGenres = includedGenresArray.join(", ");
+            includedGenresArray = [];
+            for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+                for (k = 0; k < genres.length; k++) {
+                    if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+                        includedGenresArray.push(genres[k].name);
+                    }
+                }
+            }
+            let whereToWatchInfo = [];
+            let whereToWatchItem;
+            if (locationInfo) {
+                for (i = 0; i < locationInfo.length; i++) {
+                    whereToWatchItem = {serviceName: locationInfo[i].display_name,
+                                        serviceIcon: locationInfo[i].icon,
+                                        serviceURL: locationInfo[i].url
+                    }
+                    whereToWatchInfo.push(whereToWatchItem);
+                 }
+            } else {
+                whereToWatchInfo = ["Sorry we couldn't find a service that streams <em>" + results[randomMovieNum].title + ".</em>"];
+            }
+
+            movieObject = {title: results[randomMovieNum].title, 
+                            poster: results[randomMovieNum].poster_path,
+                            overview: results[randomMovieNum].overview,
+                            genres: includedGenres,
+                            rating: results[randomMovieNum].vote_average,
+                            date: results[randomMovieNum].release_date,
+                            whereToWatch: whereToWatchInfo,
+                            tmdbId: tmdbID
+                            };
+                
+    
+    
+            displayMovies(movieObject);
+
+            if(pageNo2 && countPages === 2) {
+                fetchMovieDetails(pageNo2, genreNos);
+                if(totalResults == 2) {
+                    countPages = 1;
+                    pageNo1 = undefined;
+                    pageNo2 = undefined;
+                }
+            }
+            if(pageNo3 && countPages === 3) {
+                fetchMovieDetails(pageNo3, genreNos)
+                if(totalResults == 3) {
+                    countPages = 1; 
+                    pageNo1 = undefined;
+                    pageNo2 = undefined;
+                    pageNo3 = undefined;
+                        
+                }
+            }
+            if(pageNo4 && countPages === 4) {
+                fetchMovieDetails(pageNo4, genreNos)
+                if(totalResults == 4) {
+                    countPages = 1; 
+                    pageNo1 = undefined;
+                    pageNo2 = undefined;
+                    pageNo3 = undefined;
+                    pageNo4 = undefined;
+                        
+                }
+           }
+
+        })
+        .catch(err => {
+            console.error(err);
+            
+        });
+
+    
     })
 }
 
 
 function setPageNo(){
-    let genreNos = collectGenres();
-    moviedisplayEl.textContent = "";
-    let pageNo;
-    for (var i = 0; i < 4; i++) {
-        console.log(i);
-        fetch(tmdbCall+genreNos)
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(data){
-            if (data.results.length === 0) {
-                alert("Sorry too many genres. Try again.");
-            } else {         
-                console.log("total pages: " + data.total_pages);
-                pageNo = Math.ceil(Math.random() * data.total_pages);
-                console.log("page number: " + pageNo);
-                console.log("total results: " + data.total_results + "  i: " + i);
-                fetchMovieDetails(pageNo, genreNos);
+    genreNos = collectGenres();
+    fetch(tmdbCall+genreNos)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+        if (data.results.length === 0) {
+            tooManyGenresModalEl.setAttribute("class", "is-active modal");
+            genresOKButtonEl.addEventListener("click", function() {
+                tooManyGenresModalEl.setAttribute("class", "modal");
+            })
+        } else {         
+            moviedisplayEl.textContent = "";
+            totalResults = data.total_results;
+            pageNo1 = Math.ceil(Math.random() * data.total_pages);    
+            if (totalResults >= 2) {
+                pageNo2 = Math.ceil(Math.random() * data.total_pages); 
             }
-        })
+            if (totalResults >= 3) {
+                pageNo3 = Math.ceil(Math.random() * data.total_pages);
+            }    
+            if (totalResults >= 4) {
+                pageNo4 = Math.ceil(Math.random() * data.total_pages); 
+            }   
+            fetchMovieDetails(pageNo1, genreNos);
+
+        }
+    })
         
-    }
 }
 
 function collectGenres() {
     let theGenres = []
     for (var i = 0; i < genres.length; i++) {
         let genreCheck = document.getElementById(genres[i].id);
-        console.log(i+": ", genreCheck);
         if (genreCheck.checked) {
             theGenres.push(genres[i].id);
             genreCheck.checked = false;
@@ -120,22 +220,20 @@ function collectGenres() {
 }
 
 
-function displayMovies(mArray) {
-    for (var i = 0; i < mArray.length; i++){
+function displayMovies(movieObject) {
         
         // create variables from array
-        let title = mArray[i].title;
-        let poster = mArray[i].poster;
-        let overview = mArray[i].overview;
-        let genres = mArray[i].genres;
-        let date = mArray[i].date.substring(0, 4);
+        let title = movieObject.title;
+        let poster = movieObject.poster;
+        let overview = movieObject.overview;
+        let genres = movieObject.genres;
+        let date = movieObject.date.substring(0, 4);
         let posterURL = "./assets/images/noPoster.png"
         if (poster) {
             posterURL="https://image.tmdb.org/t/p/w500"+poster;      
         }
-        let tmdbId = mArray[i].tmdbId;
+        //let tmdbId = movieObject.tmdbId;
 
-        findWhereToWatch(tmdbId);
 
         // create card elements
         let cardEl = document.createElement("div");
@@ -150,7 +248,6 @@ function displayMovies(mArray) {
         let posterEl = document.createElement("img");
         posterEl.setAttribute("src", posterURL);
         posterEl.setAttribute("alt", "Poster " + title);
-        //posterEl.setAttribute("class", "image");
         figureEl.appendChild(posterEl);
         cardImageEl.appendChild(figureEl);
         cardEl.appendChild(cardImageEl);
@@ -176,166 +273,41 @@ function displayMovies(mArray) {
         contentEl.textContent = overview;
         cardContentEl.appendChild(contentEl);
 
+
+        let whereToWatchEl = document.createElement("div");
+        let whereToWatchTitleEl = document.createElement("h4");
+        whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+        whereToWatchTitleEl.textContent = "Where to watch:";
+        whereToWatchEl.appendChild(whereToWatchTitleEl);
+        let iconHolder = document.createElement("div");
+        iconHolder.setAttribute("class", "icon-holder");
+        let whereToWatchIconEl;
+        if (typeof movieObject.whereToWatch[0] === "object") {
+            for (j = 0; j < movieObject.whereToWatch.length; j++) {
+                whereToWatchIconEl = document.createElement("div");
+                let watchID = movieObject.whereToWatch[j].serviceName;
+                watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+                whereToWatchIconEl.setAttribute("id", watchID);
+                whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+                whereToWatchIconEl.innerHTML= "<a href='"+movieObject.whereToWatch[j].serviceURL+"' target='_blank'><img src='" + movieObject.whereToWatch[j].serviceIcon + "' alt='" + movieObject.whereToWatch[j].serviceName + "' /></a>";
+                iconHolder.appendChild(whereToWatchIconEl);
+            }                
+        } else {
+            let whereToWatchNoOptionsEl = document.createElement("div");
+            whereToWatchNoOptionsEl.innerHTML = movieObject.whereToWatch[0];
+            iconHolder.appendChild(whereToWatchNoOptionsEl);
+        }
+        whereToWatchEl.appendChild(iconHolder);
+        cardContentEl.appendChild(whereToWatchEl);
+
+
+
+
+
+
         cardEl.appendChild(cardContentEl);
         moviedisplayEl.appendChild(cardEl);
 
-    }
 }
 
 loadGenres();
-
-//getting attributes using ID
-function findWhereToWatch(tmdbCode) {
-    var tmdbCodeurl = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbCode+"&source=tmdb&country=ca";
-    fetch(tmdbCodeurl, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
-            "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
-        }
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(function(data){
-        console.log(data);
-        let locationInfo = data.collection.locations;
-        //console.log(locationInfo);
-        for (i = 0; i < locationInfo.length; i++) {
-            console.log(locationInfo[i].display_name);
-            console.log(locationInfo[i].icon);
-            console.log(locationInfo[i].url);
-        }
-
-        //return data;
-        //displayMovieAttrTmdb(data);
-    })
-    .catch(err => {
-        console.error(err);
-        
-    });
-}
-
-function displayMovieAttrTmdb(data){
-
-
-
-//gets data from API and returns the values
-var movieName="friends";
-var apiName="https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term="+movieName+"&country=ca";
-
-fetch(apiName, {
-    "method": "GET",
-    "headers": {
-        "x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
-        "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
-    }
-})
-.then(response => {
-    return response.json();
-})
-.then(function(data){
-    displayMovieAttr(data);
-})
-.catch(err => {
-    console.error(err);
-});
-
-//displays Movie data
-   function displayMovieAttr(data){
-    var availableAt="";
-    var resultName ="";
-    var resultPicture="";
-    var resultUrl="";
-    var noOfMovies=data.results.length;
-    console.log(noOfMovies);
-    var resultsToShow=[['nameResult',""], ['photo',"" ], ['urlOf', ""],['availableloc',""]];
-    if(noOfMovies<3){
-        n=noOfMovies;
-    } else{
-        n=3;
-    }
-//get 3 movies/shows available
-    for (i=0;i<n;i++){
-        resultName=data.results[i].name;
-        resultPicture = data.results[i].picture;
-        
-        // push results onto the array 
-        resultsToShow[i].nameResult=resultName;
-        resultsToShow[i].photo=resultPicture;
-        resultsToShow[i].urlOf=resultUrl;
-        // where is the movie/show available (e.g. Netflix)
-        var sourceOfMovies=data.results[i].locations.length;
-        for(j=0;j<sourceOfMovies; j++) {
-            availableAt=data.results[i].locations[j].display_name;
-            resultUrl = data.results[i].locations[j].url;
-            resultsToShow[i].push(availableAt);
-            resultsToShow[i].push(resultUrl);
-        }    
-    }
-//print the results
-console.log(resultsToShow);
-
-} 
-
-//getting attributes using ID
-
-var imdbCode="278"; //enter the id
-var imdbCodeurl = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+imdbCode+"&source=tmdb&country=ca";
-fetch(imdbCodeurl, {
-    "method": "GET",
-    "headers": {
-        "x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
-        "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
-    }
-})
-.then(response => {
-    console.log(response);
-    return response.json();
-})
-.then(function(data){
-    displayMovieAttrImdb(data);
-})
-.catch(err => {
-    console.error(err);
-    
-});
-
-function displayMovieAttrImdb(data){
-    console.log(data);
-
-    var movieNoArray =[['urlOfMovie', ""], ['locationMovie', ""]];
-    var movieName=data.collection.name;
-    var moviePic=data.collection.picture;
-
-    var movieUrl="";
-    var movieLocation="";
-    var movieLocationNo=data.collection.locations.length;
-    console.log(movieLocationNo);
-    for (i=0; i<movieLocationNo; i++){
-        movieUrl=data.collection.locations[i].url;
-        movieLocation=data.collection.locations[i].display_name;
-        var arrayNew=[movieUrl, movieLocation];
-        movieNoArray = movieNoArray.concat(arrayNew);
-    }
-
-    console.log(movieNoArray);  
-  	// add location
-	  let cardContentEl = document.createElement("div");
-	  cardContentEl.setAttribute("class", "card-content");
-	  let mediaContentEl = document.createElement("div");
-	  mediaContentEl.setAttribute("class", "media-content");
-
-	  let locationEl = document.createElement("h4");
-	  locationEl.setAttribute("class", "subtitle is-6");
-
-	  //locationEl.textContent = availableAt;
-	  mediaContentEl.appendChild(locationEl);
-	  cardContentEl.appendChild(mediaContentEl);  
-
-
-	  locationEl.textContent = availableAt;
-	  mediaContentEl.appendChild(locationEl);
-	  cardContentEl.appendChild(mediaContentEl);  
-
-}
