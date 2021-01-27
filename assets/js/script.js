@@ -12,6 +12,7 @@ var totalResults;
 var countPages = 1;
 var genreNos;
 var results;
+var tmdbId;
 var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
 
@@ -80,7 +81,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
         let randomMovieNum = Math.floor(Math.random()*results.length);
 
 
-        let tmdbID = results[randomMovieNum].id;
+        tmdbID = results[randomMovieNum].id;
 
         var tmdbCodeURL = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbID+"&source=tmdb&country=ca";
         fetch(tmdbCodeURL, {
@@ -319,7 +320,7 @@ function displayMovies(movieObject) {
             iconHolder.appendChild(whereToWatchNoOptionsEl);
         }
 
-        let buttonFavEl = document.createElement("button");
+        /*let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
 		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
 		buttonFavEl.textContent = "Save To Favourites";
@@ -329,7 +330,7 @@ function displayMovies(movieObject) {
 		buttonWatchEl.setAttribute("id", tmdbId);
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 		buttonWatchEl.textContent = "Save To Watchlist";
-		cardContentEl.appendChild(buttonWatchEl);
+		cardContentEl.appendChild(buttonWatchEl);*/
 
 
         whereToWatchEl.appendChild(iconHolder);
@@ -522,7 +523,8 @@ var loadWatchlist = function() {
 			cardContentEl.appendChild(contentEl);
 			
 			let buttonEl = document.createElement("button");
-			buttonEl.setAttribute("id", tmdbId);
+            buttonEl.setAttribute("id", tmdbId);
+            console.log("TMDB: " + tmdbId);
 			buttonEl.setAttribute("onclick", "saveFav(this.id)");
 			buttonEl.textContent = "Save To Favourites";
 			cardContentEl.appendChild(buttonEl);
@@ -540,10 +542,11 @@ var loadWatchlist = function() {
 }
 
 var saveFav = function(clicked_id) {
+    console.log("cid: " + clicked_id)
 	var favId = document.getElementById(clicked_id).id;
 	movies = JSON.parse(localStorage.getItem("movies"));
 
-	console.log(favId);
+	console.log("fave id---" + favId);
 
 	for (var i = 0; i < movies.recentmovies.length; i++) {
 		var indexId = ""+movies.recentmovies[i].tmdbId+"";
@@ -748,7 +751,8 @@ var saveWatch = function(clicked_id) {
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
-			watchlistDisplayEl.appendChild(cardEl);
+            watchlistDisplayEl.appendChild(cardEl);
+            console.log("cardEl ----" + cardEl);
 		
 			movies.watchlist.push({
 				title: movies.recentmovies[i].title,
