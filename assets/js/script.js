@@ -5,7 +5,7 @@ var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
 
 
-
+// Get genres from tmdb and add them to the DOM as check boxes (styled to look like buttons). 
 function loadGenres() {
     fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US")
     .then(function(response){
@@ -39,12 +39,50 @@ function loadGenres() {
                 buttonHolderEl.appendChild(genreItemHolderEl);
             }
 
-            searchButtonEl.addEventListener("click", fetchMovies);            
+            searchButtonEl.addEventListener("click", setPageNo);            
         }
     })
 }
 
-function setPageNo(genreNos){
+function fetchMovieDetails(pageNo, finalGenre) {
+    fetch(tmdbCall+finalGenre+"&page="+pageNo)
+
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
+        let results = data.results;
+
+        let moviesPicked = [];
+        let includedGenresArray = [];
+        let movieObject;
+        let randomMovieNum;
+        randomMovieNum = Math.floor(Math.random()*results.length);
+        for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+            for (k = 0; k < genres.length; k++) {
+                if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+                    includedGenresArray.push(genres[k].name);
+                }
+            }
+        }
+        let includedGenres = includedGenresArray.join(", ");
+        includedGenresArray = [];
+        movieObject = {title: results[randomMovieNum].title, 
+                        poster: results[randomMovieNum].poster_path,
+                        overview: results[randomMovieNum].overview,
+                        genres: includedGenres,
+                        rating: results[randomMovieNum].vote_average,
+                        date: results[randomMovieNum].release_date,
+                        tmdbId: results[randomMovieNum].id
+                        };
+        moviesPicked.push(movieObject);
+        displayMovies(moviesPicked);
+    })
+}
+
+
+function setPageNo(){
+    let genreNos = collectGenres();
     moviedisplayEl.textContent = "";
     let pageNo;
     for (var i = 0; i < 4; i++) {
@@ -81,55 +119,6 @@ function collectGenres() {
     return theGenres.toString();
 }
 
-function fetchMovies() {
- 
-    let finalGenre = collectGenres();
-    setPageNo(finalGenre);
-
-}
-
-function fetchMovieDetails(pageNo, finalGenre) {
-    console.log("fetchMovieDetails - page no: "+pageNo);
-    console.log(tmdbCall+finalGenre+"&page="+pageNo);
-    fetch(tmdbCall+finalGenre+"&page="+pageNo)
-
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data){
-        console.log(data);
-        let results = data.results;
-        let moviesPicked = [];
-        let includedGenresArray = [];
-        let movieObject;
-        let randomMovieNum;
-        let loopLength = 3;
-        if (results.length < loopLength) {
-            loopLength = results.length;
-        }
-        randomMovieNum = Math.floor(Math.random()*results.length);
-        for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
-            for (k = 0; k < genres.length; k++) {
-                if (results[randomMovieNum].genre_ids[j]===genres[k].id){
-                    includedGenresArray.push(genres[k].name);
-                }
-            }
-        }
-        let includedGenres = includedGenresArray.join(", ");
-        includedGenresArray = [];
-        movieObject = {title: results[randomMovieNum].title, 
-                        poster: results[randomMovieNum].poster_path,
-                        overview: results[randomMovieNum].overview,
-                        genres: includedGenres,
-                        rating: results[randomMovieNum].vote_average,
-                        date: results[randomMovieNum].release_date,
-                        tmdbId: results[randomMovieNum].id
-                        };
-        moviesPicked.push(movieObject);
-        results.splice(randomMovieNum, 1)
-        displayMovies(moviesPicked);
-    })
-}
 
 function displayMovies(mArray) {
     for (var i = 0; i < mArray.length; i++){
@@ -146,6 +135,7 @@ function displayMovies(mArray) {
         }
         let tmdbId = mArray[i].tmdbId;
 
+        findWhereToWatch(tmdbId);
 
         // create card elements
         let cardEl = document.createElement("div");
@@ -194,3 +184,62 @@ function displayMovies(mArray) {
 
 loadGenres();
 
+//getting attributes using ID
+function findWhereToWatch(tmdbCode) {
+    var tmdbCodeurl = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbCode+"&source=tmdb&country=ca";
+    fetch(tmdbCodeurl, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
+            "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(function(data){
+        console.log(data);
+        let locationInfo = data.collection.locations;
+        //console.log(locationInfo);
+        for (i = 0; i < locationInfo.length; i++) {
+            console.log(locationInfo[i].display_name);
+            console.log(locationInfo[i].icon);
+            console.log(locationInfo[i].url);
+        }
+
+        //return data;
+        //displayMovieAttrTmdb(data);
+    })
+    .catch(err => {
+        console.error(err);
+        
+    });
+}
+
+function displayMovieAttrTmdb(data){
+
+
+    var movieUrl="";
+    var movieLocation="";
+    var movieLocationNo=data.collection.locations.length;
+    console.log(movieLocationNo);
+    for (i=0; i<movieLocationNo; i++){
+        movieUrl=data.collection.locations[i].url;
+        movieLocation=data.collection.locations[i].display_name;
+        var arrayNew=[movieUrl, movieLocation];
+        movieNoArray = movieNoArray.concat(arrayNew);
+    }
+    console.log(movieNoArray);  
+  	// add location
+	  let cardContentEl = document.createElement("div");
+	  cardContentEl.setAttribute("class", "card-content");
+	  let mediaContentEl = document.createElement("div");
+	  mediaContentEl.setAttribute("class", "media-content");
+
+	  let locationEl = document.createElement("h4");
+	  locationEl.setAttribute("class", "subtitle is-6");
+	  //locationEl.textContent = availableAt;
+	  mediaContentEl.appendChild(locationEl);
+	  cardContentEl.appendChild(mediaContentEl);  
+
+}
