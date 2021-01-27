@@ -102,13 +102,13 @@ var saveSearch = function() {
 	localStorage.setItem("movies", JSON.stringify(movies));
 }
 
-var clearRecentMovies = function() {
-	if (movies.recentmovies.length > 0) {
-		movies.recentmovies.length = 0;
-	}
+// var clearRecentMovies = function() {
+// 	if (movies.recentmovies.length > 0) {
+// 		movies.recentmovies.length = 0;
+// 	}
 
-	saveSearch();
-}
+// 	saveSearch();
+// }
 
 var loadMovies = function() {
 
@@ -391,8 +391,9 @@ var saveFav = function(clicked_id) {
 }
 
 var removeFav = function(this_id) {
+	if(confirm("Removed Title from Favourites")) {
+
 	movies = JSON.parse(localStorage.getItem("movies"));
-	alert("Removed Title from Favourites");
 
 	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
 
@@ -401,10 +402,12 @@ var removeFav = function(this_id) {
 	location.reload();
 
 	saveSearch();
+	}
 }
 
 var removeWatch = function(this_id) {
-	alert("Removed Title from WATCHLIST")
+	if(confirm("Removed Title from WATCHLIST")) {
+
 
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -415,6 +418,7 @@ var removeWatch = function(this_id) {
 	location.reload();
 
 	saveSearch();
+	}
 }
 
 var saveWatch = function(clicked_id) {
@@ -757,4 +761,4 @@ function displayMovieAttrImdb(data){
 }
 
 loadMovies();
-clearRecentMovies();
+// clearRecentMovies();
