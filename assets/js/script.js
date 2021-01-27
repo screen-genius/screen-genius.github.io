@@ -101,7 +101,16 @@ var saveSearch = function() {
 	localStorage.setItem("movies", JSON.stringify(movies));
 }
 
+var clearRecentMovies = function() {
+	if (movies.recentmovies.length > 0) {
+		movies.recentmovies.length = 0;
+	}
+
+	saveSearch();
+}
+
 var loadMovies = function() {
+
 
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -745,3 +754,4 @@ function displayMovieAttrImdb(data){
 }
 
 loadMovies();
+clearRecentMovies();
