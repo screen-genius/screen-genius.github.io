@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <!--link rel="stylesheet" href="./assets/css/bulma.css" /-->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Screen Genius</title>
+
+</head>
+
+
+<body><div class="tile is-parent is-3">
+    <div class="is-child is-vertical">
+        <div class="tile is-child is-primary box has-background-link-dark"><!--SEARCH-->
+            <div class="content">
+                <h3 class="has-text-white">MOVIE SEARCH</h3>
+                <input type="text" class="search-bar">
+                <button type="submit" class="submit">SEARCH</button>
+            </div>
+            <div class="content">
+                <h3 class="has-text-white">SEARCH BY MOVIE GENRES</h3>
+                <div id="genres-list" class="tile is-parent is-vertical">
+                
+                <div class="button-holder">
+                    <div class="ck-button">
+                        <label>
+                            <input type="checkbox" value="28" id="28">
+                            <span>Action</span>
+                        </label>
+                    </div>
+                    <div class="ck-button">
+                        <label>
+                            <input type="checkbox" value="12" id="12">
+                            <span>Adventure</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="button-holder">
+                    <div class="ck-button">
+                        <label>
+                            <input type="checkbox" value="16" id="16">
+                            <span>Animation</span>
+                        </label>
+                    </div>
+                    <div class="ck-button">
+                        <label>
+                            <input type="checkbox" value="35" id="35">
+                            <span>Comedy</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="ck-button"><label><input type="checkbox" value="80" id="80"><span>Crime</span></label></div><div class="ck-button"><label><input type="checkbox" value="99" id="99"><span>Documentary</span></label></div><div class="ck-button"><label><input type="checkbox" value="18" id="18"><span>Drama</span></label></div><div class="ck-button"><label><input type="checkbox" value="10751" id="10751"><span>Family</span></label></div><div class="ck-button"><label><input type="checkbox" value="14" id="14"><span>Fantasy</span></label></div><div class="ck-button"><label><input type="checkbox" value="36" id="36"><span>History</span></label></div><div class="ck-button"><label><input type="checkbox" value="27" id="27"><span>Horror</span></label></div><div class="ck-button"><label><input type="checkbox" value="10402" id="10402"><span>Music</span></label></div><div class="ck-button"><label><input type="checkbox" value="9648" id="9648"><span>Mystery</span></label></div><div class="ck-button"><label><input type="checkbox" value="10749" id="10749"><span>Romance</span></label></div><div class="ck-button"><label><input type="checkbox" value="878" id="878"><span>Science Fiction</span></label></div><div class="ck-button"><label><input type="checkbox" value="10770" id="10770"><span>TV Movie</span></label></div><div class="ck-button"><label><input type="checkbox" value="53" id="53"><span>Thriller</span></label></div><div class="ck-button"><label><input type="checkbox" value="10752" id="10752"><span>War</span></label></div><div class="ck-button"><label><input type="checkbox" value="37" id="37"><span>Western</span></label></div></div>
+                <div class="tile is-parent is-vertical">
+                    <button id="search" class="button block">Search</button>
+                </div>
+            </div>
+        </div>
+        <div id="search" class="tile is-child is-primary box  has-background-grey-dark"><!--FOOTER-->
+            <h2 class="has-text-white">
+                Term of Use
+                </h2>
+                <h2 class="has-text-white">
+                Follow Us
+                </h2>
+        </div>
+
+    </div>
+</div>
+</body>
