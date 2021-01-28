@@ -318,18 +318,20 @@ function displayMovies(movieObject) {
             iconHolder.appendChild(whereToWatchNoOptionsEl);
         }
 
-        let buttonFavEl = document.createElement("button");
-		buttonFavEl.setAttribute("id", tmdbId);
-		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
-		buttonFavEl.textContent = "Save To Favourites";
-		cardContentEl.appendChild(buttonFavEl);
-		
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
+		buttonWatchEl.setAttribute("class", "button mr-3 mb-5")
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
-		buttonWatchEl.textContent = "Save To Watchlist";
+		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
 
+        let buttonFavEl = document.createElement("button");
+		buttonFavEl.setAttribute("id", tmdbId);
+		buttonFavEl.setAttribute("class", "button mb-5")
+		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
+		buttonFavEl.textContent = "Add to Favourites";
+		cardContentEl.appendChild(buttonFavEl);
+		
 
         whereToWatchEl.appendChild(iconHolder);
         cardContentEl.appendChild(whereToWatchEl);

@@ -40,7 +40,10 @@
     font-weight: bold;
 }
 
-
+h1 {
+  position: absolute;
+  top: -200px;
+}
 
 /* Format genre check boxes */
 .button-holder {
@@ -103,8 +106,13 @@
   display: flex;
 
 }
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 760px) {
   .padding {
     padding: 9rem .5rem 0 .5rem;
   }
+
+  .is-horizontal {
+    flex-direction: column;
+  }
 }
+

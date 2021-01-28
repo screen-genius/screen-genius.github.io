@@ -12,7 +12,7 @@
 </head>
 
 
-<body class="has-navbar-fixed-top">
+<body class="has-navbar-fixed-top pr-5">
 
 
 <!-- page contents-->
@@ -20,51 +20,48 @@
     <div class="tile is-parent is-vertical">
 <!-- TOP TITLE BAR -->
 
-<nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="./">
-        <img src="./assets/images/sg-logo.png" alt="Screen Genius logo" />
-      </a>
-  
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <p class="navbar-item">
-            &nbsp;
-            </p>
-        </div>
-    
-        <div class="navbar-end">
-            <a class="navbar-item" href="#watchlist">
-              Watchlist
+        <nav class="navbar is-dark is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+            <a class="navbar-item" href="./">
+                <img src="./assets/images/sg-logo.png" alt="Screen Genius logo" />
+                <h1>Screen Genius</h1>
             </a>
-      
-            <a class="navbar-item" href="#favourites">
-              Favourites
+        
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
-
-            <a class="navbar-item">
-                About
-            </a>
-  
-
+            </div>
+        
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <p class="navbar-item">
+                    &nbsp;
+                    </p>
+                </div>
             
-        </div>
-    </div>
-  </nav>
+                <div class="navbar-end">
+                    <a class="navbar-item" href="#watchlist">
+                    Watchlist
+                    </a>
+            
+                    <a class="navbar-item" href="#favourites">
+                    Favourites
+                    </a>
 
+                    <a class="navbar-item">
+                        About
+                    </a>  
+                </div>
+            </div>
+        </nav>
 
-        <div class="tile is-ancestor main-content pl-5 pt-5">
-  
-  
+        <div class="tile is-ancestor main-content pt-3">
+        
+        
             <!-- LEFT PANEL OF PAGE (search bar and genre selection)-->
-            <div class="tile is-parent is-3">
+            <div class="tile is-parent is-3 ml-3 mr-3">
                 <div class="is-child is-vertical">
                     <div class="tile is-child is-primary box has-background-link-dark"><!--SEARCH-->
                         <!--div class="content">
@@ -75,52 +72,49 @@
                         <div class="content">
                             <h3 class="has-text-white">SEARCH BY MOVIE GENRES</h3>
                             <div id="genres-list" class="tile is-parent is-vertical">
-                               
+                                
                             </div>
                             <div class="tile is-parent is-vertical">
                                 <button id="search" class="button block">Search</button>
                             </div>
                         </div>
                     </div>
-                    <!--div id="search" class="tile is-child is-primary box has-background-grey-dark"><!--FOOTER>
-                        <h2 class="has-text-white">
-                            Term of Use
-                          </h2>
-                          <h2 class="has-text-white">
-                            Follow Us
-                          </h2>
-                    </div-->
+                        <!--div id="search" class="tile is-child is-primary box has-background-grey-dark"><!--FOOTER>
+                            <h2 class="has-text-white">
+                                Term of Use
+                                </h2>
+                                <h2 class="has-text-white">
+                                Follow Us
+                                </h2>
+                        </div-->
                 </div>
             </div>
 
+            
             <!-- MAIN BODY TO DISPLAY SEARCH RESULTS AND FAVOURITES LIST-->
 
-            <div class="tile is-parent is-9">
-                <div class="tile is-parent is-vertical">
-                    <div class="tile is-child">
-                        <div id="movie-display" class="box is-child is-vertical has-background-primary"><!--RESULTS-->
+            <div class="tile is-parent is-9 is-vertical">
+                <!--div class="tile is-parent is-vertical"-->
+                    <!--div class="tile is-child"-->
+                        <div id="movie-display" class="box is-child is-vertical has-background-primary mr-3 ml-3"><!--RESULTS-->
                             <h2>Welcome to Screen Genius</h2>
                             <p>Pick from your favourite genres on the left and press search to find great titles to watch. Or just press search for any movie ideas from any genre.</p>
-      
                         </div><!--END OF RECENT SEARCH RESULTS-->
-                    </div>
-                   <div id="watchlist" class="tile is-child is-vertical">
-                        <h2>Watchlist</h2>
-                        <div id="watchlist-display" class="box is-child is-vertical has-background-primary"><!--RESULTS-->
+                    <!--/div-->
+                    <div id="watchlist" class="tile is-child is-vertical">
+                        <h2 class="mr-3 ml-3">Watchlist</h2>
+                        <div id="watchlist-display" class="box is-child is-vertical has-background-primary mr-3 ml-3"><!--RESULTS-->
                             You haven't added to your watchlist yet.
                         </div><!--END FAVOURITES OF RESULTS-->
                     </div>
                     <div id="favourites" class="tile is-child is-vertical">
-                        <h2>Favourites</h2>
-                        <div id="favourite-display" class="box is-child is-vertical has-background-primary"><!--RESULTS-->
+                        <h2 class="mr-3 ml-3">Favourites</h2>
+                        <div id="favourite-display" class="box is-child is-vertical has-background-primary mr-3 ml-3"><!--RESULTS-->
                             You haven't saved any favourites yet.
 
                         </div><!--END FAVOURITES OF RESULTS-->
                     </div>
- 
-
-                </div>
-
+                <!--/div-->
             </div><!--END OF MAIN BODY-->
         </div>
     </div>
