@@ -162,7 +162,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
                     genres: includedGenres,
                     rating: results[randomMovieNum].vote_average,
                     date: results[randomMovieNum].release_date,
-                    tmdbId: results[randomMovieNum].id })
+                    tmdbId: ""+results[randomMovieNum].id+"" })
             saveSearch();
     
             displayMovies(movieObject);
@@ -252,15 +252,13 @@ function displayMovies(movieObject) {
         if (poster) {
             posterURL="https://image.tmdb.org/t/p/w500"+poster;      
         }
-        let tmdbId = movieObject.tmdbId;
+        let tmdbId = ""+movieObject.tmdbId+"";
 
 
         // create card elements
         let cardEl = document.createElement("div");
         cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
         cardEl.setAttribute("id", tmdbId)
-
-
 
         //add poster image
         let cardImageEl = document.createElement("div");
@@ -320,17 +318,17 @@ function displayMovies(movieObject) {
             iconHolder.appendChild(whereToWatchNoOptionsEl);
         }
 
-        /*let buttonFavEl = document.createElement("button");
+        let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
 		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
 		buttonFavEl.textContent = "Save To Favourites";
 		cardContentEl.appendChild(buttonFavEl);
-
+		
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 		buttonWatchEl.textContent = "Save To Watchlist";
-		cardContentEl.appendChild(buttonWatchEl);*/
+		cardContentEl.appendChild(buttonWatchEl);
 
 
         whereToWatchEl.appendChild(iconHolder);
