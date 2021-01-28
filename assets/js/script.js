@@ -320,14 +320,14 @@ function displayMovies(movieObject) {
 
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
-		buttonWatchEl.setAttribute("class", "button mr-3 mb-5")
+		buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
 
         let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
-		buttonFavEl.setAttribute("class", "button mb-5")
+		buttonFavEl.setAttribute("class", "button mb-5");
 		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
 		buttonFavEl.textContent = "Add to Favourites";
 		cardContentEl.appendChild(buttonFavEl);
@@ -447,12 +447,14 @@ var loadFavourites = function() {
 			
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("class", "button mr-3 mb-5");
 			buttonEl.setAttribute("onclick", "removeFav(this.id)");
 			buttonEl.textContent = "Remove From Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
+			buttonWatchEl.setAttribute("class", "button mb-5");
 			buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
@@ -525,6 +527,7 @@ var loadWatchlist = function() {
 			
 			let buttonEl = document.createElement("button");
             buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("class", "button mr-3 mb-5");
             console.log("TMDB: " + tmdbId);
 			buttonEl.setAttribute("onclick", "saveFav(this.id)");
 			buttonEl.textContent = "Save To Favourites";
@@ -532,6 +535,7 @@ var loadWatchlist = function() {
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
+			buttonWatchEl.setAttribute("class", "button mb-5");
 			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
 			buttonWatchEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
