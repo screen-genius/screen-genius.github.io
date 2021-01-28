@@ -2,6 +2,7 @@ var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
 var favDisplayEl = document.getElementById("favourite-display");
+var watchlistDisplayEl = document.getElementById("watchlist-display");
 var tooManyGenresModalEl = document.getElementById("too-many-genres");
 var genresOKButtonEl = document.getElementById("genres-OK-button");
 var pageNo1;
@@ -16,7 +17,6 @@ var tmdbId;
 var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
 
-var watchlistDisplayEl = document.getElementById("watchlist-display");
 var movies = {};
 
 // Get genres from tmdb and add them to the DOM as check boxes (styled to look like buttons). 
@@ -389,6 +389,7 @@ var loadFavourites = function() {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	if (movies.favourites.length > 0 ) {
+		favDisplayEl.textContent = "";
 		for (var i = 0; i < movies.favourites.length; i++) {
 
 			let title = movies.favourites[i].title;
@@ -417,7 +418,6 @@ var loadFavourites = function() {
 			let posterEl = document.createElement("img");
 			posterEl.setAttribute("src", posterURL);
 			posterEl.setAttribute("alt", "Poster " + title);
-			//posterEl.setAttribute("class", "image");
 			figureEl.appendChild(posterEl);
 			cardImageEl.appendChild(figureEl);
 			cardEl.appendChild(cardImageEl);
@@ -466,6 +466,7 @@ var loadWatchlist = function() {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	if (movies.watchlist.length > 0 ) {
+		watchlistDisplayEl.textContent = "";
 		for (var i = 0; i < movies.watchlist.length; i++) {
 
 			let title = movies.watchlist[i].title;

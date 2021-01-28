@@ -40,12 +40,7 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 580px) {
 
-.padding {
-    padding: 9rem .5rem 0 .5rem;
-}
-}
 
 /* Format genre check boxes */
 .button-holder {
@@ -107,4 +102,9 @@
 .icon-holder {
   display: flex;
 
+}
+@media screen and (max-width: 580px) {
+  .padding {
+    padding: 9rem .5rem 0 .5rem;
+  }
 }
