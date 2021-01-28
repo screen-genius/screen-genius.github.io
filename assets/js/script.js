@@ -252,7 +252,7 @@ function displayMovies(movieObject) {
         if (poster) {
             posterURL="https://image.tmdb.org/t/p/w500"+poster;      
         }
-        //let tmdbId = movieObject.tmdbId;
+        let tmdbId = movieObject.tmdbId;
 
 
         // create card elements
