@@ -2,7 +2,7 @@
     color: white;
 }
 
-.margin {
+/*.margin {
     margin: 1rem;
 }
 
@@ -16,7 +16,7 @@
 
 .main-content {
     margin-top: 10rem;
-}
+}*/
 
 .hover:hover {
     box-shadow: 0 0 15px black;
@@ -114,5 +114,10 @@ h1 {
   .is-horizontal {
     flex-direction: column;
   }
+
+  button {
+    width: 100%;
+  }
+
 }
 
