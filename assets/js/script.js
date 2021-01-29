@@ -553,7 +553,7 @@ var loadFavourites = function() {
 				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
 				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
 				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
-				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.favourites[i].servicegoogle + "' /></a>";
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].servicegoogleurl+"' target='_blank'><img src='" + movies.favourites[i].servicegoogleicon + "' alt='" + movies.favourites[i].servicegoogle + "' /></a>";
 				iconHolder.appendChild(whereToWatchIconEl);
 			} else {
 			let whereToWatchNoOptionsEl = document.createElement("div");
@@ -662,23 +662,23 @@ var loadWatchlist = function() {
 				iconHolder.appendChild(whereToWatchIconEl);
 			}   
 	
-			if (movies.recentmovies[i].serviceitunes === "iTunes") {
-				let watchID = movies.recentmovies[i].serviceitunes;
+			if (movies.watchlist[i].serviceitunes === "iTunes") {
+				let watchID = movies.watchlist[i].serviceitunes;
 				whereToWatchIconEl = document.createElement("div");
 				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
 				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
 				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
-				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceitunesurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceitunesicon + "' alt='" + movies.recentmovies[i].serviceitunes + "' /></a>";
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].serviceitunesurl+"' target='_blank'><img src='" + movies.watchlist[i].serviceitunesicon + "' alt='" + movies.watchlist[i].serviceitunes + "' /></a>";
 				iconHolder.appendChild(whereToWatchIconEl); 
 			}     
 			
-			if (movies.recentmovies[i].servicegoogle === "Google Play") {
-				let watchID = movies.recentmovies[i].servicegoogle;
+			if (movies.watchlist[i].servicegoogle === "Google Play") {
+				let watchID = movies.watchlist[i].servicegoogle;
 				whereToWatchIconEl = document.createElement("div");
 				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
 				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
 				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
-				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.recentmovies[i].servicegoogle + "' /></a>";
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].servicegoogleurl+"' target='_blank'><img src='" + movies.watchlist[i].servicegoogleicon + "' alt='" + movies.watchlist[i].servicegoogle + "' /></a>";
 				iconHolder.appendChild(whereToWatchIconEl);
 			} else {
 			let whereToWatchNoOptionsEl = document.createElement("div");
