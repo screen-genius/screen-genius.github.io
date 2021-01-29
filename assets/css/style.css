@@ -1,49 +1,16 @@
-.white {
-    color: white;
-}
-
-/*.margin {
-    margin: 1rem;
-}
-
-.margin-top {
-    margin: .2rem;
-}
-
-.padding {
-    padding: 7rem 5rem 0 5rem;
-}
-
-.main-content {
-    margin-top: 10rem;
-}*/
-
 body {
   padding-right: 2rem;
 }
 
 .hover:hover {
-    box-shadow: 0 0 15px black;
+  box-shadow: 0 0 15px black;
 }
 
 .text-shadow:hover {
-    text-shadow: 0 0 5px black;
+  text-shadow: 0 0 5px black;
 }
 
-.fixed {
-    display: absolute;
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-}
-
-.genre-btn {
-    padding: .25rem;
-    margin-bottom: .5rem;
-    color: white;
-    font-weight: bold;
-}
-
+/* Creates a page title that is hidden for most visitors, but can be read by for accessibilty purposes */
 h1 {
   position: absolute;
   top: -200px;
@@ -101,12 +68,13 @@ h1 {
 }
 
 
-/* bulma modification */
+/* allow columns inside bulma card */
   .is-horizontal {
     display: flex;
     align-items: center;
   }
-  
+ 
+/* allow streaming service logos to dispplay horizontally */  
 .icon-holder {
   display: flex;
 
@@ -124,7 +92,6 @@ h1 {
   body {
     padding-right: 0;
   }
-
 
 }
 
