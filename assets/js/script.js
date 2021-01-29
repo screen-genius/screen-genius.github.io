@@ -153,7 +153,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
                             whereToWatch: whereToWatchInfo,
                             tmdbId: tmdbID
                             };
-
+			console.log("where to watch: ",whereToWatchInfo);
 
             movies.recentmovies.push(
                 {	title: results[randomMovieNum].title, 

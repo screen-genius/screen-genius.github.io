@@ -18,6 +18,10 @@
     margin-top: 10rem;
 }*/
 
+body {
+  padding-right: 2rem;
+}
+
 .hover:hover {
     box-shadow: 0 0 15px black;
 }
@@ -66,6 +70,7 @@ h1 {
 .ck-button:hover {
   background:black;
   color: white;
+  cursor: pointer;
 }
 
 .ck-button label span {
@@ -107,9 +112,6 @@ h1 {
 
 }
 @media screen and (max-width: 760px) {
-  .padding {
-    padding: 9rem .5rem 0 .5rem;
-  }
 
   .is-horizontal {
     flex-direction: column;
@@ -118,6 +120,11 @@ h1 {
   button {
     width: 100%;
   }
+
+  body {
+    padding-right: 0;
+  }
+
 
 }
 
