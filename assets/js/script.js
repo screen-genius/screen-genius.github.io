@@ -402,14 +402,14 @@ function displayMovies(movieObject) {
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
 		buttonWatchEl.setAttribute("class", "button mr-3 mb-5")
-		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
+		buttonWatchEl.setAttribute("onclick", "recentSaveWatch(this.id)");
 		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
 
         let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
 		buttonFavEl.setAttribute("class", "button mb-5")
-		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
+		buttonFavEl.setAttribute("onclick", "recentSaveFav(this.id)");
 		buttonFavEl.textContent = "Add to Favourites";
 		cardContentEl.appendChild(buttonFavEl);
 	
@@ -426,13 +426,11 @@ var saveSearch = function() {
 	localStorage.setItem("movies", JSON.stringify(movies));
 }
 
+/*
 // var clearRecentMovies = function() {
 // 	if (movies.recentmovies.length > 0) {
 // 		movies.recentmovies.length = 0;
-// 	}
-
-// 	saveSearch();
-// }
+// 	}*/
 
 var loadMovies = function() {
 
@@ -460,7 +458,7 @@ var loadMovies = function() {
 
 }
 
-var loadFavourites = function() {
+var loadFavourites = function(loadFav) {
 	//LOAD MOVIES IN FAVOURITES
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -583,13 +581,15 @@ var loadFavourites = function() {
 			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
+
+	var removeId = loadFav;
+	removeWatch(removeId);
 }
 
 var loadWatchlist = function() {
 	//LOAD MOVIES IN WATCHLIST
 	movies = JSON.parse(localStorage.getItem("movies"));
 
-	if (movies.watchlist.length > 0 ) {
 		watchlistDisplayEl.textContent = "";
 		for (var i = 0; i < movies.watchlist.length; i++) {
 
@@ -707,18 +707,14 @@ var loadWatchlist = function() {
 			whereToWatchEl.appendChild(iconHolder);
 			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
-	}// END OF IF 
-}
 
-var saveFav = function(clicked_id) {
-    console.log("cid: " + clicked_id)
+}//END OF LOADWATCHLIST
+
+// ADDING FROM RECENT TO FAVOURITES LIST
+var recentSaveFav = function(clicked_id) {
 	var favId = document.getElementById(clicked_id).id;
 
-	// if (movies.favourites.length >= 1) {checkExistingFav(favId);}
-
 	movies = JSON.parse(localStorage.getItem("movies"));
-
-	console.log("fave id---" + favId);
 
 	for (var i = 0; i < movies.recentmovies.length; i++) {
 	
@@ -833,7 +829,7 @@ var saveFav = function(clicked_id) {
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
-			buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
+			buttonWatchEl.setAttribute("onclick", "favSaveWatch(this.id)");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -842,15 +838,6 @@ var saveFav = function(clicked_id) {
 
 			whereToWatchEl.appendChild(iconHolder);
 			cardContentEl.appendChild(whereToWatchEl);
-			
-			// movies.favourites.push({
-			// 	title: movies.recentmovies[i].title,
-			// 	poster: movies.recentmovies[i].poster,
-			// 	overview: movies.recentmovies[i].overview,
-			// 	genres: movies.recentmovies[i].rating,
-			// 	date: movies.recentmovies[i].date,
-			// 	tmdbId: movies.recentmovies[i].tmdbId
-			// })
 
 			movies.favourites.push(
                 {	title: movies.recentmovies[i].title, 
@@ -872,36 +859,29 @@ var saveFav = function(clicked_id) {
                     date: movies.recentmovies[i].date,
                     tmdbId: ""+movies.recentmovies[i].tmdbId+"" })
 
+			//remove object from aray position [i]
+			movies.recentmovies.splice(i, 1);
+			//remove card from recentlist
+			var deleteitem = document.getElementById("card-"+favId);
+			deleteitem.remove();
+	
 			saveSearch();
-
-		}//end of if 
-
+		}
 	}//end of for loop
-
-	//remove from watchlist
-	movies = JSON.parse(localStorage.getItem("movies"));
-	var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(favId);
-	movies.watchlist.splice(removeItem, 1)
-	var deleteitem = document.getElementById("watch-card-"+favId);
-	deleteitem.remove();
-	saveSearch();
-	//remove from watchlist
-
 }
 
-var saveWatch = function(clicked_id) {
+// ADDING FROM RECENT TO WATCH LIST
+var recentSaveWatch = function(clicked_id) {
 	var saveId = document.getElementById(clicked_id).id;
 
-	// if (movies.watchlist.length >= 1) {checkExistingWatchlist(saveId);}
-
-	;
 	movies = JSON.parse(localStorage.getItem("movies"));
-
-	console.log(saveId);
 
 	for (var i = 0; i < movies.recentmovies.length; i++) {
 
 		var recentId = ""+movies.recentmovies[i].tmdbId+"";
+		console.log("save ID is: " +saveId);
+		console.log("recent ID is: "+recentId);
+		console.log("i final is: "+i);
 
 		if (saveId === recentId) {
 			let title = movies.recentmovies[i].title;
@@ -1004,7 +984,7 @@ var saveWatch = function(clicked_id) {
 
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
-			buttonEl.setAttribute("onclick", "saveFav(this.id)");
+			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
 			buttonEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonEl);
 
@@ -1020,15 +1000,6 @@ var saveWatch = function(clicked_id) {
 			
 			whereToWatchEl.appendChild(iconHolder);
 			cardContentEl.appendChild(whereToWatchEl);
-		
-			// movies.watchlist.push({
-			// 	title: movies.recentmovies[i].title,
-			// 	poster: movies.recentmovies[i].poster,
-			// 	overview: movies.recentmovies[i].overview,
-			// 	genres: movies.recentmovies[i].rating,
-			// 	date: movies.recentmovies[i].date,
-			// 	tmdbId: movies.recentmovies[i].tmdbId
-			// })
 
 			movies.watchlist.push(
                 {	title: movies.recentmovies[i].title, 
@@ -1050,48 +1021,397 @@ var saveWatch = function(clicked_id) {
                     date: movies.recentmovies[i].date,
                     tmdbId: ""+movies.recentmovies[i].tmdbId+"" })
 
+			//remove object from aray position [i]
+			movies.recentmovies.splice(i, 1);
+			//remove card from recentlist
+			var deleteitem = document.getElementById("card-"+saveId);
+			deleteitem.remove();
+			
 			saveSearch();
 
+			// loadWatchlist();
 
 		}//end of if 
 	}//end of for loop
 
-	//remove from favourites list
+}
+
+//ADDING FROM FAVOURITES TO WATCHLIST
+var favSaveWatch = function(clicked_id) {
+	var favId = document.getElementById(clicked_id).id;
+
 	movies = JSON.parse(localStorage.getItem("movies"));
-	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(saveId);
-	movies.favourites.splice(removeItem, 1)
-	var deleteitem = document.getElementById("fav-card-"+saveId);
-	deleteitem.remove();
+
+	for (var i = 0; i < movies.favourites.length; i++) {
+
+		var recentId = ""+movies.favourites[i].tmdbId+"";
+		console.log("save ID is: " +favId);
+		console.log("recent ID is: "+recentId);
+		console.log("i final is: "+i);
+
+		if (favId === recentId) {
+			let title = movies.favourites[i].title;
+			let poster = movies.favourites[i].poster;
+			let overview = movies.favourites[i].overview;
+			let genres = movies.favourites[i].genres;
+			let date = movies.favourites[i].date.substring(0, 4);
+			let posterURL = "./assets/images/noPoster.png"
+			if (poster) {
+				posterURL="https://image.tmdb.org/t/p/w500"+poster;      
+			}
+			let tmdbId = movies.favourites[i].tmdbId;
+			//let movieIdAttribute = movies.recentmovies[i].movieObject.tmdbId;
+	
+			// create card elements
+			let cardEl = document.createElement("div");
+			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
+			//cardEl.setAttribute("id", movieIdAttribute)
+			cardEl.setAttribute("id", "watch-card-"+tmdbId)
+	
+	
+			//add poster image
+			let cardImageEl = document.createElement("div");
+			cardImageEl.setAttribute("class", "card-image is-3");
+			let figureEl = document.createElement("figure")
+			figureEl.setAttribute("class", "image");
+			let posterEl = document.createElement("img");
+			posterEl.setAttribute("src", posterURL);
+			posterEl.setAttribute("alt", "Poster " + title);
+			//posterEl.setAttribute("class", "image");
+			figureEl.appendChild(posterEl);
+			cardImageEl.appendChild(figureEl);
+			cardEl.appendChild(cardImageEl);
+	
+			// add text content
+			let cardContentEl = document.createElement("div");
+			cardContentEl.setAttribute("class", "card-content is-9");
+			let mediaContentEl = document.createElement("div");
+			mediaContentEl.setAttribute("class", "media-content");
+			let titleEl = document.createElement("h3");
+			titleEl.setAttribute("class", "title is-2 has-text-weight-bold has-text-white");
+			titleEl.innerHTML = title + " <span class='date has-text-weight-light has-text-white'>"+date+"</span>";
+			mediaContentEl.appendChild(titleEl);
+	
+			let subtitleEl = document.createElement("h4");
+			subtitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			subtitleEl.textContent = genres;
+			mediaContentEl.appendChild(subtitleEl);
+			cardContentEl.appendChild(mediaContentEl);
+	
+			let contentEl = document.createElement("div");
+			contentEl.setAttribute("class", "content has-text-grey-light");
+			contentEl.textContent = overview;
+			cardContentEl.appendChild(contentEl);
+
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			var indexId = movies.favourites[i].tmdbId;
+	
+			if (movies.favourites[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.favourites[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].serviceamazonurl+"' target='_blank'><img src='" + movies.favourites[i].serviceamazonicon + "' alt='" + movies.favourites[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.favourites[i].serviceitunes === "iTunes") {
+				let watchID = movies.favourites[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].serviceitunesurl+"' target='_blank'><img src='" + movies.favourites[i].serviceitunesicon + "' alt='" + movies.favourites[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
+			
+			if (movies.favourites[i].servicegoogle === "Google Play") {
+				let watchID = movies.favourites[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].servicegoogleurl+"' target='_blank'><img src='" + movies.favourites[i].servicegoogleicon + "' alt='" + movies.favourites[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.watchlist[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+
+			let buttonEl = document.createElement("button");
+			buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
+			buttonEl.textContent = "Add To Favourites";
+			cardContentEl.appendChild(buttonEl);
+
+			let buttonWatchEl = document.createElement("button");
+			buttonWatchEl.setAttribute("id", tmdbId);
+			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonWatchEl.textContent = "Remove From Watchlist";
+			cardContentEl.appendChild(buttonWatchEl);
+	
+			cardEl.appendChild(cardContentEl);
+            watchlistDisplayEl.appendChild(cardEl);
+			console.log("cardEl ----" + cardEl);
+			
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
+
+			movies.watchlist.push(
+                {	title: movies.favourites[i].title, 
+                    poster: movies.favourites[i].poster,
+                    overview: movies.favourites[i].overview,
+					servicegoogle: movies.favourites[i].servicegoogle,
+					servicegoogleicon: movies.favourites[i].servicegoogleicon,
+					servicegoogleurl: movies.favourites[i].servicegoogleurl,
+					serviceamazon: movies.favourites[i].serviceamazon,
+					serviceamazonicon: movies.favourites[i].serviceamazonicon,
+					serviceamazonurl: movies.favourites[i].serviceamazonurl,
+					serviceitunes: movies.favourites[i].serviceitunes,
+					serviceitunesicon: movies.favourites[i].serviceitunesicon,
+					serviceitunesurl: movies.favourites[i].serviceitunesurl,
+					servicedisney: movies.favourites[i].servicedisney,
+					servicedisneyicon: movies.favourites[i].servicedisneyicon,
+					servicedisneyurl: movies.favourites[i].servicedisneyurl,
+                    rating: movies.favourites[i].rating,
+                    date: movies.favourites[i].date,
+                    tmdbId: ""+movies.favourites[i].tmdbId+"" })
+
+			//remove object from aray position [i]
+			movies.favourites.splice(i, 1);
+			//remove card from recentlist
+			var deleteitem = document.getElementById("fav-card-"+favId);
+			deleteitem.remove();
+			
+			saveSearch();
+
+			// loadWatchlist();
+
+		}//end of if 
+	}//end of for loop
+}
+
+//ADDING FROM WATCHLIST TO FAVOURITES
+var watchSaveFav = function(clicked_id) {
+	var saveId = document.getElementById(clicked_id).id;
+
+	movies = JSON.parse(localStorage.getItem("movies"));
+
+	for (var i = 0; i < movies.watchlist.length; i++) {
+
+		var recentId = ""+movies.watchlist[i].tmdbId+"";
+		console.log("save ID is: " +saveId);
+		console.log("recent ID is: "+recentId);
+		console.log("i final is: "+i);
+
+		if (saveId === recentId) {
+			let title = movies.watchlist[i].title;
+			let poster = movies.watchlist[i].poster;
+			let overview = movies.watchlist[i].overview;
+			let genres = movies.watchlist[i].genres;
+			let date = movies.watchlist[i].date.substring(0, 4);
+			let posterURL = "./assets/images/noPoster.png"
+			if (poster) {
+				posterURL="https://image.tmdb.org/t/p/w500"+poster;      
+			}
+			let tmdbId = movies.watchlist[i].tmdbId;
+			//let movieIdAttribute = movies.recentmovies[i].movieObject.tmdbId;
+	
+			// create card elements
+			let cardEl = document.createElement("div");
+			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
+			//cardEl.setAttribute("id", movieIdAttribute)
+			cardEl.setAttribute("id", "fav-card-"+tmdbId)
+	
+	
+			//add poster image
+			let cardImageEl = document.createElement("div");
+			cardImageEl.setAttribute("class", "card-image is-3");
+			let figureEl = document.createElement("figure")
+			figureEl.setAttribute("class", "image");
+			let posterEl = document.createElement("img");
+			posterEl.setAttribute("src", posterURL);
+			posterEl.setAttribute("alt", "Poster " + title);
+			//posterEl.setAttribute("class", "image");
+			figureEl.appendChild(posterEl);
+			cardImageEl.appendChild(figureEl);
+			cardEl.appendChild(cardImageEl);
+	
+			// add text content
+			let cardContentEl = document.createElement("div");
+			cardContentEl.setAttribute("class", "card-content is-9");
+			let mediaContentEl = document.createElement("div");
+			mediaContentEl.setAttribute("class", "media-content");
+			let titleEl = document.createElement("h3");
+			titleEl.setAttribute("class", "title is-2 has-text-weight-bold has-text-white");
+			titleEl.innerHTML = title + " <span class='date has-text-weight-light has-text-white'>"+date+"</span>";
+			mediaContentEl.appendChild(titleEl);
+	
+			let subtitleEl = document.createElement("h4");
+			subtitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			subtitleEl.textContent = genres;
+			mediaContentEl.appendChild(subtitleEl);
+			cardContentEl.appendChild(mediaContentEl);
+	
+			let contentEl = document.createElement("div");
+			contentEl.setAttribute("class", "content has-text-grey-light");
+			contentEl.textContent = overview;
+			cardContentEl.appendChild(contentEl);
+
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			var indexId = movies.watchlist[i].tmdbId;
+	
+			if (movies.watchlist[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.watchlist[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].serviceamazonurl+"' target='_blank'><img src='" + movies.watchlists[i].serviceamazonicon + "' alt='" + movies.watchlist[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.watchlist[i].serviceitunes === "iTunes") {
+				let watchID = movies.watchlist[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].serviceitunesurl+"' target='_blank'><img src='" + movies.watchlist[i].serviceitunesicon + "' alt='" + movies.watchlist[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
+			
+			if (movies.watchlist[i].servicegoogle === "Google Play") {
+				let watchID = movies.watchlist[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].servicegoogleurl+"' target='_blank'><img src='" + movies.watchlist[i].servicegoogleicon + "' alt='" + movies.watchlist[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.watchlist[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+
+			let buttonEl = document.createElement("button");
+			buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("onclick", "favSaveWatch(this.id)");
+			buttonEl.textContent = "Add To Watchlist";
+			cardContentEl.appendChild(buttonEl);
+
+			let buttonWatchEl = document.createElement("button");
+			buttonWatchEl.setAttribute("id", tmdbId);
+			buttonWatchEl.setAttribute("onclick", "removeFav(this.id)");
+			buttonWatchEl.textContent = "Remove From Favourites";
+			cardContentEl.appendChild(buttonWatchEl);
+	
+			cardEl.appendChild(cardContentEl);
+            favDisplayEl.appendChild(cardEl);
+			console.log("cardEl ----" + cardEl);
+			
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
+
+			movies.favourites.push(
+                {	title: movies.watchlist[i].title, 
+                    poster: movies.watchlist[i].poster,
+                    overview: movies.watchlist[i].overview,
+					servicegoogle: movies.watchlist[i].servicegoogle,
+					servicegoogleicon: movies.watchlist[i].servicegoogleicon,
+					servicegoogleurl: movies.watchlist[i].servicegoogleurl,
+					serviceamazon: movies.watchlist[i].serviceamazon,
+					serviceamazonicon: movies.watchlist[i].serviceamazonicon,
+					serviceamazonurl: movies.watchlist[i].serviceamazonurl,
+					serviceitunes: movies.watchlist[i].serviceitunes,
+					serviceitunesicon: movies.watchlist[i].serviceitunesicon,
+					serviceitunesurl: movies.watchlist[i].serviceitunesurl,
+					servicedisney: movies.watchlist[i].servicedisney,
+					servicedisneyicon: movies.watchlist[i].servicedisneyicon,
+					servicedisneyurl: movies.watchlist[i].servicedisneyurl,
+                    rating: movies.watchlist[i].rating,
+                    date: movies.watchlist[i].date,
+                    tmdbId: ""+movies.watchlist[i].tmdbId+"" })
+
+			//remove object from aray position [i]
+			movies.watchlist.splice(i, 1);
+			//remove card from recentlist
+			var deleteitem = document.getElementById("watch-card-"+saveId);
+			deleteitem.remove();
+			
+			saveSearch();
+
+			// loadWatchlist();
+
+		}//end of if 
+	}//end of for loop
 
 }
 
+/* CAN BE DELETED
 var checkExistingFav = function(currentId) {
 
-	for (var j = 0; 0 < movies.favourites.length; j++) {
-		var recentExisting = currentId;
+// 	var test = currentId;
+// 	console.log("display i: " + i)
+// 	console.log(currentId);
+// 	movies = JSON.parse(localStorage.getItem("movies"));
 
-			var favouriteExisting = ""+movies.favourites[j].tmdbId+"";
+// 	for (var x = 0; x < movies.favourites.length; x++) {
+	
+// 	console.log("display x: " + x);
+	
+// 	if (currentId === movies.favourites[x].tmdbId) {
 
-			if (recentExisting === favouriteExisting) {alert("Already in Favourites");}
-		}
-	}
+// 	alert("DUPLICATE IS ARRAY #: " + x);
+// 	console.log("DUPLICATE IS ARRAY #: " + x);
 
+// 	var removeItem = movies.favourites.map(function(item) {return item.tmdbId;}).indexOf(currentId);
+// 	movies.favourites.splice(removeItem, 1)
+// 	var deleteitem = document.getElementById("fav-card-"+currentId);
+// 	deleteitem.remove();
+
+
+// 	saveSearch();
+
+
+// 	} else {alert("DISPLAY"); displayFav(test)};
+// 	}
+}
 
 var checkExistingWatchlist = function(watchlistId) {
 
-	for (var b = 0; 0 < movies.watchlist.length; b++) {
-		var recentExisting = watchlistId;
+// 	for (var b = 0; 0 < movies.watchlist.length; b++) {
+// 		var recentExisting = watchlistId;
 
-		var watchlistExisting = ""+movies.watchlist[b].tmdbId+"";
+// 		var watchlistExisting = ""+movies.watchlist[b].tmdbId+"";
 
-		// var watchlistExisting = movies.watchlist[j].tmdbId;
+// 		// var watchlistExisting = movies.watchlist[j].tmdbId;
 
-		if (recentExisting === watchlistExisting) {alert("Already in Watchlist"); removeWatch(); break;}
-		}
-}
+// 		if (recentExisting === watchlistExisting) {alert("Already in Watchlist"); removeWatch(); break;}
+// 		}
+}*/
 
+// REMOVE FROM FAVOURITES LIST
 var removeFav = function(this_id) {
-
 
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -1106,6 +1426,7 @@ var removeFav = function(this_id) {
 	
 }
 
+// REMOVE FROM WATCHLIST
 var removeWatch = function(this_id) {
 
 
@@ -1122,9 +1443,7 @@ var removeWatch = function(this_id) {
 
 }
 
-
 // END OF WATCHLIST AND FAVOURITES LIST 
-
 
 loadGenres();
 loadMovies();
