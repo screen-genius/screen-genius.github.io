@@ -434,7 +434,6 @@ var saveSearch = function() {
 
 var loadMovies = function() {
 
-
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	if (!movies) {
@@ -458,7 +457,7 @@ var loadMovies = function() {
 
 }
 
-var loadFavourites = function(loadFav) {
+var loadFavourites = function() {
 	//LOAD MOVIES IN FAVOURITES
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -570,7 +569,7 @@ var loadFavourites = function(loadFav) {
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
-			buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
+			buttonWatchEl.setAttribute("onclick", "favSaveWatch(this.id)");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -581,15 +580,13 @@ var loadFavourites = function(loadFav) {
 			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
-
-	var removeId = loadFav;
-	removeWatch(removeId);
 }
 
 var loadWatchlist = function() {
 	//LOAD MOVIES IN WATCHLIST
 	movies = JSON.parse(localStorage.getItem("movies"));
 
+	if (movies.watchlist.length > 0 ) {
 		watchlistDisplayEl.textContent = "";
 		for (var i = 0; i < movies.watchlist.length; i++) {
 
@@ -697,7 +694,7 @@ var loadWatchlist = function() {
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
-			buttonWatchEl.setAttribute("onclick", "saveFav(this.id)");
+			buttonWatchEl.setAttribute("onclick", "watchSaveFav(this.id)");
 			buttonWatchEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -707,7 +704,7 @@ var loadWatchlist = function() {
 			whereToWatchEl.appendChild(iconHolder);
 			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
-
+	}
 }//END OF LOADWATCHLIST
 
 // ADDING FROM RECENT TO FAVOURITES LIST
