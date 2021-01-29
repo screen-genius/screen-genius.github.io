@@ -77,8 +77,18 @@ h1 {
 /* allow streaming service logos to dispplay horizontally */  
 .icon-holder {
   display: flex;
-
 }
+
+.icon-holder a {
+  color: #ddd;
+  text-decoration: underline;
+}
+
+.icon-holder a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 760px) {
 
   .is-horizontal {
