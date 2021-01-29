@@ -2,21 +2,18 @@
     color: white;
 }
 
-.margin {
+/*.margin {
     margin: 1rem;
 }
-
 .margin-top {
     margin: .2rem;
 }
-
 .padding {
     padding: 7rem 5rem 0 5rem;
 }
-
 .main-content {
     margin-top: 10rem;
-}
+}*/
 
 .hover:hover {
     box-shadow: 0 0 15px black;
@@ -40,11 +37,9 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 580px) {
-
-.padding {
-    padding: 9rem .5rem 0 .5rem;
-}
+h1 {
+  position: absolute;
+  top: -200px;
 }
 
 /* Format genre check boxes */
@@ -106,5 +101,19 @@
   
 .icon-holder {
   display: flex;
+
+}
+@media screen and (max-width: 760px) {
+  .padding {
+    padding: 9rem .5rem 0 .5rem;
+  }
+
+  .is-horizontal {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
 
 }

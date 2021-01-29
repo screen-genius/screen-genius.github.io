@@ -2,6 +2,7 @@ var genreAreaEl = document.getElementById("genres-list");
 var searchButtonEl = document.getElementById("search");
 var moviedisplayEl = document.getElementById("movie-display");
 var favDisplayEl = document.getElementById("favourite-display");
+var watchlistDisplayEl = document.getElementById("watchlist-display");
 var tooManyGenresModalEl = document.getElementById("too-many-genres");
 var genresOKButtonEl = document.getElementById("genres-OK-button");
 var pageNo1;
@@ -16,7 +17,6 @@ var tmdbId;
 var genres = [];
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
 
-var watchlistDisplayEl = document.getElementById("watchlist-display");
 var movies = {};
 
 // Get genres from tmdb and add them to the DOM as check boxes (styled to look like buttons). 
@@ -142,7 +142,9 @@ function fetchMovieDetails(pageNo, finalGenre) {
                  }
             } else {
                 whereToWatchInfo = ["Sorry we couldn't find a service that streams <em>" + results[randomMovieNum].title + ".</em>"];
-            }
+			}
+			
+
 
             movieObject = {title: results[randomMovieNum].title, 
                             poster: results[randomMovieNum].poster_path,
@@ -152,14 +154,73 @@ function fetchMovieDetails(pageNo, finalGenre) {
                             date: results[randomMovieNum].release_date,
                             whereToWatch: whereToWatchInfo,
                             tmdbId: tmdbID
-                            };
+							};
+							
+			console.log(locationInfo);
+			
+			//google where to watch display info
+			if (locationInfo) 
+			{			
+				for (y = 0; y < locationInfo.length; y++) {
+				if (locationInfo[y].display_name === "Google Play") {
+					var googlename = locationInfo[y].display_name;
+					var googleicon = locationInfo[y].icon;
+					var googleurl = locationInfo[y].url;
+				}
+				}
+			
 
+			//apple where to watch display info
+			 			
+				for (r = 0; r < locationInfo.length; r++) {
+				if (locationInfo[r].display_name === "Disney") {
+					var disneyname = locationInfo[r].display_name;
+					var disneyicon = locationInfo[r].icon;
+					var disneyurl = locationInfo[r].url;
+				}
+				}
+			
+
+			//itunes where to watch display info
+				
+				for (w = 0; w < locationInfo.length; w++) {
+				if (locationInfo[w].display_name === "iTunes") {
+					var itunesname = locationInfo[w].display_name;
+					var itunesicon = locationInfo[w].icon;
+					var itunesurl = locationInfo[w].url;
+				}
+				}
+			
+
+			//Amazon where to watch display info
+						
+				for (f = 0; f < locationInfo.length; f++) {
+				if (locationInfo[f].display_name === "Amazon Prime Video") {
+					var amazonname = locationInfo[f].display_name;
+					var amazonicon = locationInfo[f].icon;
+					var amazonurl = locationInfo[f].url;
+				}
+			}
+		}
+			
 
             movies.recentmovies.push(
                 {	title: results[randomMovieNum].title, 
                     poster: results[randomMovieNum].poster_path,
                     overview: results[randomMovieNum].overview,
-                    genres: includedGenres,
+					genres: includedGenres,
+					servicegoogle: googlename,
+					servicegoogleicon: googleicon,
+					servicegoogleurl: googleurl,
+					serviceamazon: amazonname,
+					serviceamazonicon: amazonicon,
+					serviceamazonurl: amazonurl,
+					serviceitunes: itunesname,
+					serviceitunesicon: itunesicon,
+					serviceitunesurl: itunesurl,
+					servicedisney: disneyname,
+					servicedisneyicon: disneyicon,
+					servicedisneyurl: disneyurl,
                     rating: results[randomMovieNum].vote_average,
                     date: results[randomMovieNum].release_date,
                     tmdbId: ""+results[randomMovieNum].id+"" })
@@ -226,7 +287,6 @@ function setPageNo(){
         
 }
 
-
 function collectGenres() {
     let theGenres = []
     for (var i = 0; i < genres.length; i++) {
@@ -238,7 +298,6 @@ function collectGenres() {
     }
     return theGenres.toString();
 }
-
 
 function displayMovies(movieObject) {
         
@@ -258,7 +317,7 @@ function displayMovies(movieObject) {
         // create card elements
         let cardEl = document.createElement("div");
         cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
-        cardEl.setAttribute("id", tmdbId)
+        cardEl.setAttribute("id", "card-"+tmdbId)
 
         //add poster image
         let cardImageEl = document.createElement("div");
@@ -301,49 +360,66 @@ function displayMovies(movieObject) {
         whereToWatchEl.appendChild(whereToWatchTitleEl);
         let iconHolder = document.createElement("div");
         iconHolder.setAttribute("class", "icon-holder");
-        let whereToWatchIconEl;
-        if (typeof movieObject.whereToWatch[0] === "object") {
-            for (j = 0; j < movieObject.whereToWatch.length; j++) {
-                whereToWatchIconEl = document.createElement("div");
-                let watchID = movieObject.whereToWatch[j].serviceName;
-                watchID = watchID.replace(/\s+/g, '-').toLowerCase();
-                whereToWatchIconEl.setAttribute("id", watchID);
-                whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
-                whereToWatchIconEl.innerHTML= "<a href='"+movieObject.whereToWatch[j].serviceURL+"' target='_blank'><img src='" + movieObject.whereToWatch[j].serviceIcon + "' alt='" + movieObject.whereToWatch[j].serviceName + "' /></a>";
-                iconHolder.appendChild(whereToWatchIconEl);
-            }                
-        } else {
-            let whereToWatchNoOptionsEl = document.createElement("div");
-            whereToWatchNoOptionsEl.innerHTML = movieObject.whereToWatch[0];
-            iconHolder.appendChild(whereToWatchNoOptionsEl);
-        }
+		let whereToWatchIconEl;
 
-        let buttonFavEl = document.createElement("button");
-		buttonFavEl.setAttribute("id", tmdbId);
-		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
-		buttonFavEl.textContent = "Save To Favourites";
-		cardContentEl.appendChild(buttonFavEl);
+		// Display where to watch
+		var n = movies.recentmovies.length - 1;
+
+		if (movies.recentmovies[n].serviceamazon === "Amazon Prime Video") {
+			let watchID = movies.recentmovies[n].serviceamazon;
+			whereToWatchIconEl = document.createElement("div");
+			watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+			whereToWatchIconEl.setAttribute("id", watchID+"-"+n);
+			whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+			whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[n].serviceamazonurl+"' target='_blank'><img src='" + movies.recentmovies[n].serviceamazonicon + "' alt='" + movies.recentmovies[n].serviceamazon + "' /></a>";
+			iconHolder.appendChild(whereToWatchIconEl);
+		}   
+
+		if (movies.recentmovies[n].serviceitunes === "iTunes") {
+			let watchID = movies.recentmovies[n].serviceitunes;
+			whereToWatchIconEl = document.createElement("div");
+			watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+			whereToWatchIconEl.setAttribute("id", watchID+"-"+n);
+			whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+			whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[n].serviceitunesurl+"' target='_blank'><img src='" + movies.recentmovies[n].serviceitunesicon + "' alt='" + movies.recentmovies[n].serviceitunes + "' /></a>";
+			iconHolder.appendChild(whereToWatchIconEl); 
+		}     
+		
+		if (movies.recentmovies[n].servicegoogle === "Google Play") {
+			let watchID = movies.recentmovies[n].servicegoogle;
+			whereToWatchIconEl = document.createElement("div");
+			watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+			whereToWatchIconEl.setAttribute("id", watchID+"-"+n);
+			whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+			whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[n].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[n].servicegoogleicon + "' alt='" + movies.recentmovies[n].servicegoogle + "' /></a>";
+			iconHolder.appendChild(whereToWatchIconEl);
+		} else {
+		let whereToWatchNoOptionsEl = document.createElement("div");
+		whereToWatchNoOptionsEl.innerHTML = movieObject.whereToWatch[0];
+		iconHolder.appendChild(whereToWatchNoOptionsEl);
+		}
 		
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
+		buttonWatchEl.setAttribute("class", "button mr-3 mb-5")
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
-		buttonWatchEl.textContent = "Save To Watchlist";
+		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
 
-
-        whereToWatchEl.appendChild(iconHolder);
-        cardContentEl.appendChild(whereToWatchEl);
-
-
-
-
-
+        let buttonFavEl = document.createElement("button");
+		buttonFavEl.setAttribute("id", tmdbId);
+		buttonFavEl.setAttribute("class", "button mb-5")
+		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
+		buttonFavEl.textContent = "Add to Favourites";
+		cardContentEl.appendChild(buttonFavEl);
+	
+		whereToWatchEl.appendChild(iconHolder);
+		cardContentEl.appendChild(whereToWatchEl);
 
         cardEl.appendChild(cardContentEl);
         moviedisplayEl.appendChild(cardEl);
 
 }
-
 
 // WATCH LIST AND FAVOURITES LIST CREATION STARTS
 var saveSearch = function() {
@@ -389,6 +465,7 @@ var loadFavourites = function() {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	if (movies.favourites.length > 0 ) {
+		favDisplayEl.textContent = "";
 		for (var i = 0; i < movies.favourites.length; i++) {
 
 			let title = movies.favourites[i].title;
@@ -407,7 +484,7 @@ var loadFavourites = function() {
 			let cardEl = document.createElement("div");
 			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
 			//cardEl.setAttribute("id", movieIdAttribute)
-			cardEl.setAttribute("id", tmdbId)
+			cardEl.setAttribute("id", "fav-card-"+tmdbId)
 	
 			//add poster image
 			let cardImageEl = document.createElement("div");
@@ -417,7 +494,6 @@ var loadFavourites = function() {
 			let posterEl = document.createElement("img");
 			posterEl.setAttribute("src", posterURL);
 			posterEl.setAttribute("alt", "Poster " + title);
-			//posterEl.setAttribute("class", "image");
 			figureEl.appendChild(posterEl);
 			cardImageEl.appendChild(figureEl);
 			cardEl.appendChild(cardImageEl);
@@ -443,6 +519,51 @@ var loadFavourites = function() {
 			contentEl.textContent = overview;
 			cardContentEl.appendChild(contentEl);
 			
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			// Display where to watch
+	
+			if (movies.favourites[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.favourites[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].serviceamazonurl+"' target='_blank'><img src='" + movies.favourites[i].serviceamazonicon + "' alt='" + movies.favourites[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.favourites[i].serviceitunes === "iTunes") {
+				let watchID = movies.favourites[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].serviceitunesurl+"' target='_blank'><img src='" + movies.favourites[i].serviceitunesicon + "' alt='" + movies.favourites[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
+			
+			if (movies.favourites[i].servicegoogle === "Google Play") {
+				let watchID = movies.favourites[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.favourites[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.favourites[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.recentmovies[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+		
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "removeFav(this.id)");
@@ -457,6 +578,9 @@ var loadFavourites = function() {
 	
 			cardEl.appendChild(cardContentEl);
 			favDisplayEl.appendChild(cardEl);
+
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
 }
@@ -466,6 +590,7 @@ var loadWatchlist = function() {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	if (movies.watchlist.length > 0 ) {
+		watchlistDisplayEl.textContent = "";
 		for (var i = 0; i < movies.watchlist.length; i++) {
 
 			let title = movies.watchlist[i].title;
@@ -484,7 +609,7 @@ var loadWatchlist = function() {
 			let cardEl = document.createElement("div");
 			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
 			//cardEl.setAttribute("id", movieIdAttribute)
-			cardEl.setAttribute("id", tmdbId)
+			cardEl.setAttribute("id", "watch-card-"+tmdbId)
 	
 			//add poster image
 			let cardImageEl = document.createElement("div");
@@ -519,22 +644,68 @@ var loadWatchlist = function() {
 			contentEl.setAttribute("class", "content has-text-grey-light");
 			contentEl.textContent = overview;
 			cardContentEl.appendChild(contentEl);
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			// Display where to watch
+	
+			if (movies.watchlist[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.watchlist[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.watchlist[i].serviceamazonurl+"' target='_blank'><img src='" + movies.watchlist[i].serviceamazonicon + "' alt='" + movies.watchlist[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.recentmovies[i].serviceitunes === "iTunes") {
+				let watchID = movies.recentmovies[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceitunesurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceitunesicon + "' alt='" + movies.recentmovies[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
 			
+			if (movies.recentmovies[i].servicegoogle === "Google Play") {
+				let watchID = movies.recentmovies[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+tmdbId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.recentmovies[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.recentmovies[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+		
 			let buttonEl = document.createElement("button");
-            buttonEl.setAttribute("id", tmdbId);
-            console.log("TMDB: " + tmdbId);
-			buttonEl.setAttribute("onclick", "saveFav(this.id)");
-			buttonEl.textContent = "Save To Favourites";
+			buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
-			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
-			buttonWatchEl.textContent = "Remove From Watchlist";
+			buttonWatchEl.setAttribute("onclick", "saveFav(this.id)");
+			buttonWatchEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
 			watchlistDisplayEl.appendChild(cardEl);
+
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
 		} // END OF FOR LOOP
 	}// END OF IF 
 }
@@ -542,15 +713,18 @@ var loadWatchlist = function() {
 var saveFav = function(clicked_id) {
     console.log("cid: " + clicked_id)
 	var favId = document.getElementById(clicked_id).id;
+
+	// if (movies.favourites.length >= 1) {checkExistingFav(favId);}
+
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	console.log("fave id---" + favId);
 
 	for (var i = 0; i < movies.recentmovies.length; i++) {
-		var indexId = ""+movies.recentmovies[i].tmdbId+"";
-		console.log(indexId)
-		if (favId === indexId) {
-			alert("Movie title: " +movies.recentmovies[i].title+ " has been added to your Favourites List");
+	
+		var recentId = ""+movies.recentmovies[i].tmdbId+"";
+
+		if (favId === recentId) {
 
 			let title = movies.recentmovies[i].title;
 			let poster = movies.recentmovies[i].poster;
@@ -568,7 +742,7 @@ var saveFav = function(clicked_id) {
 			let cardEl = document.createElement("div");
 			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
 			//cardEl.setAttribute("id", movieIdAttribute)
-			cardEl.setAttribute("id", tmdbId)
+			cardEl.setAttribute("id", "fav-card-"+tmdbId)
 	
 	
 			//add poster image
@@ -604,7 +778,53 @@ var saveFav = function(clicked_id) {
 			contentEl.setAttribute("class", "content has-text-grey-light");
 			contentEl.textContent = overview;
 			cardContentEl.appendChild(contentEl);
+
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			// Display where to watch
+			var indexId = movies.recentmovies[i].tmdbId;
+	
+			if (movies.recentmovies[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.recentmovies[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceamazonurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceamazonicon + "' alt='" + movies.recentmovies[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.recentmovies[i].serviceitunes === "iTunes") {
+				let watchID = movies.recentmovies[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceitunesurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceitunesicon + "' alt='" + movies.recentmovies[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
 			
+			if (movies.recentmovies[i].servicegoogle === "Google Play") {
+				let watchID = movies.recentmovies[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.recentmovies[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.recentmovies[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+		
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "removeFav(this.id)");
@@ -619,70 +839,71 @@ var saveFav = function(clicked_id) {
 	
 			cardEl.appendChild(cardContentEl);
 			favDisplayEl.appendChild(cardEl);
+
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
 			
-			movies.favourites.push({
-				title: movies.recentmovies[i].title,
-				poster: movies.recentmovies[i].poster,
-				overview: movies.recentmovies[i].overview,
-				genres: movies.recentmovies[i].rating,
-				date: movies.recentmovies[i].date,
-				tmdbId: movies.recentmovies[i].tmdbId
-			})
+			// movies.favourites.push({
+			// 	title: movies.recentmovies[i].title,
+			// 	poster: movies.recentmovies[i].poster,
+			// 	overview: movies.recentmovies[i].overview,
+			// 	genres: movies.recentmovies[i].rating,
+			// 	date: movies.recentmovies[i].date,
+			// 	tmdbId: movies.recentmovies[i].tmdbId
+			// })
+
+			movies.favourites.push(
+                {	title: movies.recentmovies[i].title, 
+                    poster: movies.recentmovies[i].poster,
+                    overview: movies.recentmovies[i].overview,
+					servicegoogle: movies.recentmovies[i].servicegoogle,
+					servicegoogleicon: movies.recentmovies[i].servicegoogleicon,
+					servicegoogleurl: movies.recentmovies[i].servicegoogleurl,
+					serviceamazon: movies.recentmovies[i].serviceamazon,
+					serviceamazonicon: movies.recentmovies[i].serviceamazonicon,
+					serviceamazonurl: movies.recentmovies[i].serviceamazonurl,
+					serviceitunes: movies.recentmovies[i].serviceitunes,
+					serviceitunesicon: movies.recentmovies[i].serviceitunesicon,
+					serviceitunesurl: movies.recentmovies[i].serviceitunesurl,
+					servicedisney: movies.recentmovies[i].servicedisney,
+					servicedisneyicon: movies.recentmovies[i].servicedisneyicon,
+					servicedisneyurl: movies.recentmovies[i].servicedisneyurl,
+                    rating: movies.recentmovies[i].rating,
+                    date: movies.recentmovies[i].date,
+                    tmdbId: ""+movies.recentmovies[i].tmdbId+"" })
 
 			saveSearch();
 
-			var removeItem = movies.recentmovies.map(function(item) {return item.tdmbId;}).indexOf(i);
-
-			movies.recentmovies.splice(removeItem, i)
-
-
 		}//end of if 
+
 	}//end of for loop
-}
 
-var removeFav = function(this_id) {
-	if(confirm("Removed Title from Favourites")) {
-
+	//remove from watchlist
 	movies = JSON.parse(localStorage.getItem("movies"));
-
-	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
-
-	movies.favourites.splice(removeItem, 1)
-
-	location.reload();
-
-	saveSearch();
-	}
-}
-
-var removeWatch = function(this_id) {
-	if(confirm("Removed Title from WATCHLIST")) {
-
-
-	movies = JSON.parse(localStorage.getItem("movies"));
-
-	var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(this_id);
-
+	var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(favId);
 	movies.watchlist.splice(removeItem, 1)
-
-	location.reload();
-
+	var deleteitem = document.getElementById("watch-card-"+favId);
+	deleteitem.remove();
 	saveSearch();
-	}
+	//remove from watchlist
+
 }
 
 var saveWatch = function(clicked_id) {
 	var saveId = document.getElementById(clicked_id).id;
+
+	// if (movies.watchlist.length >= 1) {checkExistingWatchlist(saveId);}
+
+	;
 	movies = JSON.parse(localStorage.getItem("movies"));
 
 	console.log(saveId);
 
 	for (var i = 0; i < movies.recentmovies.length; i++) {
-		var indexId = ""+movies.recentmovies[i].tmdbId+"";
-		console.log(indexId)
-		if (saveId === indexId) {
-			alert("Movie title: " +movies.recentmovies[i].title+ " has been added to your Watch List");
 
+		var recentId = ""+movies.recentmovies[i].tmdbId+"";
+
+		if (saveId === recentId) {
 			let title = movies.recentmovies[i].title;
 			let poster = movies.recentmovies[i].poster;
 			let overview = movies.recentmovies[i].overview;
@@ -699,7 +920,7 @@ var saveWatch = function(clicked_id) {
 			let cardEl = document.createElement("div");
 			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
 			//cardEl.setAttribute("id", movieIdAttribute)
-			cardEl.setAttribute("id", tmdbId)
+			cardEl.setAttribute("id", "watch-card-"+tmdbId)
 	
 	
 			//add poster image
@@ -735,7 +956,52 @@ var saveWatch = function(clicked_id) {
 			contentEl.setAttribute("class", "content has-text-grey-light");
 			contentEl.textContent = overview;
 			cardContentEl.appendChild(contentEl);
+
+			let whereToWatchEl = document.createElement("div");
+			let whereToWatchTitleEl = document.createElement("h4");
+			whereToWatchTitleEl.setAttribute("class", "subtitle is-5 has-text-white");
+			whereToWatchTitleEl.textContent = "Where to watch:";
+			whereToWatchEl.appendChild(whereToWatchTitleEl);
+			let iconHolder = document.createElement("div");
+			iconHolder.setAttribute("class", "icon-holder");
+			let whereToWatchIconEl;
+	
+			var indexId = movies.recentmovies[i].tmdbId;
+	
+			if (movies.recentmovies[i].serviceamazon === "Amazon Prime Video") {
+				let watchID = movies.recentmovies[i].serviceamazon;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceamazonurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceamazonicon + "' alt='" + movies.recentmovies[i].serviceamazon + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			}   
+	
+			if (movies.recentmovies[i].serviceitunes === "iTunes") {
+				let watchID = movies.recentmovies[i].serviceitunes;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].serviceitunesurl+"' target='_blank'><img src='" + movies.recentmovies[i].serviceitunesicon + "' alt='" + movies.recentmovies[i].serviceitunes + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl); 
+			}     
 			
+			if (movies.recentmovies[i].servicegoogle === "Google Play") {
+				let watchID = movies.recentmovies[i].servicegoogle;
+				whereToWatchIconEl = document.createElement("div");
+				watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+				whereToWatchIconEl.setAttribute("id", watchID+"-"+indexId);
+				whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+				whereToWatchIconEl.innerHTML= "<a href='"+movies.recentmovies[i].servicegoogleurl+"' target='_blank'><img src='" + movies.recentmovies[i].servicegoogleicon + "' alt='" + movies.recentmovies[i].servicegoogle + "' /></a>";
+				iconHolder.appendChild(whereToWatchIconEl);
+			} else {
+			let whereToWatchNoOptionsEl = document.createElement("div");
+			whereToWatchNoOptionsEl.innerHTML = movies.recentmovies[0];
+			iconHolder.appendChild(whereToWatchNoOptionsEl);
+			}
+
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "saveFav(this.id)");
@@ -750,23 +1016,112 @@ var saveWatch = function(clicked_id) {
 	
 			cardEl.appendChild(cardContentEl);
             watchlistDisplayEl.appendChild(cardEl);
-            console.log("cardEl ----" + cardEl);
+			console.log("cardEl ----" + cardEl);
+			
+			whereToWatchEl.appendChild(iconHolder);
+			cardContentEl.appendChild(whereToWatchEl);
 		
-			movies.watchlist.push({
-				title: movies.recentmovies[i].title,
-				poster: movies.recentmovies[i].poster,
-				overview: movies.recentmovies[i].overview,
-				genres: movies.recentmovies[i].rating,
-				date: movies.recentmovies[i].date,
-				tmdbId: movies.recentmovies[i].tmdbId
-			})
+			// movies.watchlist.push({
+			// 	title: movies.recentmovies[i].title,
+			// 	poster: movies.recentmovies[i].poster,
+			// 	overview: movies.recentmovies[i].overview,
+			// 	genres: movies.recentmovies[i].rating,
+			// 	date: movies.recentmovies[i].date,
+			// 	tmdbId: movies.recentmovies[i].tmdbId
+			// })
+
+			movies.watchlist.push(
+                {	title: movies.recentmovies[i].title, 
+                    poster: movies.recentmovies[i].poster,
+                    overview: movies.recentmovies[i].overview,
+					servicegoogle: movies.recentmovies[i].servicegoogle,
+					servicegoogleicon: movies.recentmovies[i].servicegoogleicon,
+					servicegoogleurl: movies.recentmovies[i].servicegoogleurl,
+					serviceamazon: movies.recentmovies[i].serviceamazon,
+					serviceamazonicon: movies.recentmovies[i].serviceamazonicon,
+					serviceamazonurl: movies.recentmovies[i].serviceamazonurl,
+					serviceitunes: movies.recentmovies[i].serviceitunes,
+					serviceitunesicon: movies.recentmovies[i].serviceitunesicon,
+					serviceitunesurl: movies.recentmovies[i].serviceitunesurl,
+					servicedisney: movies.recentmovies[i].servicedisney,
+					servicedisneyicon: movies.recentmovies[i].servicedisneyicon,
+					servicedisneyurl: movies.recentmovies[i].servicedisneyurl,
+                    rating: movies.recentmovies[i].rating,
+                    date: movies.recentmovies[i].date,
+                    tmdbId: ""+movies.recentmovies[i].tmdbId+"" })
 
 			saveSearch();
+
 
 		}//end of if 
 	}//end of for loop
 
+	//remove from favourites list
+	movies = JSON.parse(localStorage.getItem("movies"));
+	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(saveId);
+	movies.favourites.splice(removeItem, 1)
+	var deleteitem = document.getElementById("fav-card-"+saveId);
+	deleteitem.remove();
+
 }
+
+var checkExistingFav = function(currentId) {
+
+	for (var j = 0; 0 < movies.favourites.length; j++) {
+		var recentExisting = currentId;
+
+			var favouriteExisting = ""+movies.favourites[j].tmdbId+"";
+
+			if (recentExisting === favouriteExisting) {alert("Already in Favourites");}
+		}
+	}
+
+
+var checkExistingWatchlist = function(watchlistId) {
+
+	for (var b = 0; 0 < movies.watchlist.length; b++) {
+		var recentExisting = watchlistId;
+
+		var watchlistExisting = ""+movies.watchlist[b].tmdbId+"";
+
+		// var watchlistExisting = movies.watchlist[j].tmdbId;
+
+		if (recentExisting === watchlistExisting) {alert("Already in Watchlist"); removeWatch(); break;}
+		}
+}
+
+var removeFav = function(this_id) {
+
+
+	movies = JSON.parse(localStorage.getItem("movies"));
+
+	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
+
+	movies.favourites.splice(removeItem, 1)
+
+	var deleteitem = document.getElementById("fav-card-"+this_id);
+	deleteitem.remove();
+
+	saveSearch();
+	
+}
+
+var removeWatch = function(this_id) {
+
+
+	movies = JSON.parse(localStorage.getItem("movies"));
+
+	var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(this_id);
+
+	movies.watchlist.splice(removeItem, 1)
+
+	var deleteitem = document.getElementById("watch-card-"+this_id);
+	deleteitem.remove();
+	
+	saveSearch();
+
+}
+
 
 // END OF WATCHLIST AND FAVOURITES LIST 
 
