@@ -1031,6 +1031,21 @@ var recentSaveWatch = function(clicked_id) {
 		}//end of if 
 	}//end of for loop
 
+	checkExisting(saveId);
+}
+
+var checkExisting = function(itemId) {
+	movies = JSON.parse(localStorage.getItem("movies"));
+
+	var recentId = ""+itemId+"";
+	console.log(recentId);
+	var favouritesArr = movies.favourites.map(function(item) { return item.tmdbId});
+	var isDuplicate = favouritesArr.some(function(item, recentId) {
+		return favouritesArr.indexOf(item) != recentId
+	});
+
+	console.log(isDuplicate);
+	
 }
 
 //ADDING FROM FAVOURITES TO WATCHLIST
@@ -1312,14 +1327,14 @@ var watchSaveFav = function(clicked_id) {
 
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
-			buttonEl.setAttribute("onclick", "favSaveWatch(this.id)");
-			buttonEl.textContent = "Add To Watchlist";
+			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
+			buttonEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
-			buttonWatchEl.setAttribute("onclick", "removeFav(this.id)");
-			buttonWatchEl.textContent = "Remove From Favourites";
+			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonWatchEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
