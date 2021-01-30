@@ -1,19 +1,6 @@
-.white {
-  color: white;
+body {
+  padding-right: 2rem;
 }
-
-/*.margin {
-  margin: 1rem;
-}
-.margin-top {
-  margin: .2rem;
-}
-.padding {
-  padding: 7rem 5rem 0 5rem;
-}
-.main-content {
-  margin-top: 10rem;
-}*/
 
 .hover:hover {
   box-shadow: 0 0 15px black;
@@ -23,97 +10,97 @@
   text-shadow: 0 0 5px black;
 }
 
-.fixed {
-  display: absolute;
-  position: fixed;
-  z-index: 999;
-  width: 100%;
-}
-
-.genre-btn {
-  padding: .25rem;
-  margin-bottom: .5rem;
-  color: white;
-  font-weight: bold;
-}
-
+/* Creates a page title that is hidden for most visitors, but can be read by for accessibilty purposes */
 h1 {
-position: absolute;
-top: -200px;
+  position: absolute;
+  top: -200px;
 }
 
 /* Format genre check boxes */
 .button-holder {
-display: flex;
-justify-content: center;
-padding: 0;
-margin: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .ck-button {
-margin:4px;
-background-color:#EFEFEF;
-border-radius:4px;
-border:1px solid #D0D0D0;
-overflow:auto;
-float:left;
-width: 50%;
+  margin:4px;
+  background-color:#EFEFEF;
+  border-radius:4px;
+  border:1px solid #D0D0D0;
+  overflow:auto;
+  float:left;
+  width: 50%;
 }
 
 .ck-button:hover {
-background:black;
-color: white;
+  background:black;
+  color: white;
+  cursor: pointer;
 }
 
 .ck-button label span {
-text-align:center;
-padding:3px 0px;
-display:block;
+  text-align:center;
+  padding:3px 0px;
+  display:block;
 }
 
 .ck-button label input {
-position:absolute;
-top:-200px;
+  position:absolute;
+  top:-200px;
 }
 
 .ck-button input:checked + span {
-background-color:#666;
-color:#fff;
+  background-color:#666;
+  color:#fff;
 }
 
 .date {
-font-weight: lighter;
-font-size: 0.6em;
+ font-weight: lighter;
+ font-size: 0.6em;
 } 
 
 .image {
-width: 200px;
-margin-left: 0;
-padding: 0;
+  width: 200px;
+  margin-left: 0;
+  padding: 0;
 }
 
 
-/* bulma modification */
-.is-horizontal {
-  display: flex;
-  align-items: center;
-}
-
+/* allow columns inside bulma card */
+  .is-horizontal {
+    display: flex;
+    align-items: center;
+  }
+ 
+/* allow streaming service logos to dispplay horizontally */  
 .icon-holder {
-display: flex;
-
+  display: flex;
 }
+
+.icon-holder a {
+  color: #ddd;
+  text-decoration: underline;
+}
+
+.icon-holder a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 760px) {
-.padding {
-  padding: 9rem .5rem 0 .5rem;
-}
 
-.is-horizontal {
-  flex-direction: column;
-}
+  .is-horizontal {
+    flex-direction: column;
+  }
 
-button {
-  width: 100%;
-}
+  button {
+    width: 100%;
+  }
+
+  body {
+    padding-right: 0;
+  }
 
 }
