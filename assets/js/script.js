@@ -266,10 +266,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 		
 		}
         /*let randomMovieNum = Math.floor(Math.random()*results.length);
-
-
         tmdbID = results[randomMovieNum].id;
-
         var tmdbCodeURL = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbID+"&source=tmdb&country=ca";
         fetch(tmdbCodeURL, {
             "method": "GET",
@@ -306,7 +303,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
                         includedGenresArray.push(genres[k].name);
                     }
                 }
-
             }
     
             let includedGenres = includedGenresArray.join(", ");
@@ -332,8 +328,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
                 whereToWatchInfo = ["Sorry we couldn't find a service that streams <em>" + results[randomMovieNum].title + ".</em>"];
 			}
 			
-
-
             movieObject = {title: results[randomMovieNum].title, 
                             poster: results[randomMovieNum].poster_path,
                             overview: results[randomMovieNum].overview,
@@ -357,7 +351,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
 				}
 				}
 			
-
 			//apple where to watch display info
 			 			
 				for (r = 0; r < locationInfo.length; r++) {
@@ -368,7 +361,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
 				}
 				}
 			
-
 			//itunes where to watch display info
 				
 				for (w = 0; w < locationInfo.length; w++) {
@@ -379,7 +371,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
 				}
 				}
 			
-
 			//Amazon where to watch display info
 						
 				for (f = 0; f < locationInfo.length; f++) {
@@ -391,7 +382,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
 			}
 		}
 			
-
             movies.recentmovies.push(
                 {	title: results[randomMovieNum].title, 
                     poster: results[randomMovieNum].poster_path,
@@ -416,9 +406,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
     
             displayMovies(movieObject);
             countPages++;
-
             //Runs the fetchMovieDetails function again, while avoiding asynchronous issues
-
             if(pageNo2 && countPages === 2) {
                 fetchMovieDetails(pageNo2, genreNos);
              
@@ -430,7 +418,6 @@ function fetchMovieDetails(pageNo, finalGenre) {
             if(pageNo4 && countPages === 4) {
                 fetchMovieDetails(pageNo4, genreNos);
   
-
             }*/
 
 	})
@@ -651,14 +638,12 @@ function displayMovies(movieObject) {
             whereToWatchNoOptionsEl.innerHTML = movieObject.whereToWatch[0];
             iconHolder.appendChild(whereToWatchNoOptionsEl);
         }
-
 		let buttonWatchEl = document.createElement("button");
 		buttonWatchEl.setAttribute("id", tmdbId);
 		buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
-
         let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
 		buttonFavEl.setAttribute("class", "button mb-5");
@@ -666,15 +651,8 @@ function displayMovies(movieObject) {
 		buttonFavEl.textContent = "Add to Favourites";
 		cardContentEl.appendChild(buttonFavEl);
 		
-
         whereToWatchEl.appendChild(iconHolder);
-
         cardContentEl.appendChild(whereToWatchEl);*/
-
-
-
-
-
 
         let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
@@ -842,7 +820,6 @@ var loadFavourites = function() {
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "favSaveWatch(this.id)");
 			buttonWatchEl.setAttribute("class", "button mb-5");
-			//buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -964,7 +941,6 @@ var loadWatchlist = function() {
 			buttonEl.setAttribute("onclick", "removeWatch(this.id)");
 			buttonEl.textContent = "Remove From Watchlist";
 			buttonEl.setAttribute("class", "button mr-3 mb-5");
-
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
@@ -1099,12 +1075,14 @@ var recentSaveFav = function(clicked_id) {
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "removeFav(this.id)");
+			buttonEl.setAttribute("class", "button mb-5");
 			buttonEl.textContent = "Remove From Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "favSaveWatch(this.id)");
+			buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -1260,12 +1238,14 @@ var recentSaveWatch = function(clicked_id) {
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
+			buttonEl.setAttribute("class", "button mb-5");
 			buttonEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 			buttonWatchEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -1312,7 +1292,6 @@ var recentSaveWatch = function(clicked_id) {
 	checkExisting(saveId);
 }
 
-
 var checkExisting = function(itemId) {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -1343,7 +1322,7 @@ var favSaveWatch = function(clicked_id) {
 		if (favId === recentId) {
 			addToWatchModalEl.setAttribute("class", "is-active modal");
 			watchOKButtonEl.addEventListener("click", function() {
-		  addToWatchModalEl.setAttribute("class", "modal");
+		  	addToWatchModalEl.setAttribute("class", "modal");
 			let title = movies.favourites[i].title;
 			let poster = movies.favourites[i].poster;
 			let overview = movies.favourites[i].overview;
@@ -1445,12 +1424,14 @@ var favSaveWatch = function(clicked_id) {
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
+			buttonEl.setAttribute("class", "button mb-5");
 			buttonEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 			buttonWatchEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -1489,10 +1470,10 @@ var favSaveWatch = function(clicked_id) {
 			
 			saveSearch();
 
-			// loadWatchlist();
-
-		}//end of if 
+				
+		})//end of if 
 	}//end of for loop
+}
 }
 
 //ADDING FROM WATCHLIST TO FAVOURITES
@@ -1510,7 +1491,7 @@ var watchSaveFav = function(clicked_id) {
 		console.log("i final is: "+i);
 
 		if (saveId === recentId) {
-      addToFavModalEl.setAttribute("class", "is-active modal");
+      		addToFavModalEl.setAttribute("class", "is-active modal");
 			favOKButtonEl.addEventListener("click", function() {
 			addToFavModalEl.setAttribute("class", "modal");
 			let title = movies.watchlist[i].title;
@@ -1617,19 +1598,19 @@ var watchSaveFav = function(clicked_id) {
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "watchSaveFav(this.id)");
+			buttonEl.setAttribute("class", "button mb-5");
 			buttonEl.textContent = "Add To Favourites";
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "removeWatch(this.id)");
+			buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
 			buttonWatchEl.textContent = "Remove From Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
-
-
-      favDisplayEl.appendChild(cardEl);
+      		favDisplayEl.appendChild(cardEl);
 			console.log("cardEl ----" + cardEl);
 			
 			whereToWatchEl.appendChild(iconHolder);
@@ -1666,11 +1647,10 @@ var watchSaveFav = function(clicked_id) {
 
 			// loadWatchlist();
 
-		}//end of if 
+		})//end of if 
 	}//end of for loop
-
 }
-
+}
 
 // REMOVE FROM FAVOURITES LIST
 var removeFav = function(this_id) {
