@@ -15,7 +15,8 @@ var genreNos;
 var results;
 var tmdbId;
 var genres = [];
-var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=1000&language=en&vote_average.gte=7&with_genres=";
+var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=4000&language=en&vote_average.gte=7&with_genres=";
+var duplicateChecker = [];
 
 var movies = {};
 
@@ -71,14 +72,187 @@ function fetchMovieDetails(pageNo, finalGenre) {
  
 
     fetch(tmdbCall+finalGenre+"&page="+pageNo)
-
     .then(function(response){
         return response.json();
     })
     .then(function(data){
         results = data.results;
 
-        let randomMovieNum = Math.floor(Math.random()*results.length);
+		let randomMovieNum = Math.floor(Math.random()*results.length);
+		
+
+		tmdbID = results[randomMovieNum].id;
+		let hasDuplicate = duplicateChecker.some( check => check['tmdbId'] === tmdbID )
+
+		if (hasDuplicate === true) {
+			fetchMovieDetails(pageNo, finalGenre)
+		} else {
+			var tmdbCodeURL = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/idlookup?source_id=movie/"+tmdbID+"&source=tmdb&country=ca";
+			fetch(tmdbCodeURL, {
+				"method": "GET",
+				"headers": {
+					"x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
+					"x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
+				}
+			})
+			.then(response => {
+				return response.json();
+			})
+			.then(function(utellyData){
+				if (countPages ===2 && !pageNo3) {
+					resetVariables();
+					return;
+				} else if (countPages ===3 && !pageNo4) {
+					resetVariables();
+					return;
+				}  else if (countPages === 4) {
+					resetVariables();
+					return;
+				} 
+	   
+				let locationInfo = utellyData.collection.locations;
+	 
+				let includedGenresArray = [];
+				let movieObject;
+				for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+					for (k = 0; k < genres.length; k++) {
+						if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+							includedGenresArray.push(genres[k].name);
+						}
+					}
+				}
+		
+				let includedGenres = includedGenresArray.join(", ");
+				includedGenresArray = [];
+				for(var j = 0; j < results[randomMovieNum].genre_ids.length; j++) {
+					for (k = 0; k < genres.length; k++) {
+						if (results[randomMovieNum].genre_ids[j]===genres[k].id){
+							includedGenresArray.push(genres[k].name);
+						}
+					}
+				}
+				let whereToWatchInfo = [];
+				let whereToWatchItem;
+				if (locationInfo) {
+					for (i = 0; i < locationInfo.length; i++) {
+						whereToWatchItem = {serviceName: locationInfo[i].display_name,
+											serviceIcon: locationInfo[i].icon,
+											serviceURL: locationInfo[i].url
+						}
+						whereToWatchInfo.push(whereToWatchItem);
+					 }
+				} else {
+					let googleSearch = "https://www.google.com/search?q=movie+" + results[randomMovieNum].title.replace(/\s/g, '+') + "+" + results[randomMovieNum].release_date.substring(0, 4);
+					whereToWatchInfo = ["Sorry we couldn't find a service that streams <em>" + results[randomMovieNum].title + ".</em> <br /><a href='" + googleSearch + "' target='_blank'>Click here to search for the title on Google</a>."];
+				}
+	
+				movieObject = {title: results[randomMovieNum].title, 
+								poster: results[randomMovieNum].poster_path,
+								overview: results[randomMovieNum].overview,
+								genres: includedGenres,
+								rating: results[randomMovieNum].vote_average,
+								date: results[randomMovieNum].release_date,
+								whereToWatch: whereToWatchInfo,
+								tmdbId: tmdbID
+								};
+				duplicateChecker.push(movieObject);		
+					
+	
+				//google where to watch display info
+			if (locationInfo) 
+			{			
+				for (y = 0; y < locationInfo.length; y++) {
+				if (locationInfo[y].display_name === "Google Play") {
+					var googlename = locationInfo[y].display_name;
+					var googleicon = locationInfo[y].icon;
+					var googleurl = locationInfo[y].url;
+				}
+				}
+			
+
+			//apple where to watch display info
+			 			
+				for (r = 0; r < locationInfo.length; r++) {
+				if (locationInfo[r].display_name === "Disney") {
+					var disneyname = locationInfo[r].display_name;
+					var disneyicon = locationInfo[r].icon;
+					var disneyurl = locationInfo[r].url;
+				}
+				}
+			
+
+			//itunes where to watch display info
+				
+				for (w = 0; w < locationInfo.length; w++) {
+				if (locationInfo[w].display_name === "iTunes") {
+					var itunesname = locationInfo[w].display_name;
+					var itunesicon = locationInfo[w].icon;
+					var itunesurl = locationInfo[w].url;
+				}
+				}
+			
+
+			//Amazon where to watch display info
+						
+				for (f = 0; f < locationInfo.length; f++) {
+				if (locationInfo[f].display_name === "Amazon Prime Video") {
+					var amazonname = locationInfo[f].display_name;
+					var amazonicon = locationInfo[f].icon;
+					var amazonurl = locationInfo[f].url;
+				}
+			}
+		}
+			
+
+            movies.recentmovies.push(
+                {	title: results[randomMovieNum].title, 
+                    poster: results[randomMovieNum].poster_path,
+                    overview: results[randomMovieNum].overview,
+					genres: includedGenres,
+					servicegoogle: googlename,
+					servicegoogleicon: googleicon,
+					servicegoogleurl: googleurl,
+					serviceamazon: amazonname,
+					serviceamazonicon: amazonicon,
+					serviceamazonurl: amazonurl,
+					serviceitunes: itunesname,
+					serviceitunesicon: itunesicon,
+					serviceitunesurl: itunesurl,
+					servicedisney: disneyname,
+					servicedisneyicon: disneyicon,
+					servicedisneyurl: disneyurl,
+                    rating: results[randomMovieNum].vote_average,
+                    date: results[randomMovieNum].release_date,
+                    tmdbId: ""+results[randomMovieNum].id+"" })
+            saveSearch();
+		
+				displayMovies(movieObject);
+				countPages++;
+	
+				//Runs the fetchMovieDetails function again, while avoiding asynchronous issues
+	
+				if(pageNo2 && countPages === 2) {
+					fetchMovieDetails(pageNo2, genreNos);
+				 
+				}
+				if(pageNo3 && countPages === 3) {
+					fetchMovieDetails(pageNo3, genreNos);
+				}
+					
+				if(pageNo4 && countPages === 4) {
+					fetchMovieDetails(pageNo4, genreNos);
+	  
+				}
+	
+			})
+			.catch(err => {
+				console.error(err);
+				
+			});
+	
+		
+		}
+        /*let randomMovieNum = Math.floor(Math.random()*results.length);
 
 
         tmdbID = results[randomMovieNum].id;
@@ -242,20 +416,16 @@ function fetchMovieDetails(pageNo, finalGenre) {
             if(pageNo4 && countPages === 4) {
                 fetchMovieDetails(pageNo4, genreNos);
   
-            }
+            }*/
 
-        })
-        .catch(err => {
-            console.error(err);
-            
-        });
+	})
+		
 
-    
-    })
 }
 
 // do an api call to find out how many pages there are and then add randomly generated page nos to pageNo variables
 function setPageNo(){
+	duplicateChecker = [];
     genreNos = collectGenres();
     fetch(tmdbCall+genreNos)
     .then(function(response){
@@ -269,17 +439,56 @@ function setPageNo(){
             })
         } else {         
             moviedisplayEl.textContent = "";
-            totalResults = data.total_results;
-            pageNo1 = Math.ceil(Math.random() * data.total_pages);    
-            if (totalResults >= 2) {
-                pageNo2 = Math.ceil(Math.random() * data.total_pages); 
-            }
-            if (totalResults >= 3) {
-                pageNo3 = Math.ceil(Math.random() * data.total_pages);
-            }    
-            if (totalResults >= 4) {
-                pageNo4 = Math.ceil(Math.random() * data.total_pages); 
-            }   
+			totalResults = data.total_results;
+			console.log ("total results: " + totalResults);
+			pageNo1 = Math.ceil(Math.random() * data.total_pages);   
+			if (totalResults === 1) {
+				pageNo1 = 1;
+			} else if (totalResults === 2) {
+				pageNo1 = 1;
+				pageNo2 = 1;
+			} else if (totalResults === 3) {
+				pageNo1 = 1;
+				pageNo2 = 1;
+				pageNo3 = 1;
+			} else if (totalResults <= 20) {
+				pageNo1 = 1;
+				pageNo2 = 1;
+				pageNo3 = 1;
+				pageNo4 = 1;
+			} else if (totalResults <= 40) {
+				pageNo1 = 1;
+				pageNo2 = 1;
+				pageNo3 = 2;
+				if (totalResults === 21) {
+					pageNo4 = 1;
+				} else {
+					pageNo4 = 2;
+				}
+			} else if (totalResults <= 60) {
+				pageNo1 = 1;
+				pageNo2 = 2;
+				pageNo3 = 3;
+				pageNo4 = Math.ceil(Math.random() * data.total_pages-1);
+			} else if (totalResults <= 80) {
+				pageNo1 = 1;
+				pageNo2 = 2;
+				pageNo3 = 3;
+				pageNo4 = 4; 
+			} else {
+				pageNo1 = Math.ceil(Math.random() * data.total_pages);   
+				do {
+					pageNo2 = Math.ceil(Math.random() * data.total_pages);
+				} while (pageNo1 === pageNo2);
+				do {
+					pageNo3 = Math.ceil(Math.random() * data.total_pages);
+				} while (pageNo1 === pageNo3 || pageNo2 === pageNo3);
+				
+				do {
+					pageNo4 = Math.ceil(Math.random() * data.total_pages);
+				} while (pageNo1 === pageNo4 || pageNo2 === pageNo4 || pageNo3 === pageNo4); 
+			}
+            
             fetchMovieDetails(pageNo1, genreNos);
 
         }
@@ -732,6 +941,7 @@ var loadWatchlist = function() {
 			buttonEl.setAttribute("onclick", "removeWatch(this.id)");
 			buttonEl.textContent = "Remove From Watchlist";
 			buttonEl.setAttribute("class", "button mr-3 mb-5");
+
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
@@ -750,9 +960,11 @@ var loadWatchlist = function() {
 	}
 }//END OF LOADWATCHLIST
 
+
 // ADDING FROM RECENT TO FAVOURITES LIST
 var recentSaveFav = function(clicked_id) {
 	var favId = document.getElementById(clicked_id).id;
+
 
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -1262,6 +1474,7 @@ var watchSaveFav = function(clicked_id) {
 
 	movies = JSON.parse(localStorage.getItem("movies"));
 
+
 	for (var i = 0; i < movies.watchlist.length; i++) {
 
 		var recentId = ""+movies.watchlist[i].tmdbId+"";
@@ -1381,6 +1594,7 @@ var watchSaveFav = function(clicked_id) {
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
+
             favDisplayEl.appendChild(cardEl);
 			console.log("cardEl ----" + cardEl);
 			
@@ -1413,6 +1627,7 @@ var watchSaveFav = function(clicked_id) {
 			var deleteitem = document.getElementById("watch-card-"+saveId);
 			deleteitem.remove();
 			
+
 			saveSearch();
 
 			// loadWatchlist();
