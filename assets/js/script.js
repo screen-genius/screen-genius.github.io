@@ -318,7 +318,6 @@ function displayMovies(movieObject) {
         let cardEl = document.createElement("div");
         cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
         cardEl.setAttribute("id", "card-"+tmdbId)
-
         //add poster image
         let cardImageEl = document.createElement("div");
         cardImageEl.setAttribute("class", "card-image is-3");
@@ -405,6 +404,45 @@ function displayMovies(movieObject) {
 		buttonWatchEl.setAttribute("onclick", "recentSaveWatch(this.id)");
 		buttonWatchEl.textContent = "Add to Watchlist";
 		cardContentEl.appendChild(buttonWatchEl);
+
+        /*let whereToWatchIconEl;
+        if (typeof movieObject.whereToWatch[0] === "object") {
+            for (j = 0; j < movieObject.whereToWatch.length; j++) {
+                whereToWatchIconEl = document.createElement("div");
+                let watchID = movieObject.whereToWatch[j].serviceName;
+                watchID = watchID.replace(/\s+/g, '-').toLowerCase();
+                whereToWatchIconEl.setAttribute("id", watchID);
+                whereToWatchIconEl.setAttribute("class", "p-3 has-background-white");
+                whereToWatchIconEl.innerHTML= "<a href='"+movieObject.whereToWatch[j].serviceURL+"' target='_blank'><img src='" + movieObject.whereToWatch[j].serviceIcon + "' alt='" + movieObject.whereToWatch[j].serviceName + "' /></a>";
+                iconHolder.appendChild(whereToWatchIconEl);
+            }                
+        } else {
+            let whereToWatchNoOptionsEl = document.createElement("div");
+            whereToWatchNoOptionsEl.innerHTML = movieObject.whereToWatch[0];
+            iconHolder.appendChild(whereToWatchNoOptionsEl);
+        }
+
+		let buttonWatchEl = document.createElement("button");
+		buttonWatchEl.setAttribute("id", tmdbId);
+		buttonWatchEl.setAttribute("class", "button mr-3 mb-5");
+		buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
+		buttonWatchEl.textContent = "Add to Watchlist";
+		cardContentEl.appendChild(buttonWatchEl);
+
+        let buttonFavEl = document.createElement("button");
+		buttonFavEl.setAttribute("id", tmdbId);
+		buttonFavEl.setAttribute("class", "button mb-5");
+		buttonFavEl.setAttribute("onclick", "saveFav(this.id)");
+		buttonFavEl.textContent = "Add to Favourites";
+		cardContentEl.appendChild(buttonFavEl);
+		
+
+        whereToWatchEl.appendChild(iconHolder);
+        cardContentEl.appendChild(whereToWatchEl);*/
+
+
+
+
 
         let buttonFavEl = document.createElement("button");
 		buttonFavEl.setAttribute("id", tmdbId);
@@ -563,6 +601,7 @@ var loadFavourites = function() {
 		
 			let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
+			buttonEl.setAttribute("class", "button mr-3 mb-5");
 			buttonEl.setAttribute("onclick", "removeFav(this.id)");
 			buttonEl.textContent = "Remove From Favourites";
 			cardContentEl.appendChild(buttonEl);
@@ -570,6 +609,8 @@ var loadFavourites = function() {
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "favSaveWatch(this.id)");
+			buttonWatchEl.setAttribute("class", "button mb-5");
+			//buttonWatchEl.setAttribute("onclick", "saveWatch(this.id)");
 			buttonWatchEl.textContent = "Add To Watchlist";
 			cardContentEl.appendChild(buttonWatchEl);
 	
@@ -686,16 +727,18 @@ var loadWatchlist = function() {
 			iconHolder.appendChild(whereToWatchNoOptionsEl);
 			}
 		
-			let buttonEl = document.createElement("button");
+		  let buttonEl = document.createElement("button");
 			buttonEl.setAttribute("id", tmdbId);
 			buttonEl.setAttribute("onclick", "removeWatch(this.id)");
 			buttonEl.textContent = "Remove From Watchlist";
+			buttonEl.setAttribute("class", "button mr-3 mb-5");
 			cardContentEl.appendChild(buttonEl);
 
 			let buttonWatchEl = document.createElement("button");
 			buttonWatchEl.setAttribute("id", tmdbId);
 			buttonWatchEl.setAttribute("onclick", "watchSaveFav(this.id)");
 			buttonWatchEl.textContent = "Add To Favourites";
+			buttonWatchEl.setAttribute("class", "button mb-5");
 			cardContentEl.appendChild(buttonWatchEl);
 	
 			cardEl.appendChild(cardContentEl);
@@ -1378,49 +1421,6 @@ var watchSaveFav = function(clicked_id) {
 	}//end of for loop
 
 }
-
-/* CAN BE DELETED
-var checkExistingFav = function(currentId) {
-
-// 	var test = currentId;
-// 	console.log("display i: " + i)
-// 	console.log(currentId);
-// 	movies = JSON.parse(localStorage.getItem("movies"));
-
-// 	for (var x = 0; x < movies.favourites.length; x++) {
-	
-// 	console.log("display x: " + x);
-	
-// 	if (currentId === movies.favourites[x].tmdbId) {
-
-// 	alert("DUPLICATE IS ARRAY #: " + x);
-// 	console.log("DUPLICATE IS ARRAY #: " + x);
-
-// 	var removeItem = movies.favourites.map(function(item) {return item.tmdbId;}).indexOf(currentId);
-// 	movies.favourites.splice(removeItem, 1)
-// 	var deleteitem = document.getElementById("fav-card-"+currentId);
-// 	deleteitem.remove();
-
-
-// 	saveSearch();
-
-
-// 	} else {alert("DISPLAY"); displayFav(test)};
-// 	}
-}
-
-var checkExistingWatchlist = function(watchlistId) {
-
-// 	for (var b = 0; 0 < movies.watchlist.length; b++) {
-// 		var recentExisting = watchlistId;
-
-// 		var watchlistExisting = ""+movies.watchlist[b].tmdbId+"";
-
-// 		// var watchlistExisting = movies.watchlist[j].tmdbId;
-
-// 		if (recentExisting === watchlistExisting) {alert("Already in Watchlist"); removeWatch(); break;}
-// 		}
-}*/
 
 // REMOVE FROM FAVOURITES LIST
 var removeFav = function(this_id) {
