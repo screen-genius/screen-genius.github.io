@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
   <link rel="stylesheet" href="https://bulma.io/css/bulma-docs.min.css?v=202101281238">
   <link rel="stylesheet" href="./assets/css/style.css">
   <title>Screen Genius</title>
   <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" >
 </head>
+
 
 
 <body class="has-navbar-fixed-top">
@@ -27,6 +29,7 @@
                 <h1>Screen Genius</h1>
             </a>
         
+
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -34,11 +37,10 @@
             </a>
             </div>
         
+
             <div id="navbar-menu" class="navbar-menu">
                 <div class="navbar-start">
-                    <!--p class="navbar-item">
-                    &nbsp;
-                    </p-->
+
                 </div>
             
                 <div class="navbar-end">
@@ -50,7 +52,8 @@
                     Favourites
                     </a>
 
-                    <a class="navbar-item">
+
+                    <a class="navbar-item" href="about.html">
                         About
                     </a>  
                 </div>
@@ -133,6 +136,70 @@
       </section>
       <footer class="modal-card-foot">
         <button id="genres-OK-button" class="button is-success">OK</button>
+      </footer>
+    </div>
+</div>
+
+<!-- Modal Alerts-->
+
+<div id="add-fav" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Added to Favourites</p>
+      </header>
+      <section class="modal-card-body">
+       This movie has been added to your favourites.
+      </section>
+      <footer class="modal-card-foot">
+        <button id="fav-OK-button" class="button is-success">OK</button>
+      </footer>
+    </div>
+</div>
+
+<div id="add-watch" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Added to Watchlist</p>
+      </header>
+      <section class="modal-card-body">
+       This movie has been added to your watchlist.
+      </section>
+      <footer class="modal-card-foot">
+        <button id="watch-OK-button" class="button is-success">OK</button>
+      </footer>
+    </div>
+</div>
+
+<div id="remove-fav" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Remove From Favourites</p>
+      </header>
+      <section class="modal-card-body">
+       Are you sure you want to remove?
+      </section>
+      <footer class="modal-card-foot">
+        <button id="yes-button"class="button is-success">Yes</button>
+        <button id ="no-button" class="button is-no">No</button>
+      </footer>
+    </div>
+</div>
+
+<div id="remove-watch" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Remove From Watchlist</p>
+      </header>
+      <section class="modal-card-body">
+       Are you sure you want to remove?
+      </section>
+      <footer class="modal-card-foot">
+        <button id="yes-w-button"class="button is-success">Yes</button>
+        <button id ="no-w-button" class="button is-no">No</button>
       </footer>
     </div>
 </div>

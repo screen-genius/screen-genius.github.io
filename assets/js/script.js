@@ -5,6 +5,16 @@ var favDisplayEl = document.getElementById("favourite-display");
 var watchlistDisplayEl = document.getElementById("watchlist-display");
 var tooManyGenresModalEl = document.getElementById("too-many-genres");
 var genresOKButtonEl = document.getElementById("genres-OK-button");
+var addToFavModalEl = document.getElementById("add-fav");
+var favOKButtonEl = document.getElementById("fav-OK-button");
+var addToWatchModalEl = document.getElementById("add-watch");
+var watchOKButtonEl = document.getElementById("watch-OK-button");
+var removeFavModalEl = document.getElementById("remove-fav");
+var yesButtonEl = document.getElementById("yes-button");
+var noButtonEl = document.getElementById("no-button");
+var yesWatButtonEl = document.getElementById("yes-w-button");
+var noWatButtonEl = document.getElementById("no-w-button");
+var removeWatchModalEl = document.getElementById("remove-watch");
 var pageNo1;
 var pageNo2;
 var pageNo3;
@@ -15,6 +25,7 @@ var genreNos;
 var results;
 var tmdbId;
 var genres = [];
+
 var tmdbCall = "https://api.themoviedb.org/3/discover/movie?api_key=fdf647e2a6c6b5d7ea2edb2acfe6abf1&language=en-US&vote_count.gte=100&vote_count.lte=4000&language=en&vote_average.gte=7&with_genres=";
 var duplicateChecker = [];
 
@@ -72,11 +83,13 @@ function fetchMovieDetails(pageNo, finalGenre) {
  
 
     fetch(tmdbCall+finalGenre+"&page="+pageNo)
+
     .then(function(response){
         return response.json();
     })
     .then(function(data){
         results = data.results;
+
 
 		let randomMovieNum = Math.floor(Math.random()*results.length);
 		
@@ -293,6 +306,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
                         includedGenresArray.push(genres[k].name);
                     }
                 }
+
             }
     
             let includedGenres = includedGenresArray.join(", ");
@@ -416,6 +430,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
             if(pageNo4 && countPages === 4) {
                 fetchMovieDetails(pageNo4, genreNos);
   
+
             }*/
 
 	})
@@ -425,6 +440,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 
 // do an api call to find out how many pages there are and then add randomly generated page nos to pageNo variables
 function setPageNo(){
+
 	duplicateChecker = [];
     genreNos = collectGenres();
     fetch(tmdbCall+genreNos)
@@ -439,6 +455,7 @@ function setPageNo(){
             })
         } else {         
             moviedisplayEl.textContent = "";
+
 			totalResults = data.total_results;
 			console.log ("total results: " + totalResults);
 			pageNo1 = Math.ceil(Math.random() * data.total_pages);   
@@ -489,12 +506,13 @@ function setPageNo(){
 				} while (pageNo1 === pageNo4 || pageNo2 === pageNo4 || pageNo3 === pageNo4); 
 			}
             
-            fetchMovieDetails(pageNo1, genreNos);
+      fetchMovieDetails(pageNo1, genreNos);
 
         }
     })
         
 }
+
 
 function collectGenres() {
     let theGenres = []
@@ -507,6 +525,7 @@ function collectGenres() {
     }
     return theGenres.toString();
 }
+
 
 function displayMovies(movieObject) {
         
@@ -526,6 +545,7 @@ function displayMovies(movieObject) {
         // create card elements
         let cardEl = document.createElement("div");
         cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
+
         cardEl.setAttribute("id", "card-"+tmdbId)
         //add poster image
         let cardImageEl = document.createElement("div");
@@ -567,6 +587,7 @@ function displayMovies(movieObject) {
         whereToWatchTitleEl.textContent = "Where to watch:";
         whereToWatchEl.appendChild(whereToWatchTitleEl);
         let iconHolder = document.createElement("div");
+
         iconHolder.setAttribute("class", "icon-holder");
 		let whereToWatchIconEl;
 
@@ -647,7 +668,9 @@ function displayMovies(movieObject) {
 		
 
         whereToWatchEl.appendChild(iconHolder);
+
         cardContentEl.appendChild(whereToWatchEl);*/
+
 
 
 
@@ -1289,6 +1312,7 @@ var recentSaveWatch = function(clicked_id) {
 	checkExisting(saveId);
 }
 
+
 var checkExisting = function(itemId) {
 	movies = JSON.parse(localStorage.getItem("movies"));
 
@@ -1317,6 +1341,9 @@ var favSaveWatch = function(clicked_id) {
 		console.log("i final is: "+i);
 
 		if (favId === recentId) {
+			addToWatchModalEl.setAttribute("class", "is-active modal");
+			watchOKButtonEl.addEventListener("click", function() {
+		  addToWatchModalEl.setAttribute("class", "modal");
 			let title = movies.favourites[i].title;
 			let poster = movies.favourites[i].poster;
 			let overview = movies.favourites[i].overview;
@@ -1483,6 +1510,9 @@ var watchSaveFav = function(clicked_id) {
 		console.log("i final is: "+i);
 
 		if (saveId === recentId) {
+      addToFavModalEl.setAttribute("class", "is-active modal");
+			favOKButtonEl.addEventListener("click", function() {
+			addToFavModalEl.setAttribute("class", "modal");
 			let title = movies.watchlist[i].title;
 			let poster = movies.watchlist[i].poster;
 			let overview = movies.watchlist[i].overview;
@@ -1492,6 +1522,7 @@ var watchSaveFav = function(clicked_id) {
 			if (poster) {
 				posterURL="https://image.tmdb.org/t/p/w500"+poster;      
 			}
+
 			let tmdbId = movies.watchlist[i].tmdbId;
 			//let movieIdAttribute = movies.recentmovies[i].movieObject.tmdbId;
 	
@@ -1499,6 +1530,7 @@ var watchSaveFav = function(clicked_id) {
 			let cardEl = document.createElement("div");
 			cardEl.setAttribute("class", "card is-child has-background-grey-dark hover has-text-white is-horizontal p-5 mb-5");
 			//cardEl.setAttribute("id", movieIdAttribute)
+
 			cardEl.setAttribute("id", "fav-card-"+tmdbId)
 	
 	
@@ -1535,6 +1567,7 @@ var watchSaveFav = function(clicked_id) {
 			contentEl.setAttribute("class", "content has-text-grey-light");
 			contentEl.textContent = overview;
 			cardContentEl.appendChild(contentEl);
+
 
 			let whereToWatchEl = document.createElement("div");
 			let whereToWatchTitleEl = document.createElement("h4");
@@ -1595,7 +1628,8 @@ var watchSaveFav = function(clicked_id) {
 	
 			cardEl.appendChild(cardContentEl);
 
-            favDisplayEl.appendChild(cardEl);
+
+      favDisplayEl.appendChild(cardEl);
 			console.log("cardEl ----" + cardEl);
 			
 			whereToWatchEl.appendChild(iconHolder);
@@ -1605,18 +1639,18 @@ var watchSaveFav = function(clicked_id) {
                 {	title: movies.watchlist[i].title, 
                     poster: movies.watchlist[i].poster,
                     overview: movies.watchlist[i].overview,
-					servicegoogle: movies.watchlist[i].servicegoogle,
-					servicegoogleicon: movies.watchlist[i].servicegoogleicon,
-					servicegoogleurl: movies.watchlist[i].servicegoogleurl,
-					serviceamazon: movies.watchlist[i].serviceamazon,
-					serviceamazonicon: movies.watchlist[i].serviceamazonicon,
-					serviceamazonurl: movies.watchlist[i].serviceamazonurl,
-					serviceitunes: movies.watchlist[i].serviceitunes,
-					serviceitunesicon: movies.watchlist[i].serviceitunesicon,
-					serviceitunesurl: movies.watchlist[i].serviceitunesurl,
-					servicedisney: movies.watchlist[i].servicedisney,
-					servicedisneyicon: movies.watchlist[i].servicedisneyicon,
-					servicedisneyurl: movies.watchlist[i].servicedisneyurl,
+                    servicegoogle: movies.watchlist[i].servicegoogle,
+                    servicegoogleicon: movies.watchlist[i].servicegoogleicon,
+                    servicegoogleurl: movies.watchlist[i].servicegoogleurl,
+                    serviceamazon: movies.watchlist[i].serviceamazon,
+                    serviceamazonicon: movies.watchlist[i].serviceamazonicon,
+                    serviceamazonurl: movies.watchlist[i].serviceamazonurl,
+                    serviceitunes: movies.watchlist[i].serviceitunes,
+                    serviceitunesicon: movies.watchlist[i].serviceitunesicon,
+                    serviceitunesurl: movies.watchlist[i].serviceitunesurl,
+                    servicedisney: movies.watchlist[i].servicedisney,
+                    servicedisneyicon: movies.watchlist[i].servicedisneyicon,
+                    servicedisneyurl: movies.watchlist[i].servicedisneyurl,
                     rating: movies.watchlist[i].rating,
                     date: movies.watchlist[i].date,
                     tmdbId: ""+movies.watchlist[i].tmdbId+"" })
@@ -1637,37 +1671,51 @@ var watchSaveFav = function(clicked_id) {
 
 }
 
+
 // REMOVE FROM FAVOURITES LIST
 var removeFav = function(this_id) {
 
-	movies = JSON.parse(localStorage.getItem("movies"));
+	  removeFavModalEl.setAttribute("class", "is-active modal");
 
-	var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
+	  yesButtonEl.onclick = function() {
+      
+      movies = JSON.parse(localStorage.getItem("movies"));
 
-	movies.favourites.splice(removeItem, 1)
+      var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
 
-	var deleteitem = document.getElementById("fav-card-"+this_id);
-	deleteitem.remove();
+      movies.favourites.splice(removeItem, 1)
 
-	saveSearch();
-	
+      var deleteitem = document.getElementById("fav-card-"+this_id);
+      deleteitem.remove();
+
+      saveSearch();
+    }
+	  noButtonEl.onclick = function() {
+	    removeFavModalEl.setAttribute("class", "modal");
+	  }
 }
 
 // REMOVE FROM WATCHLIST
 var removeWatch = function(this_id) {
 
+  removeWatchModalEl.setAttribute("class", "is-active modal");
+		
+	yesWatButtonEl.onclick = function() {
+    movies = JSON.parse(localStorage.getItem("movies"));
 
-	movies = JSON.parse(localStorage.getItem("movies"));
+    var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(this_id);
 
-	var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(this_id);
+    movies.watchlist.splice(removeItem, 1)
 
-	movies.watchlist.splice(removeItem, 1)
+    var deleteitem = document.getElementById("watch-card-"+this_id);
+    deleteitem.remove();
 
-	var deleteitem = document.getElementById("watch-card-"+this_id);
-	deleteitem.remove();
-	
-	saveSearch();
-
+    saveSearch();
+  }
+  
+  noWatButtonEl.onclick = function() {
+		removeWatchModalEl.setAttribute("class", "modal");
+	}
 }
 
 // END OF WATCHLIST AND FAVOURITES LIST 
