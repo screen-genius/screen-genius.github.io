@@ -38,8 +38,11 @@ This api will pull from 100,000's movies based on one or a combination of multip
 # Technologies
 As we were limited by not usuing boot-strap we used;
 * HTML 
-* CSS
+* Bulma CSS
 * JS
+* The Movie Database Api
+* Rapid Api - Utelly
+
 
 # Status
 We are currently working on adding new features to Screen Genius! These feature include better suggested titles based on user input. 
