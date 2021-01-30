@@ -50,7 +50,7 @@ A seperate e-petition page that will allow the user to request a streaming servi
 # Screenshot
 
 # Presentation
-[Screen-buddy.pdf](https://github.com/screen-genius/screen-genius.github.io/files/5875611/Screen-buddy.pdf)
+[Screen-Genius](https://github.com/screen-genius/screen-genius.github.io/files/5898468/Screen-Genius.finished.pdf)
 =======
 # Screen Genius
 Use Screen Genius to discover movies and shows you will love
