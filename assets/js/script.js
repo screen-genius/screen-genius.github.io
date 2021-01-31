@@ -520,6 +520,7 @@ var recentSave = function(clicked_id, cardNo) {
 
 			if(recentMovies.length===0){
 				displayEl.textContent = "Pick from your favourite genres on the left and press search to find hidden gem movies to watch. Or just press search for great movie ideas from any genre.";
+				movieDisplayEmpty = true;
 			}
 
 	
