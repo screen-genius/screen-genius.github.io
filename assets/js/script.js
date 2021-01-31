@@ -251,6 +251,7 @@ function setPageNo(){
     })
     .then(function(data){
         if (data.results.length === 0) {
+			spinnerEl.setAttribute("class", "modal")
             tooManyGenresModalEl.setAttribute("class", "is-active modal");
             genresOKButtonEl.addEventListener("click", function() {
                 tooManyGenresModalEl.setAttribute("class", "modal");
