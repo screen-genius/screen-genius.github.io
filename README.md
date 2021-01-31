@@ -20,7 +20,7 @@ This is your home for new movies, and forgotten favorites.This is a website that
 * [Overview](#Overview)
 * [Technologies](#Technologies)
 * [Status](#Status)
-* [Screenshot](#Screenshot)
+* [Functionality](#Functionality)
 * [PowerPoint](#PowerPoint)
 
 # Overview
@@ -38,8 +38,11 @@ This api will pull from 100,000's movies based on one or a combination of multip
 # Technologies
 As we were limited by not usuing boot-strap we used;
 * HTML 
-* CSS
+* Bulma CSS
 * JS
+* The Movie Database Api
+* Rapid Api - Utelly
+
 
 # Status
 We are currently working on adding new features to Screen Genius! These feature include better suggested titles based on user input. 
@@ -47,32 +50,13 @@ A seperate e-petition page that will allow the user to request a streaming servi
 
 
 
-# Screenshot
+# Functionality
+![Functionality2](https://user-images.githubusercontent.com/72447285/106393838-3abc6900-63c7-11eb-8fc5-5fd2b6b69e09.gif)
 
 # Presentation
+
+
 [Screen-Genius](https://github.com/screen-genius/screen-genius.github.io/files/5898468/Screen-Genius.finished.pdf)
-=======
-# Screen Genius
-Use Screen Genius to discover movies and shows you will love
-
-## Table of Contents
-* Overview
-* Technologies
-* Status
-* Screenshot
-
-## Overview
-This is an application using HTML, JS, and CSS. The app allows you to search for movie titles based off of different genres. The search engine will provide the user with the title, synopsis, and location of where to view the movie. There is also a feature to add movies to a favourites and a watchlist.
-
-## Technologies
-Project created with:
-* HTML
-* CSS
-* JS
-
-## Status
-To view finished project please visit the below.
 
 
 
-## Screenshot
