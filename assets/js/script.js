@@ -49,7 +49,7 @@ var displayCards = [{card: "movie-display",
 					},
 					{card: "favourite-display",
 					lbFunction: "removeFav(this.id)",
-					lbTextContent: "Remove from Watchlist",
+					lbTextContent: "Remove from Favourites",
 					rbFunction: "favToWatch(this.id)",
 					rbTextContent: "Move to Watchlist",
 					idPrefix: "fav-card-"
@@ -488,6 +488,8 @@ var recentSave = function(clicked_id, cardNo) {
 		var recentId = recentMovies[i].tmdbId;
 		if (id == recentId) {
 
+			let displayEl = document.getElementById("movie-display")
+
 			displayMovies(recentMovies[i], displayCards[cardNo]);
 
 			if(cardNo == 1) {
@@ -504,6 +506,11 @@ var recentSave = function(clicked_id, cardNo) {
 			//remove card from recentlist
 			var deleteitem = document.getElementById("card-"+id);
 			deleteitem.remove();
+			
+			if(recentMovies.length===0){
+				displayEl.textContent = "Pick from your favourite genres on the left and press search to find hidden gem movies to watch. Or just press search for great movie ideas from any genre.";
+			}
+
 	
 			saveSearch();
 		}
@@ -514,6 +521,7 @@ var recentSave = function(clicked_id, cardNo) {
 //ADDING FROM FAVOURITES TO WATCHLIST
 var favToWatch = function(clicked_id) {
 	var favId = document.getElementById(clicked_id).id;
+	let displayEl = document.getElementById("favourite-display");
 
 
 	for (var i = 0; i < movies.favourites.length; i++) {
@@ -523,14 +531,26 @@ var favToWatch = function(clicked_id) {
 
 		if (favId == recentId) {
 
-			displayMovies(movies.favourites[i], displayCards[1]);
-			//remove object from aray position [i]
-			movies.watchlist.push(movies.favourites[i]);
 
+			//display movie under watchlist on screen
+			displayMovies(movies.favourites[i], displayCards[1]);
+			watchlistDisplayEmpty = false;
+
+			//move object [i] from favourites array to watchlist array  
+			movies.watchlist.push(movies.favourites[i]);
 			movies.favourites.splice(i, 1);
-			//remove card from recentlist
+
+			//remove card from favourites display area
 			var deleteitem = document.getElementById("fav-card-"+favId);
 			deleteitem.remove();
+
+			//check if favourites area is blank. If yes insert default text
+			if (movies.favourites.length == 0){
+				displayEl.textContent = "No movies in your Favourites.";
+				favDisplayEmpty = true;
+			}
+
+
 			saveSearch();
 
 		}//end of if
@@ -540,6 +560,7 @@ var favToWatch = function(clicked_id) {
 //ADDING FROM WATCHLIST TO FAVOURITES
 var watchToFav = function(clicked_id) {
 	var watchId = document.getElementById(clicked_id).id;
+	let displayEl = document.getElementById("watchlist-display");
 
 
 	for (var i = 0; i < movies.watchlist.length; i++) {
@@ -549,14 +570,24 @@ var watchToFav = function(clicked_id) {
 
 		if (watchId == recentId) {
 
+			//display movie under favourites on screen
 			displayMovies(movies.watchlist[i], displayCards[2]);
-			//remove object from aray position [i]
-			movies.favourites.push(movies.watchlist[i]);
+			favDisplayEmpty = false;
 
+			//move object [i] from watchlist array to favourites array  
+			movies.favourites.push(movies.watchlist[i]);
 			movies.watchlist.splice(i, 1);
-			//remove card from recentlist
+
+			//remove card from watchlist display area
 			var deleteitem = document.getElementById("watch-card-"+watchId);
-			deleteitem.remove();			
+			deleteitem.remove();	
+			
+			//check if watchlist area is blank. If yes insert default text
+			if (movies.watchlist.length == 0){
+				displayEl.textContent = "No movies in your Watchlist.";
+				watchlistDisplayEmpty = true;
+			}
+			
 
 			saveSearch();
 
@@ -571,8 +602,10 @@ var removeFav = function(this_id) {
 
 	removeFavModalEl.setAttribute("class", "is-active modal");
 
+
 	yesFavButtonEl.onclick = function() {
-      
+		
+		let displayEl = document.getElementById("favourite-display");
 		movies = JSON.parse(localStorage.getItem("movies"));
 
 		var removeItem = movies.favourites.map(function(item) {return item.tdmbId;}).indexOf(this_id);
@@ -583,7 +616,14 @@ var removeFav = function(this_id) {
 		deleteitem.remove();
 
 		saveSearch();
+
+		if (movies.favourites.length == 0){
+			displayEl.textContent = "No movies in your Favourites.";
+			favDisplayEmpty = true;
+		}
 		removeFavModalEl.setAttribute("class", "modal");
+
+
 	}
 	noFavButtonEl.onclick = function() {
 	    removeFavModalEl.setAttribute("class", "modal");
@@ -596,6 +636,9 @@ var removeWatch = function(this_id) {
 removeWatchModalEl.setAttribute("class", "is-active modal");
 		
 	yesWatButtonEl.onclick = function() {
+
+		let displayEl = document.getElementById("watchlist-display");
+
 		movies = JSON.parse(localStorage.getItem("movies"));
 
 		var removeItem = movies.watchlist.map(function(item) {return item.tdmbId;}).indexOf(this_id);
@@ -606,6 +649,13 @@ removeWatchModalEl.setAttribute("class", "is-active modal");
 		deleteitem.remove();
 
 		saveSearch();
+
+		if (movies.watchlist.length == 0){
+			displayEl.textContent = "No movies in your Watchlist.";
+			watchlistDisplayEmpty = true;
+		}
+
+
 		removeWatchModalEl.setAttribute("class", "modal");
 	}
 	
