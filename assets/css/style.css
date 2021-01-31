@@ -57,9 +57,12 @@ h1 {
 }
 
 .date {
- font-weight: lighter;
  font-size: 0.6em;
 } 
+
+.rating {
+  font-size: 0.8em;
+}
 
 .image {
   width: 200px;
