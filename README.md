@@ -54,9 +54,11 @@ A seperate e-petition page that will allow the user to request a streaming servi
 ![Functionality2](https://user-images.githubusercontent.com/72447285/106393838-3abc6900-63c7-11eb-8fc5-5fd2b6b69e09.gif)
 
 # Presentation
+[Screen Genius](https://github.com/screen-genius/screen-genius.github.io/files/5898468/Screen-Genius.finished.pdf)
 
+# Link to webpage
+[Screen Genius](https://screen-genius.github.io)
 
-[Screen-Genius](https://github.com/screen-genius/screen-genius.github.io/files/5898468/Screen-Genius.finished.pdf)
 
 
 
