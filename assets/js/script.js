@@ -142,15 +142,9 @@ function fetchMovieDetails(pageNo, finalGenre) {
 				return response.json();
 			})
 			.then(function(utellyData){
-				if (countPages ===2 && !pageNo3) {
+				if ((countPages ===2 && !pageNo3)||(countPages ===3 && !pageNo4)||(countPages === 4)) {
 					resetVariables();
-					return;
-
-				} else if (countPages ===3 && !pageNo4) {
-					resetVariables();
-					return;
-				}  else if (countPages === 4) {
-					resetVariables();
+					movieDisplayEmpty = true;
 					return;
 				} 
 	   
@@ -520,7 +514,6 @@ var recentSave = function(clicked_id, cardNo) {
 
 			if(recentMovies.length===0){
 				displayEl.textContent = "Pick from your favourite genres on the left and press search to find hidden gem movies to watch. Or just press search for great movie ideas from any genre.";
-				movieDisplayEmpty = true;
 			}
 
 	
