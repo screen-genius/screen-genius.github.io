@@ -34,7 +34,7 @@ var watchlistDisplayEmpty=true;
 var movieDisplayEmpty=true;
 var favDisplayEmpty=true;
 
-var displayCards = [{card: "movie-display",
+var cardProperties = [{card: "movie-display",
 					 lbFunction: "recentSave(this.id, 1)",
 					 lbTextContent: "Add to Watchlist",
 					 rbFunction: "recentSave(this.id, 2)",
@@ -125,7 +125,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 		
 
 		tmdbID = results[randomMovieNum].id;
-		let hasDuplicate = duplicateChecker.some( check => check['tmdbId'] === tmdbID )
+		let hasDuplicate = duplicateChecker.some( check => check['tmdbId'] === tmdbID );
 
 		if (hasDuplicate === true) {
 			fetchMovieDetails(pageNo, finalGenre)
@@ -199,7 +199,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 
 				recentMovies.push(movieObject);
 				pageTitleEl.textContent = "Search Results";
-				displayMovies(movieObject, displayCards[0]);
+				displayMovies(movieObject, cardProperties[0]);
 				countPages++;
 		
 				//Runs the fetchMovieDetails function again, while avoiding asynchronous issues
@@ -236,6 +236,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 function setPageNo(){
 
 	spinnerEl.setAttribute("class", "modal is-active");
+	movieDisplayEmpty=true;
 
 	duplicateChecker = [];
     genreNos = collectGenres();
@@ -300,7 +301,7 @@ function setPageNo(){
 				} while (pageNo1 === pageNo4 || pageNo2 === pageNo4 || pageNo3 === pageNo4); 
 			}
             
-      fetchMovieDetails(pageNo1, genreNos);
+      		fetchMovieDetails(pageNo1, genreNos);
 
         }
     })
@@ -477,7 +478,7 @@ var loadStoredMovies = function(moviesToLoad, displayNo) {
 		displayEl.textContent = "";
 		for (var i = 0; i < moviesToLoad.length; i++) {
 
-			displayMovies(moviesToLoad[i], displayCards[displayNo]);
+			displayMovies(moviesToLoad[i], cardProperties[displayNo]);
 
 		} // END OF FOR LOOP
 	}// END OF IF 
@@ -495,7 +496,7 @@ var recentSave = function(clicked_id, cardNo) {
 
 			let displayEl = document.getElementById("movie-display")
 
-			displayMovies(recentMovies[i], displayCards[cardNo]);
+			displayMovies(recentMovies[i], cardProperties[cardNo]);
 
 			if(cardNo == 1) {
 				movies.watchlist.push(recentMovies[i]);
@@ -514,6 +515,7 @@ var recentSave = function(clicked_id, cardNo) {
 
 			if(recentMovies.length===0){
 				displayEl.textContent = "Pick from your favourite genres on the left and press search to find hidden gem movies to watch. Or just press search for great movie ideas from any genre.";
+				movieDisplayEmpty = true;
 			}
 
 	
@@ -538,7 +540,7 @@ var favToWatch = function(clicked_id) {
 
 
 			//display movie under watchlist on screen
-			displayMovies(movies.favourites[i], displayCards[1]);
+			displayMovies(movies.favourites[i], cardProperties[1]);
 			watchlistDisplayEmpty = false;
 
 			//move object [i] from favourites array to watchlist array  
@@ -576,7 +578,7 @@ var watchToFav = function(clicked_id) {
 		if (watchId == recentId) {
 
 			//display movie under favourites on screen
-			displayMovies(movies.watchlist[i], displayCards[2]);
+			displayMovies(movies.watchlist[i], cardProperties[2]);
 			favDisplayEmpty = false;
 
 			//move object [i] from watchlist array to favourites array  
