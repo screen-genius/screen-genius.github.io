@@ -20,7 +20,7 @@ This is your home for new movies, and forgotten favorites.This is a website that
 * [Overview](#Overview)
 * [Technologies](#Technologies)
 * [Status](#Status)
-* [Screenshot](#Screenshot)
+* [Functionality](#Functionality)
 * [PowerPoint](#PowerPoint)
 
 # Overview
@@ -50,8 +50,8 @@ A seperate e-petition page that will allow the user to request a streaming servi
 
 
 
-# Screenshot
-![Screenshot (26)](https://user-images.githubusercontent.com/72447285/106364613-3c6e2a00-62fe-11eb-889f-b4739f660a6b.png)
+# Functionality
+![Functionality2](https://user-images.githubusercontent.com/72447285/106393838-3abc6900-63c7-11eb-8fc5-5fd2b6b69e09.gif)
 
 # Presentation
 
