@@ -13,6 +13,7 @@ var yesWatButtonEl = document.getElementById("yes-w-button");
 var noWatButtonEl = document.getElementById("no-w-button");
 
 var pageTitleEl = document.getElementById("page-title");
+var spinnerEl = document.getElementById("spinner");
 
 var pageNo1;
 var pageNo2;
@@ -101,12 +102,15 @@ function resetVariables() {
     pageNo1 = null;
     pageNo2 = null;
     pageNo3 = null;
-    pageNo4 = null;
+	pageNo4 = null;
+	spinnerEl.setAttribute("class", "modal");
+
 }
 
 //Pick a random movie from the page selected and get the Title, poster, release date, description, and where to watch information
 function fetchMovieDetails(pageNo, finalGenre) {
  
+	spinnerEl.setAttribute("class", "modal is-active");
 
     fetch(tmdbCall+finalGenre+"&page="+pageNo)
 
@@ -141,6 +145,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 				if (countPages ===2 && !pageNo3) {
 					resetVariables();
 					return;
+
 				} else if (countPages ===3 && !pageNo4) {
 					resetVariables();
 					return;
@@ -235,6 +240,8 @@ function fetchMovieDetails(pageNo, finalGenre) {
 
 // do an api call to find out how many pages there are and then add randomly generated page nos to pageNo variables
 function setPageNo(){
+
+	spinnerEl.setAttribute("class", "modal is-active");
 
 	duplicateChecker = [];
     genreNos = collectGenres();
@@ -429,6 +436,9 @@ function displayMovies(movieObject, cardObject) {
 	cardEl.appendChild(cardContentEl);
 	displayEl.appendChild(cardEl);
 
+	spinnerEl.setAttribute("class", "modal");
+
+
 }
 
 // WATCH LIST AND FAVOURITES LIST CREATION STARTS
@@ -506,7 +516,7 @@ var recentSave = function(clicked_id, cardNo) {
 			//remove card from recentlist
 			var deleteitem = document.getElementById("card-"+id);
 			deleteitem.remove();
-			
+
 			if(recentMovies.length===0){
 				displayEl.textContent = "Pick from your favourite genres on the left and press search to find hidden gem movies to watch. Or just press search for great movie ideas from any genre.";
 			}
