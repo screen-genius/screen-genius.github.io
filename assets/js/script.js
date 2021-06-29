@@ -134,7 +134,7 @@ function fetchMovieDetails(pageNo, finalGenre) {
 			fetch(tmdbCodeURL, {
 				"method": "GET",
 				"headers": {
-					"x-rapidapi-key": "2bbe3f6662msh6816e85f5b1dd27p1e0fe8jsncb2c41fb7a72",
+					"x-rapidapi-key": "c7c1d5e89amshd2d6e0b473e71f5p155e92jsn28da3e272438",
 					"x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
 				}
 			})
